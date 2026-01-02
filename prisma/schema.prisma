@@ -1,0 +1,121 @@
+// prisma/schema.prisma
+
+// 1. KONFIGURASI KONEKSI
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 2. ENUM (Pilihan Tetap)
+enum Role {
+  ADMIN   // Pengelola Penuh
+  WRITER  // Penulis Konten
+  READER  // Pembaca Biasa
+}
+
+enum ArticleStatus {
+  DRAFT     // Masih ditulis, belum dikirim
+  PENDING   // Menunggu persetujuan Admin
+  PUBLISHED // Sudah tayang di website
+  REJECTED  // Ditolak / Perlu revisi
+}
+
+// 3. MODEL USER (Pengguna)
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  password      String
+  image         String?   // Foto Profil
+  bio           String?   // Biodata Penulis
+
+  role          Role      @default(READER)
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relasi (Hubungan ke tabel lain)
+  articles      Article[]
+  comments      Comment[]
+  ratings       Rating[]
+  reports       Report[]  // <--- TAMBAHAN PENTING (Agar error P1012 hilang)
+}
+
+// 4. MODEL ARTICLE (Berita/Tulisan)
+model Article {
+  id          String        @id @default(cuid())
+  title       String
+  slug        String        @unique // URL ramah SEO (judul-berita-keren)
+  content     String        @db.Text
+  excerpt     String?       // Ringkasan pendek
+  image       String?       // Cover Image URL
+  category    String
+
+  // STATUS & FEATURED
+  status      ArticleStatus @default(DRAFT)
+  isFeatured  Boolean       @default(false)
+
+  // WAKTU
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  publishedAt DateTime?     // Kapan artikel disetujui Admin
+
+  // RELASI PENULIS
+  authorId    String
+  author      User          @relation(fields: [authorId], references: [id])
+
+  // RELASI INTERAKSI
+  comments    Comment[]
+  ratings     Rating[]
+}
+
+model Visitor {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) // Mencatat tanggal & jam masuk
+  userAgent String?  // (Opsional) Info browser/device
+}
+
+// 5. MODEL COMMENT (Komentar Pembaca)
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+
+  articleId String
+  article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+}
+
+// 6. MODEL RATING (Bintang 1-5)
+model Rating {
+  id        String   @id @default(cuid())
+  value     Int
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+
+  articleId String
+  article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  // Mencegah 1 user memberi rating berkali-kali di artikel yang sama
+  @@unique([userId, articleId])
+}
+
+// 7. MODEL LAPORAN PENGGUNA (BUG / FEEDBACK)
+model Report {
+  id        String   @id @default(cuid())
+  subject   String   // Judul Masalah / Laporan
+  message   String   // Detail Laporan
+  type      String   // Tipe: 'BUG' (Error) atau 'FEEDBACK' (Saran)
+  
+  userId    String?  // Opsional: Bisa lapor meski tidak login (kalau mau), atau wajib login
+  user      User?    @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+}
