@@ -193,7 +193,7 @@ export default function Navbar() {
                 </div>
              ) : (
                  <Link href="/login" className="bg-black text-white px-6 py-3 text-[10px] font-bold uppercase tracking-widest hover:bg-gray-800 transition-all shadow-md">
-                    DUKUNG KAMI
+                    LOGIN
                  </Link>
              )}
         </div>
