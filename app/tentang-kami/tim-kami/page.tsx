@@ -43,7 +43,7 @@ export default function TimKamiPage() {
                 <div className="relative w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden border border-gray-100 grayscale group-hover:grayscale-0 transition-all duration-500">
                     {/* Placeholder Image - Ganti dengan foto asli */}
                     <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400 font-serif italic">
-                        Photo
+                        <img src="/noel.jpg" alt="Noel Kumaat" className="w-full h-full object-cover" />
                     </div>
                     {/* Jika sudah ada foto, pakai ini:
                     <Image src="/foto-noel.jpg" alt="Noel Kumaat" fill className="object-cover" /> 
