@@ -18,7 +18,7 @@ export default async function GaleriPage() {
   });
 
   // 2. Ambil Data PENDING (Khusus Admin)
-  let pendingGalleries = [];
+  let pendingGalleries: any[] = [];
   if (userRole === 'ADMIN') {
     pendingGalleries = await prisma.gallery.findMany({
       where: { status: 'PENDING' },
