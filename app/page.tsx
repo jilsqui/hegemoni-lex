@@ -1,9 +1,8 @@
 // app/page.tsx
 import Link from 'next/link';
 import Image from 'next/image';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma';
+import ScrollPopOut from '@/components/ScrollPopOut';
 export const revalidate = 0; 
 
 export default async function Home() {
@@ -72,7 +71,7 @@ export default async function Home() {
 
             <div className="relative z-10 p-10">
                 <div className="absolute top-0 right-0 bg-black text-white py-3 px-5 -mt-10 mr-0">
-                <div className="text-3xl font-serif leading-none">2025</div>
+                <div className="text-3xl font-serif leading-none">2026</div>
                 <div className="text-[9px] uppercase tracking-widest opacity-80 mt-1 text-right">Fokus Utama</div>
                 </div>
                 
@@ -125,10 +124,11 @@ export default async function Home() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
             {articles.map((article) => (
-              <Link href={`/artikel/${article.slug}`} key={article.id} className="group cursor-pointer">
+              <ScrollPopOut key={article.id}>
+              <Link href={`/artikel/${article.slug}`} className="group cursor-pointer">
                 <article className="flex flex-col h-full">
                   
-                  <div className="aspect-[4/3] w-full bg-gray-100 border border-black mb-5 relative overflow-hidden">
+                  <div className="aspect-[4/3] w-full bg-gray-100 border border-black mb-5 relative overflow-hidden hover-shake">
                     {article.image ? (
                         <img 
                             src={article.image} 
@@ -165,6 +165,7 @@ export default async function Home() {
                   </div>
                 </article>
               </Link>
+              </ScrollPopOut>
             ))}
           </div>
         )}
@@ -200,20 +201,20 @@ export default async function Home() {
             <div>
               <h4 className="font-bold mb-6 text-[10px] tracking-[0.2em] text-gray-500 uppercase">Tentang</h4>
               <ul className="space-y-4 text-xs font-bold tracking-wider text-gray-300">
-                <li><Link href="/tentang-kami" className="hover:text-white hover:underline transition">VISI & MISI</Link></li>
-                <li><Link href="/tentang-kami/tim-kami" className="hover:text-white hover:underline transition">TIM REDAKSI</Link></li>
-                {/* Hubungi Kami dipertahankan di sini */}
-                <li><Link href="/lapor" className="hover:text-white hover:underline transition">HUBUNGI KAMI</Link></li>
+                <li><Link href="/tentang-kami/tim-kami" className="hover:text-white hover:underline transition">TIM KAMI</Link></li>
+                <li><Link href="/hubungi-kami" className="hover:text-white hover:underline transition">HUBUNGI KAMI</Link></li>
+                <li><Link href="/dashboard/writer/create" className="hover:text-white hover:underline transition">KIRIM TULISAN</Link></li>
+                <li><Link href="/galeri" className="hover:text-white hover:underline transition">GALERI</Link></li>
+                <li><Link href="/artikel" className="hover:text-white hover:underline transition">PUBLIKASI</Link></li>
               </ul>
             </div>
 
-            {/* Kolom Menu 2: PARTISIPASI */}
+            {/* Kolom Menu 2: DUKUNG KAMI */}
             <div>
-              <h4 className="font-bold mb-6 text-[10px] tracking-[0.2em] text-gray-500 uppercase">Partisipasi</h4>
+              <h4 className="font-bold mb-6 text-[10px] tracking-[0.2em] text-gray-500 uppercase">Dukung Kami</h4>
               <ul className="space-y-4 text-xs font-bold tracking-wider text-gray-300">
-                {/* Kirim Tulisan SUDAH DIHAPUS dari sini */}
-                <li><Link href="/donasi" className="hover:text-white hover:underline transition">DUKUNG KAMI</Link></li>
-                <li><span className="text-gray-600 cursor-not-allowed">PANDUAN (Segera)</span></li>
+                <li><Link href="/donasi" className="hover:text-white hover:underline transition">DONASI</Link></li>
+                <li><Link href="/merch" className="hover:text-white hover:underline transition">MERCH</Link></li>
               </ul>
             </div>
 
@@ -222,7 +223,7 @@ export default async function Home() {
               <h4 className="font-bold mb-6 text-[10px] tracking-[0.2em] text-gray-500 uppercase">Informasi</h4>
               <ul className="space-y-4 text-xs font-bold tracking-wider text-gray-300">
                 <li><Link href="/disclaimer" className="hover:text-white hover:underline transition">DISCLAIMER</Link></li>
-                {/* Lapor Masalah SUDAH DIHAPUS (karena duplikat dengan Hubungi Kami) */}
+                <li><Link href="/lapor" className="hover:text-white hover:underline transition">LAPOR MASALAH</Link></li>
               </ul>
             </div>
 
@@ -230,7 +231,7 @@ export default async function Home() {
         </div>
 
         <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-gray-900 flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-600 font-mono uppercase tracking-widest gap-4">
-          <span>© 2025 HEGEMONI LEX PORTAL.</span>
+          <span>© 2026 HEGEMONI LEX PORTAL.</span>
           <span>DIBUAT DENGAN NEXT.JS OLEH TIM MAHASISWA</span>
         </div>
       </footer>

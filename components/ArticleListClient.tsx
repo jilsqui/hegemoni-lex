@@ -14,6 +14,7 @@ type Article = {
   excerpt: string | null;
   content: string;
   image: string | null;
+  viewCount?: number;
   publishedAt: Date | null;
   author: {
     name: string | null;
@@ -124,9 +125,11 @@ export default function ArticleListClient({ initialArticles }: { initialArticles
                     // Jika user mengetik, otomatis reset kategori ke SEMUA agar pencarian global
                     if(selectedCategory !== "SEMUA") setSelectedCategory("SEMUA");
                 }}
-                className="w-full border-b-2 border-gray-200 py-3 pr-10 outline-none focus:border-black font-serif transition-colors bg-transparent"
+                className="w-full border-b-2 border-gray-200 py-3 pr-10 outline-none focus:border-black font-serif transition-colors bg-transparent text-black placeholder:text-gray-400"
             />
-            <span className="absolute right-0 top-3 text-gray-400">🔍</span>
+            <span className="absolute right-0 top-3 text-gray-400">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </span>
        </div>
 
        {/* --- 3. GRID ARTIKEL (DENGAN ANIMASI) --- */}
@@ -156,7 +159,7 @@ export default function ArticleListClient({ initialArticles }: { initialArticles
                     <article className="flex flex-col h-full">
                     
                     {/* GAMBAR */}
-                    <div className="aspect-[4/3] w-full bg-gray-100 border border-black mb-5 relative overflow-hidden">
+                    <div className="aspect-[4/3] w-full bg-gray-100 border border-black mb-5 relative overflow-hidden hover-shake">
                         {article.image ? (
                             <img 
                                 src={article.image} 
@@ -191,8 +194,13 @@ export default function ArticleListClient({ initialArticles }: { initialArticles
                         {article.excerpt || article.content.substring(0, 150) + "..."}
                         </p>
 
-                        <div className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
-                            Oleh {article.author.name || "Redaksi"}
+                        <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-widest text-gray-400">
+                            <span>Oleh {article.author.name || "Redaksi"}</span>
+                            {typeof article.viewCount === 'number' && (
+                              <span className="flex items-center gap-1 text-gray-400">
+                                👁 {article.viewCount.toLocaleString()}
+                              </span>
+                            )}
                         </div>
                     </div>
                     </article>

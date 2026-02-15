@@ -1,12 +1,10 @@
 // app/dashboard/admin/activity/page.tsx
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/lib/prisma';
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth"; 
 import ActivityReport from '@/components/ActivityReport';
 import Link from 'next/link';
-
-const prisma = new PrismaClient();
 
 export default async function ActivityPage() {
   const session = await getServerSession(authOptions);

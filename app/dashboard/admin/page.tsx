@@ -1,13 +1,11 @@
 // app/dashboard/admin/page.tsx
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/lib/prisma';
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth"; 
 import AdminChart from '@/components/AdminChart';
 import AdminNotification from '@/components/AdminNotification'; 
 import Link from 'next/link';
-
-const prisma = new PrismaClient();
 
 export default async function AdminDashboard() {
   const session = await getServerSession(authOptions);
@@ -24,6 +22,13 @@ export default async function AdminDashboard() {
   // Hitung Total Pengunjung (Visitor)
   // Karena tabel Visitor baru dibuat, mungkin masih 0.
   const totalVisitors = await prisma.visitor.count();
+
+  // Hitung Total Komentar
+  const totalComments = await prisma.comment.count();
+
+  // Hitung Total Views (Semua Artikel)
+  const totalViewsAgg = await prisma.article.aggregate({ _sum: { viewCount: true } });
+  const totalViews = totalViewsAgg._sum.viewCount || 0;
 
   // --- 2. DATA UNTUK NOTIFIKASI ---
   const pendingPosts = await prisma.article.findMany({
@@ -152,6 +157,26 @@ export default async function AdminDashboard() {
              <span className="absolute right-2 bottom-0 text-5xl text-blue-500 opacity-10 font-serif font-bold">@</span>
         </div>
 
+      </div>
+
+      {/* STATS ROW 2: Views & Komentar (Private - Hanya Admin) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div className="bg-white p-5 border-l-4 border-indigo-500 shadow-sm rounded-r-md flex justify-between items-center relative overflow-hidden">
+             <div className="relative z-10">
+                <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Total Views (Semua Artikel)</h3>
+                <div className="text-3xl font-serif font-bold text-black">{totalViews.toLocaleString()}</div>
+                <p className="text-[9px] text-gray-400 mt-1 uppercase tracking-wider">Hanya terlihat oleh Admin</p>
+             </div>
+             <span className="absolute right-2 bottom-2 text-3xl text-indigo-500 opacity-20">👁</span>
+        </div>
+        <div className="bg-white p-5 border-l-4 border-orange-500 shadow-sm rounded-r-md flex justify-between items-center relative overflow-hidden">
+             <div className="relative z-10">
+                <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Total Komentar</h3>
+                <div className="text-3xl font-serif font-bold text-black">{totalComments.toLocaleString()}</div>
+                <p className="text-[9px] text-gray-400 mt-1 uppercase tracking-wider">Hanya terlihat oleh Admin</p>
+             </div>
+             <span className="absolute right-2 bottom-2 text-3xl text-orange-500 opacity-20">💬</span>
+        </div>
       </div>
 
       {/* GRAFIK DINAMIS (Visitor / Article) */}

@@ -50,19 +50,31 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <span>📊</span> Dashboard
           </Link>
 
-          {/* MENU 2: KELOLA ARTIKEL (Ganti istilah Approval jadi Kelola Artikel biar konsisten) */}
+          {/* MENU 2: PERSETUJUAN */}
           <Link 
-            href="/dashboard/admin/posts" 
+            href="/dashboard/admin/approval" 
             className={`flex items-center gap-3 px-4 py-3 rounded transition-all ${
-                pathname.includes('/dashboard/admin/posts') 
+                pathname.includes('/dashboard/admin/approval') 
                 ? 'bg-white text-black' 
                 : 'text-gray-400 hover:text-white hover:bg-gray-800'
             }`}
           >
-            <span>⚖️</span> Kelola Artikel
+            <span>⚖️</span> Persetujuan
           </Link>
 
-          {/* MENU 3: KELOLA USER */}
+          {/* MENU 3: KELOLA ARTIKEL */}
+          <Link 
+            href="/dashboard/admin/articles" 
+            className={`flex items-center gap-3 px-4 py-3 rounded transition-all ${
+                pathname.includes('/dashboard/admin/articles') 
+                ? 'bg-white text-black' 
+                : 'text-gray-400 hover:text-white hover:bg-gray-800'
+            }`}
+          >
+            <span>📰</span> Kelola Artikel
+          </Link>
+
+          {/* MENU 4: KELOLA USER */}
           <Link 
             href="/dashboard/admin/users" 
             className={`flex items-center gap-3 px-4 py-3 rounded transition-all ${
@@ -72,6 +84,18 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             }`}
           >
              <span>👥</span> Kelola User
+          </Link>
+
+          {/* MENU 5: LOG AKTIVITAS */}
+          <Link 
+            href="/dashboard/admin/activity" 
+            className={`flex items-center gap-3 px-4 py-3 rounded transition-all ${
+                pathname.includes('/dashboard/admin/activity') 
+                ? 'bg-white text-black' 
+                : 'text-gray-400 hover:text-white hover:bg-gray-800'
+            }`}
+          >
+             <span>📋</span> Log Aktivitas
           </Link>
           
           <div className="pt-8 mt-8 border-t border-gray-800">

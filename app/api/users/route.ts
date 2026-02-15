@@ -1,11 +1,9 @@
 // app/api/users/route.ts
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from '@/lib/prisma';
 import * as bcrypt from "bcryptjs";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route"; // Pastikan path ini benar sesuai struktur folder Anda
-
-const prisma = new PrismaClient();
+import { authOptions } from "@/lib/auth";
 
 export async function POST(req: Request) {
   try {
@@ -56,5 +54,43 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error("Error creating user:", error);
     return NextResponse.json({ error: "Gagal membuat user" }, { status: 500 });
+  }
+}
+
+// DELETE: Hapus user (Hanya ADMIN)
+export async function DELETE(req: Request) {
+  try {
+    const session = await getServerSession(authOptions);
+
+    if (!session || session.user.role !== 'ADMIN') {
+      return NextResponse.json({ error: "Akses ditolak." }, { status: 403 });
+    }
+
+    const { searchParams } = new URL(req.url);
+    const userId = searchParams.get('id');
+
+    if (!userId) {
+      return NextResponse.json({ error: "ID user diperlukan" }, { status: 400 });
+    }
+
+    // Cegah admin menghapus dirinya sendiri
+    if (userId === session.user.id) {
+      return NextResponse.json({ error: "Tidak dapat menghapus akun sendiri" }, { status: 400 });
+    }
+
+    // Hapus artikel milik user terlebih dahulu (karena ada relasi)
+    await prisma.article.deleteMany({ where: { authorId: userId } });
+    await prisma.comment.deleteMany({ where: { userId: userId } });
+    await prisma.rating.deleteMany({ where: { userId: userId } });
+    await prisma.report.deleteMany({ where: { userId: userId } });
+
+    // Hapus user
+    await prisma.user.delete({ where: { id: userId } });
+
+    return NextResponse.json({ message: "User berhasil dihapus" });
+
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    return NextResponse.json({ error: "Gagal menghapus user" }, { status: 500 });
   }
 }

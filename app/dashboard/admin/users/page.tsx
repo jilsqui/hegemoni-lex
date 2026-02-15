@@ -1,9 +1,8 @@
 // app/dashboard/admin/users/page.tsx
-import { PrismaClient } from "@prisma/client";
+import { prisma } from '@/lib/prisma';
 import Link from "next/link";
-import { formatDate } from "@/lib/utils"; // Nanti kita buat helper ini, atau hapus dulu jika error
-
-const prisma = new PrismaClient();
+import { formatDate } from "@/lib/utils";
+import DeleteUserButton from "./DeleteUserButton";
 
 // Fungsi untuk mengambil data user langsung dari database
 async function getUsers() {
@@ -70,9 +69,9 @@ export default async function UsersPage() {
                     })}
                 </td>
                 <td className="p-4 text-right">
-                  <button className="text-xs font-bold text-red-600 hover:text-red-800 uppercase tracking-wider">
-                    Hapus
-                  </button>
+                  {user.role !== 'ADMIN' && (
+                    <DeleteUserButton userId={user.id} userName={user.name || user.email} />
+                  )}
                 </td>
               </tr>
             ))}

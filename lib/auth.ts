@@ -1,10 +1,8 @@
 // lib/auth.ts
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcrypt"; // Pastikan pakai 'bcrypt' (sesuai installan sebelumnya)
-
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
+import bcrypt from "bcrypt";
 
 export const authOptions: NextAuthOptions = {
   // 1. Konfigurasi Provider (Login pakai Email & Password)

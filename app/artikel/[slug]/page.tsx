@@ -1,10 +1,9 @@
 // app/artikel/[slug]/page.tsx
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
-import ArticleRating from '@/components/ArticleRating'; // <--- Tambahkan ini
+import ArticleRating from '@/components/ArticleRating';
+import ViewCounter from '@/components/ViewCounter';
 import { notFound } from 'next/navigation';
-
-const prisma = new PrismaClient();
 
 // Agar halaman ini selalu mengambil data terbaru (tidak cache mati)
 export const revalidate = 0;
@@ -58,6 +57,9 @@ export default async function ArticleDetailPage({ params }: PageProps) {
   // 5. JIKA DITEMUKAN: TAMPILKAN ARTIKEL
   return (
     <div className="min-h-screen bg-white text-black font-sans pb-20">
+      
+      {/* View Counter (invisible, tracks views) */}
+      <ViewCounter articleId={article.id} />
       
       {/* HEADER SIMPEL */}
       <nav className="border-b border-gray-100 py-6 px-6 mb-12 flex justify-between items-center sticky top-0 bg-white/80 backdrop-blur-md z-50">
@@ -133,7 +135,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
       {/* FOOTER KECIL */}
       <div className="max-w-3xl mx-auto px-6 mt-20 pt-10 border-t border-black">
         <p className="text-center text-[10px] uppercase tracking-widest text-gray-400">
-            © 2025 Hegemoni Lex Portal
+            © 2026 Hegemoni Lex Portal
         </p>
       </div>
     </div>

@@ -57,21 +57,18 @@ export default function Home() {
     : articles.filter(item => item.level === activeFilter);
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans">
-      
-      {/* 2. Navbar Sederhana */}
-      <nav className="bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center sticky top-0 z-10">
-        <div className="font-bold text-xl text-gray-800">🏛️ HukumKita.id</div>
-        <div className="text-sm text-gray-500">Masuk / Daftar</div>
-      </nav>
+    <div className="min-h-screen bg-gray-50 font-sans pt-24">
 
-      {/* 3. Hero Section (Berita Utama) */}
+      {/* Hero Section */}
       <header className="bg-white p-6 md:p-12 border-b border-gray-200 text-center">
-        <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
-          Melek Hukum, <span className="text-blue-600">Mulai Sekarang.</span>
+        <span className="inline-block py-1 px-3 border border-gray-800 text-[10px] font-bold uppercase tracking-[0.2em] mb-6 text-gray-600">
+          Hegemoni Lex — Edukasi
+        </span>
+        <h1 className="text-3xl md:text-5xl font-serif font-medium text-gray-900 mb-4 tracking-tight">
+          Melek Hukum, <span className="italic border-b-2 border-black pb-1">Mulai Sekarang.</span>
         </h1>
-        <p className="text-gray-600 max-w-2xl mx-auto text-lg">
-          Pusat edukasi dan informasi hukum terlengkap di Indonesia untuk semua kalangan usia.
+        <p className="text-gray-600 max-w-2xl mx-auto text-lg font-light">
+          Pusat edukasi dan informasi hukum untuk semua kalangan usia.
         </p>
       </header>
 

@@ -1,9 +1,7 @@
 // app/api/reports/route.ts
 import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
-import nodemailer from 'nodemailer'; // Import library email
-
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma';
+import nodemailer from 'nodemailer';
 
 export async function POST(request: Request) {
   try {

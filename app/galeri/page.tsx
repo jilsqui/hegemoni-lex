@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import Image from "next/image";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 import UploadGalleryButton from "./components/UploadGalleryButton"; // Kita buat sebentar lagi
 import AdminApprovalCard from "./components/AdminApprovalCard";   // Kita buat sebentar lagi
 

@@ -51,10 +51,10 @@ export default function UploadGalleryButton({ userRole }: { userRole: string }) 
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                        <input type="text" name="title" placeholder="Judul Kegiatan" required className="w-full border border-gray-300 p-3 text-sm focus:outline-black transition-colors"/>
+                        <input type="text" name="title" placeholder="Judul Kegiatan" required className="w-full border border-gray-300 p-3 text-sm text-black placeholder:text-gray-400 focus:outline-black transition-colors bg-white"/>
                     </div>
                     <div>
-                        <textarea name="description" placeholder="Deskripsi Singkat" rows={2} className="w-full border border-gray-300 p-3 text-sm focus:outline-black transition-colors"></textarea>
+                        <textarea name="description" placeholder="Deskripsi Singkat" rows={2} className="w-full border border-gray-300 p-3 text-sm text-black placeholder:text-gray-400 focus:outline-black transition-colors bg-white"></textarea>
                     </div>
                     <div>
                         <input type="file" name="image" accept="image/*" required className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:border-0 file:text-xs file:font-bold file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200"/>

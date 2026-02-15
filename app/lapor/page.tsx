@@ -103,7 +103,7 @@ export default function ReportPage() {
                 <input 
                     type="text" 
                     placeholder={type === 'BUG' ? "Contoh: Tombol login tidak berfungsi..." : "Contoh: Tambahkan fitur mode gelap..."}
-                    className="w-full p-3 border border-gray-300 outline-none focus:border-black transition-colors"
+                    className="w-full p-3 border border-gray-300 outline-none focus:border-black transition-colors text-black placeholder:text-gray-400 bg-white"
                     required
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
@@ -116,7 +116,7 @@ export default function ReportPage() {
                 <textarea 
                     rows={6}
                     placeholder="Jelaskan secara detail apa yang terjadi..." 
-                    className="w-full p-3 border border-gray-300 outline-none focus:border-black transition-colors resize-none"
+                    className="w-full p-3 border border-gray-300 outline-none focus:border-black transition-colors resize-none text-black placeholder:text-gray-400 bg-white"
                     required
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}

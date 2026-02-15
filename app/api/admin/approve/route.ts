@@ -1,16 +1,15 @@
 // app/api/admin/approve/route.ts
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { authOptions } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
 
 export async function PUT(request: Request) {
   try {
     // 1. Cek Security: Harus Login & Harus ADMIN
-    const session = await getServerSession();
+    const session = await getServerSession(authOptions);
     
-    // Cek login via email user (karena session kadang tidak menyimpan role lengkap, kita cek ulang ke DB)
+    // Cek login via email user
     if (!session || !session.user?.email) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

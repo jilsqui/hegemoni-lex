@@ -78,7 +78,7 @@ export default function CreateUserPage() {
                     onChange={handleChange}
                     placeholder="Contoh: Budi Sudarsono, S.H."
                     required
-                    className="w-full bg-gray-50 border border-gray-300 p-3 focus:outline-none focus:border-black transition-colors"
+                    className="w-full bg-gray-50 border border-gray-300 p-3 focus:outline-none focus:border-black transition-colors text-black placeholder:text-gray-400"
                 />
             </div>
 
@@ -92,7 +92,7 @@ export default function CreateUserPage() {
                     onChange={handleChange}
                     placeholder="penulis@hegemoni.lex"
                     required
-                    className="w-full bg-gray-50 border border-gray-300 p-3 focus:outline-none focus:border-black transition-colors"
+                    className="w-full bg-gray-50 border border-gray-300 p-3 focus:outline-none focus:border-black transition-colors text-black placeholder:text-gray-400"
                 />
             </div>
 
@@ -106,7 +106,7 @@ export default function CreateUserPage() {
                     onChange={handleChange}
                     placeholder="Buat password yang kuat"
                     required
-                    className="w-full bg-gray-50 border border-gray-300 p-3 focus:outline-none focus:border-black transition-colors"
+                    className="w-full bg-gray-50 border border-gray-300 p-3 focus:outline-none focus:border-black transition-colors text-black placeholder:text-gray-400"
                 />
                 <p className="text-[10px] text-gray-400 mt-1">*Penulis bisa mengganti password ini nanti.</p>
             </div>

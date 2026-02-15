@@ -137,7 +137,7 @@ export default function LoginPage() {
 
         <div className="absolute bottom-6 left-0 w-full text-center lg:text-left lg:bottom-12 lg:left-24 pointer-events-none">
             <span className="text-[10px] text-black font-bold uppercase tracking-widest">
-                © 2025 Hegemoni Lex. Secure Login.
+                © 2026 Hegemoni Lex. Secure Login.
             </span>
         </div>
 

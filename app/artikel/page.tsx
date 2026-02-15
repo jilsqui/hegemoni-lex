@@ -1,9 +1,6 @@
 // app/artikel/page.tsx
-import { PrismaClient } from '@prisma/client';
-// Hapus import Link & Image jika tidak dipakai di level page ini (karena navbar sudah di handle global)
-import ArticleListClient from '@/components/ArticleListClient'; 
-
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma';
+import ArticleListClient from '@/components/ArticleListClient';
 
 export const revalidate = 0;
 
@@ -12,7 +9,8 @@ export default async function ArchivePage() {
   const articles = await prisma.article.findMany({
     where: { status: 'PUBLISHED' },
     orderBy: { publishedAt: 'desc' },
-    include: { author: { select: { name: true, email: true } } }
+    include: { author: { select: { name: true, email: true } } },
+    // viewCount is included by default as a scalar field
   });
 
   return (
@@ -46,7 +44,7 @@ export default async function ArchivePage() {
 
       {/* FOOTER MINI */}
       <footer className="max-w-7xl mx-auto px-6 mt-20 pt-8 border-t border-gray-200/60 text-center relative z-10">
-          <p className="text-[10px] text-gray-400 uppercase tracking-widest">© 2025 Hegemoni Lex Archive</p>
+          <p className="text-[10px] text-gray-400 uppercase tracking-widest">© 2026 Hegemoni Lex Archive</p>
       </footer>
     </div>
   );

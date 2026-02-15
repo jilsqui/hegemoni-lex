@@ -29,13 +29,10 @@ export default function Navbar() {
         
         {/* ================= 1. LOGO ================= */}
         <Link href="/" className="flex items-center gap-3 group z-50">
-             <div className="relative w-12 h-12"> 
+             <div className="relative w-16 h-16"> 
                 <Image src="/logohl.png" alt="Logo" fill className="object-contain" /> 
              </div>
-             <div className="flex flex-col justify-center">
-                <span className="font-serif font-bold text-2xl tracking-tight leading-none group-hover:opacity-70 transition-opacity text-black">HEGEMONI</span>
-                <span className="font-sans text-[11px] font-bold tracking-[0.3em] leading-none text-gray-500 mt-1">LEX</span>
-             </div>
+             <span className="font-serif font-bold text-4xl tracking-tight leading-none group-hover:opacity-70 transition-opacity text-black">HEGEMONI<span className="text-4xl">LEX</span></span>
         </Link>
 
         {/* ================= 2. DESKTOP MENU ================= */}
@@ -53,22 +50,12 @@ export default function Navbar() {
                 <div className="absolute top-full left-1/2 -translate-x-1/2 w-64 bg-white border border-gray-200 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.2)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 p-4">
                     <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-t border-l border-gray-200 rotate-45"></div>
                     <div className="relative z-10 flex flex-col gap-3">
-                         {/* 1. Tentang Kami (Saya arahkan ke folder tentang-kami) */}
-                         <Link href="/tentang-kami" className="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black hover:pl-2 transition-all">Tentang Kami</Link>
-                         
-                         {/* 2. Tim Kami (SUDAH DIPERBAIKI) */}
                          <Link href="/tentang-kami/tim-kami" className="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black hover:pl-2 transition-all">Tim Kami</Link>
                          
-                         {/* 3. Hubungi Kami */}
-                         <Link href="/profil/hubungi-kami" className="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black hover:pl-2 transition-all">Hubungi Kami</Link>
+                         <Link href="/hubungi-kami" className="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black hover:pl-2 transition-all">Hubungi Kami</Link>
                          
-                         {/* 4. Kirim Tulisan */}
-                         <Link href="/profil/kirim-tulisan" className="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black hover:pl-2 transition-all">Kirim Tulisan</Link>
+                         <Link href="/artikel" className="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black hover:pl-2 transition-all">Publikasi</Link>
                          
-                         {/* 5. Publikasi */}
-                         <Link href="/profil/publikasi" className="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black hover:pl-2 transition-all">Publikasi</Link>
-                         
-                         {/* 6. Galeri */}
                          <Link href="/galeri" className="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black hover:pl-2 transition-all">Galeri</Link>
                     </div>
                 </div>
@@ -91,10 +78,19 @@ export default function Navbar() {
                 </div>
             </div>
 
-            {/* Link Donasi */}
-            <Link href="/donasi" className={`text-[10px] font-bold uppercase tracking-widest hover:text-gray-500 transition-colors ${pathname === '/donasi' ? 'text-black' : 'text-gray-400'}`}>
-                Donasi
-            </Link>
+            {/* --- DROPDOWN DUKUNG KAMI --- */}
+            <div className="relative group h-full flex items-center">
+                <button className={`text-[10px] font-bold uppercase tracking-widest hover:text-gray-500 transition-colors flex items-center gap-1 group-hover:text-black ${pathname?.includes('/donasi') || pathname?.includes('/merch') ? 'text-black' : 'text-gray-400'}`}>
+                    Dukung Kami ▾
+                </button>
+                <div className="absolute top-full left-1/2 -translate-x-1/2 w-56 bg-white border border-gray-200 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.2)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 p-4">
+                    <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-t border-l border-gray-200 rotate-45"></div>
+                    <div className="relative z-10 flex flex-col gap-3">
+                         <Link href="/donasi" className="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black hover:pl-2 transition-all">Donasi</Link>
+                         <Link href="/merch" className="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black hover:pl-2 transition-all">Merch</Link>
+                    </div>
+                </div>
+            </div>
 
             {/* Link Lapor Masalah */}
             <Link href="/lapor" className={`text-[10px] font-bold uppercase tracking-widest hover:text-gray-500 transition-colors ${pathname === '/lapor' ? 'text-black border-b-2 border-black pb-1' : 'text-gray-400'}`}>
@@ -104,9 +100,11 @@ export default function Navbar() {
 
         {/* ================= 3. USER & SEARCH ================= */}
         <div className="hidden md:flex items-center gap-6">
-             <form action="/artikel" className="flex items-center border-b border-gray-300 pb-1 group focus-within:border-black transition-colors">
-                <input type="text" name="q" placeholder="CARI..." className="text-[10px] uppercase font-bold tracking-widest w-20 focus:w-32 transition-all outline-none placeholder:text-gray-300 text-black bg-transparent" />
-                <button type="submit" className="text-gray-400 group-focus-within:text-black">🔍</button>
+             <form action="/artikel" className="flex items-center gap-2">
+                <input type="text" name="q" placeholder="CARI..." className="text-[10px] uppercase font-bold tracking-widest w-28 outline-none placeholder:text-gray-300 text-black bg-transparent border-b border-gray-300 pb-1 focus:border-black transition-colors" />
+                <button type="submit" className="text-gray-500 hover:text-black transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                </button>
              </form>
 
              {/* Tombol Login / User Profile */}
@@ -155,14 +153,16 @@ export default function Navbar() {
                 <Link href="/" className="font-bold" onClick={() => setIsMobileMenuOpen(false)}>BERANDA</Link>
                 <div className="border-l-2 border-gray-100 pl-4 space-y-3">
                     <p className="text-xs text-gray-400 font-bold uppercase">Profil</p>
-                    
-                    {/* Link Mobile disamakan dengan Desktop */}
-                    <Link href="/tentang-kami" className="block text-sm" onClick={() => setIsMobileMenuOpen(false)}>Tentang Kami</Link>
                     <Link href="/tentang-kami/tim-kami" className="block text-sm" onClick={() => setIsMobileMenuOpen(false)}>Tim Kami</Link>
-                    <Link href="/profil/hubungi-kami" className="block text-sm" onClick={() => setIsMobileMenuOpen(false)}>Hubungi Kami</Link>
-                    <Link href="/profil/kirim-tulisan" className="block text-sm" onClick={() => setIsMobileMenuOpen(false)}>Kirim Tulisan</Link>
-                    <Link href="/profil/publikasi" className="block text-sm" onClick={() => setIsMobileMenuOpen(false)}>Publikasi</Link>
+                    <Link href="/hubungi-kami" className="block text-sm" onClick={() => setIsMobileMenuOpen(false)}>Hubungi Kami</Link>
+                    <Link href="/artikel" className="block text-sm" onClick={() => setIsMobileMenuOpen(false)}>Publikasi</Link>
                     <Link href="/galeri" className="block text-sm" onClick={() => setIsMobileMenuOpen(false)}>Galeri</Link>
+                </div>
+                
+                <div className="border-l-2 border-gray-100 pl-4 space-y-3">
+                    <p className="text-xs text-gray-400 font-bold uppercase">Dukung Kami</p>
+                    <Link href="/donasi" className="block text-sm" onClick={() => setIsMobileMenuOpen(false)}>Donasi</Link>
+                    <Link href="/merch" className="block text-sm" onClick={() => setIsMobileMenuOpen(false)}>Merch</Link>
                 </div>
                 
                 <div className="border-l-2 border-gray-100 pl-4 space-y-3 mt-4">

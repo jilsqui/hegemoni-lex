@@ -92,7 +92,7 @@ export default function CreateArticlePage() {
                     <input 
                         type="text" 
                         placeholder="Contoh: Analisis Kritis UU Cipta Kerja..." 
-                        className="w-full p-4 border-2 border-gray-200 focus:border-black outline-none font-serif text-xl placeholder:text-gray-300 transition-colors bg-white"
+                        className="w-full p-4 border-2 border-gray-200 focus:border-black outline-none font-serif text-xl placeholder:text-gray-300 transition-colors bg-white text-black"
                         required
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
@@ -105,7 +105,7 @@ export default function CreateArticlePage() {
                     <textarea 
                         rows={15}
                         placeholder="Mulai menulis di sini..." 
-                        className="w-full p-4 border-2 border-gray-200 focus:border-black outline-none text-base leading-relaxed placeholder:text-gray-300 transition-colors bg-white resize-y"
+                        className="w-full p-4 border-2 border-gray-200 focus:border-black outline-none text-base leading-relaxed placeholder:text-gray-300 transition-colors bg-white resize-y text-black"
                         required
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
@@ -122,7 +122,7 @@ export default function CreateArticlePage() {
                 <div className="bg-white p-6 border border-gray-200 space-y-4">
                     <label className="text-xs font-bold uppercase tracking-widest text-gray-500">Kategori</label>
                     <select 
-                        className="w-full p-3 border border-gray-300 outline-none text-sm bg-gray-50 focus:border-black uppercase cursor-pointer"
+                        className="w-full p-3 border border-gray-300 outline-none text-sm bg-gray-50 focus:border-black uppercase cursor-pointer text-black"
                         value={category}
                         onChange={(e) => setCategory(e.target.value)}
                     >
@@ -139,7 +139,7 @@ export default function CreateArticlePage() {
                     <input 
                         type="text" 
                         placeholder="https://..." 
-                        className="w-full p-3 border border-gray-300 outline-none text-sm bg-gray-50 focus:border-black"
+                        className="w-full p-3 border border-gray-300 outline-none text-sm bg-gray-50 focus:border-black text-black placeholder:text-gray-400"
                         value={coverImage}
                         onChange={(e) => setCoverImage(e.target.value)} 
                     />
