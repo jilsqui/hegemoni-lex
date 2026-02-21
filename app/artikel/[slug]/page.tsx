@@ -61,17 +61,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
       {/* View Counter (invisible, tracks views) */}
       <ViewCounter articleId={article.id} />
       
-      {/* HEADER SIMPEL */}
-      <nav className="border-b border-gray-100 py-6 px-6 mb-12 flex justify-between items-center sticky top-0 bg-white/80 backdrop-blur-md z-50">
-        <Link href="/" className="text-xl font-serif font-bold tracking-tighter hover:opacity-70 transition-opacity">
-            Hegemoni Lex
-        </Link>
-        <Link href="/" className="text-[10px] font-bold uppercase tracking-widest border border-black px-4 py-2 hover:bg-black hover:text-white transition-all">
-            KEMBALI
-        </Link>
-      </nav>
-
-      <article className="max-w-3xl mx-auto px-6">
+      <article className="max-w-3xl mx-auto px-6 pt-28">
         
         {/* KATEGORI & TANGGAL */}
         <div className="flex items-center gap-4 mb-6 border-b border-gray-100 pb-6">
@@ -122,10 +112,6 @@ export default async function ArticleDetailPage({ params }: PageProps) {
         </div>
 
       </article>
-
-      <div className="prose max-w-none mb-10">
-    {/* Isi konten artikel anda biasanya ada disini */}
-</div>
 
 {/* --- FITUR RATING --- */}
 <div className="max-w-xl mx-auto">

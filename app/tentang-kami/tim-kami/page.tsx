@@ -4,9 +4,9 @@ import Image from 'next/image';
 export default function TimKamiPage() {
   // Data Dummy Tim (Bisa Anda sesuaikan dengan data asli)
   const teamMembers = [
-    { name: "Fitra Adyaksa", role: "Pemimpin Redaksi", image: "/team1.jpg" }, // Pastikan ada gambar placeholder atau ganti src
-    { name: "Noel Kumaat", role: "Editor In Chief", image: "/team2.jpg" },
-    { name: "Lex Hegemoni", role: "Kontributor Utama", image: "/team3.jpg" },
+    { name: "Fitra Adhyaksa", role: "Founder", image: "/team1.jpg" },
+    { name: "Noel Kumaat", role: "Co-Founder", image: "/team2.jpg" },
+    { name: "Efrial Ruliandi Silalahi", role: "Co-Founder", image: "/team3.jpg" },
   ];
 
   return (
@@ -50,7 +50,7 @@ export default function TimKamiPage() {
                     */}
                 </div>
                 <h3 className="text-xl font-serif font-bold mb-1">Noel Kumaat</h3>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Co-Founder & Editor</p>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Co-Founder</p>
             </div>
 
             {/* CONTOH CARD MEMBER 2 */}
@@ -60,8 +60,8 @@ export default function TimKamiPage() {
                         Photo
                     </div>
                 </div>
-                <h3 className="text-xl font-serif font-bold mb-1">Fitra Adyaksa</h3>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Pemimpin Redaksi</p>
+                <h3 className="text-xl font-serif font-bold mb-1">Fitra Adhyaksa</h3>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Founder</p>
             </div>
 
              {/* CONTOH CARD MEMBER 3 */}
@@ -71,8 +71,8 @@ export default function TimKamiPage() {
                         Photo
                     </div>
                 </div>
-                <h3 className="text-xl font-serif font-bold mb-1">Kak Riel</h3>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Kontributor Hukum</p>
+                <h3 className="text-xl font-serif font-bold mb-1">Efrial Ruliandi Silalahi</h3>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Co-Founder</p>
             </div>
 
         </div>

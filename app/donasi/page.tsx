@@ -52,7 +52,7 @@ export default function DonasiPage() {
 
               <div className="bg-white border border-gray-200 p-6">
                 <p className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2">Atas Nama</p>
-                <p className="text-2xl font-serif font-bold">Hegemoni Lex</p>
+                <p className="text-2xl font-serif font-bold">Efrial Ruliandi Silalahi</p>
               </div>
             </div>
 
