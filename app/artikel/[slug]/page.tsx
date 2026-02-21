@@ -61,14 +61,14 @@ export default async function ArticleDetailPage({ params }: PageProps) {
       {/* View Counter (invisible, tracks views) */}
       <ViewCounter articleId={article.id} />
       
-      <article className="max-w-3xl mx-auto px-6 pt-28">
+      <article className="max-w-3xl mx-auto px-4 md:px-6 pt-20 md:pt-28">
         
         {/* KATEGORI & TANGGAL */}
-        <div className="flex items-center gap-4 mb-6 border-b border-gray-100 pb-6">
+        <div className="flex flex-wrap items-center gap-3 md:gap-4 mb-6 border-b border-gray-100 pb-6">
             <span className="bg-black text-white px-2 py-1 text-[9px] font-bold uppercase tracking-widest">
                 {article.category}
             </span>
-            <span className="text-xs text-gray-500 font-mono uppercase">
+            <span className="text-[10px] md:text-xs text-gray-500 font-mono uppercase">
                 {article.publishedAt 
                   ? new Date(article.publishedAt).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) 
                   : ''}
@@ -76,12 +76,12 @@ export default async function ArticleDetailPage({ params }: PageProps) {
         </div>
 
         {/* JUDUL UTAMA */}
-        <h1 className="text-3xl md:text-5xl font-serif font-bold leading-tight mb-8 text-gray-900">
+        <h1 className="text-2xl md:text-5xl font-serif font-bold leading-tight mb-6 md:mb-8 text-gray-900">
             {article.title}
         </h1>
 
         {/* INFO PENULIS */}
-        <div className="flex items-center gap-3 mb-10">
+        <div className="flex items-center gap-3 mb-8 md:mb-10">
             <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center font-serif font-bold text-gray-500">
                 {(article.author.name || article.author.email).charAt(0).toUpperCase()}
             </div>
@@ -97,7 +97,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
 
         {/* GAMBAR UTAMA */}
         {article.image && (
-            <div className="w-full aspect-video bg-gray-100 mb-12 relative overflow-hidden border border-black">
+            <div className="w-full aspect-video bg-gray-100 mb-8 md:mb-12 relative overflow-hidden border border-black">
                 <img 
                     src={article.image} 
                     alt={article.title} 
@@ -107,19 +107,19 @@ export default async function ArticleDetailPage({ params }: PageProps) {
         )}
 
         {/* ISI KONTEN */}
-        <div className="prose prose-lg prose-gray max-w-none font-serif leading-relaxed text-gray-800 whitespace-pre-wrap first-letter:text-5xl first-letter:font-bold first-letter:mr-3 first-letter:float-left">
+        <div className="prose prose-base md:prose-lg prose-gray max-w-none font-serif leading-relaxed text-gray-800 whitespace-pre-wrap first-letter:text-4xl md:first-letter:text-5xl first-letter:font-bold first-letter:mr-2 md:first-letter:mr-3 first-letter:float-left">
             {article.content}
         </div>
 
       </article>
 
 {/* --- FITUR RATING --- */}
-<div className="max-w-xl mx-auto">
+<div className="max-w-xl mx-auto px-4 md:px-0">
     <ArticleRating articleId={article.id} />
 </div>
 
       {/* FOOTER KECIL */}
-      <div className="max-w-3xl mx-auto px-6 mt-20 pt-10 border-t border-black">
+      <div className="max-w-3xl mx-auto px-4 md:px-6 mt-12 md:mt-20 pt-10 border-t border-black">
         <p className="text-center text-[10px] uppercase tracking-widest text-gray-400">
             © 2026 Hegemoni Lex Portal
         </p>

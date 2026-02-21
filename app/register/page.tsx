@@ -48,7 +48,7 @@ export default function RegisterPage() {
     <div className="min-h-screen flex bg-white font-sans selection:bg-black selection:text-white text-black">
       
       {/* 1. BAGIAN KIRI - FORMULIR DAFTAR */}
-      <div className="w-full lg:w-1/2 flex flex-col justify-center p-8 md:p-16 lg:p-24 border-r-2 border-black relative">
+      <div className="w-full lg:w-1/2 flex flex-col justify-center p-8 md:p-16 lg:p-24 lg:border-r-2 border-black relative">
         
         <div className="absolute top-8 left-8 md:top-12 md:left-12 lg:top-12 lg:left-24">
             <Link href="/" className="group flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:opacity-70 transition-opacity text-black">

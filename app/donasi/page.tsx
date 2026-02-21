@@ -7,12 +7,12 @@ export default function DonasiPage() {
     <div className="min-h-screen bg-white text-black font-sans selection:bg-black selection:text-white">
       
       {/* HERO */}
-      <div className="pt-36 pb-20 px-6 border-b border-gray-200">
+      <div className="pt-24 md:pt-36 pb-12 md:pb-20 px-4 md:px-6 border-b border-gray-200">
         <div className="max-w-4xl mx-auto text-center">
           <span className="inline-block py-1 px-3 border border-gray-800 text-[10px] font-bold uppercase tracking-[0.2em] mb-8 text-gray-600">
             Dukung Kami
           </span>
-          <h1 className="text-4xl md:text-6xl font-serif font-bold mb-6 leading-tight">
+          <h1 className="text-3xl md:text-6xl font-serif font-bold mb-6 leading-tight">
             Donasi untuk <br />
             <span className="italic border-b-2 border-black pb-1">Literasi Hukum</span>
           </h1>
@@ -24,11 +24,11 @@ export default function DonasiPage() {
       </div>
 
       {/* DONASI INFO */}
-      <div className="max-w-4xl mx-auto px-6 py-20">
+      <div className="max-w-4xl mx-auto px-4 md:px-6 py-10 md:py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           
           {/* INFO REKENING */}
-          <div className="bg-gray-50 border border-gray-200 p-10">
+          <div className="bg-gray-50 border border-gray-200 p-5 md:p-10">
             <div className="flex items-center gap-3 mb-8">
               <div className="w-12 h-12 bg-black text-white flex items-center justify-center font-bold text-xl">
                 💳
@@ -45,14 +45,14 @@ export default function DonasiPage() {
                 <p className="text-2xl font-serif font-bold">BCA</p>
               </div>
 
-              <div className="bg-white border border-gray-200 p-6">
+              <div className="bg-white border border-gray-200 p-4 md:p-6">
                 <p className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2">Nomor Rekening</p>
-                <p className="text-2xl font-mono font-bold tracking-wider">8415 0908 22</p>
+                <p className="text-xl md:text-2xl font-mono font-bold tracking-wider">8415 0908 22</p>
               </div>
 
-              <div className="bg-white border border-gray-200 p-6">
+              <div className="bg-white border border-gray-200 p-4 md:p-6">
                 <p className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2">Atas Nama</p>
-                <p className="text-2xl font-serif font-bold">Efrial Ruliandi Silalahi</p>
+                <p className="text-lg md:text-2xl font-serif font-bold">Efrial Ruliandi Silalahi</p>
               </div>
             </div>
 

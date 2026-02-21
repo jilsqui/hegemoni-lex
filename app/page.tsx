@@ -67,16 +67,16 @@ export default async function Home() {
       {/* ================================================================ */}
       {/* 1. HERO SECTION - MAGAZINE STYLE (Terinspirasi antinomi.org)     */}
       {/* ================================================================ */}
-      <header className="pt-28 border-b border-gray-200">
+      <header className="pt-20 md:pt-28 border-b border-gray-200">
         
         {/* FEATURED ARTICLE - Full Width Hero */}
         {featuredArticle ? (
           <div className="relative">
-            <div className="max-w-7xl mx-auto px-6 pt-8 pb-6">
+            <div className="max-w-7xl mx-auto px-4 md:px-6 pt-4 md:pt-8 pb-4 md:pb-6">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 border border-gray-200">
                 
                 {/* LEFT: Featured Image */}
-                <div className="lg:col-span-7 relative min-h-[350px] lg:min-h-[480px] bg-gray-100 overflow-hidden group">
+                <div className="lg:col-span-7 relative min-h-[260px] md:min-h-[350px] lg:min-h-[480px] bg-gray-100 overflow-hidden group">
                   {featuredArticle.image ? (
                     <img 
                       src={featuredArticle.image} 
@@ -90,7 +90,7 @@ export default async function Home() {
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
                   
-                  <div className="absolute bottom-0 left-0 right-0 p-8 lg:p-10 z-10">
+                  <div className="absolute bottom-0 left-0 right-0 p-5 md:p-8 lg:p-10 z-10">
                     <div className="flex items-center gap-3 mb-4">
                       <span className="bg-white text-black px-3 py-1 text-[9px] font-bold uppercase tracking-widest">
                         {featuredArticle.category}
@@ -123,14 +123,14 @@ export default async function Home() {
                 </div>
 
                 {/* RIGHT: Sidebar Latest Articles */}
-                <div className="lg:col-span-5 bg-white flex flex-col divide-y divide-gray-200 border-l border-gray-200">
+                <div className="lg:col-span-5 bg-white flex flex-col divide-y divide-gray-200 lg:border-l border-t lg:border-t-0 border-gray-200">
                   {trendingArticles.length > 0 ? trendingArticles.map((article, index) => (
                     <Link 
                       key={article.id} 
                       href={`/artikel/${article.slug}`}
                       className="flex items-start gap-4 p-5 hover:bg-gray-50 transition-colors group/item flex-1"
                     >
-                      <span className="text-3xl font-serif font-bold text-gray-200 group-hover/item:text-black transition-colors leading-none mt-1">
+                      <span className="text-2xl md:text-3xl font-serif font-bold text-gray-200 group-hover/item:text-black transition-colors leading-none mt-1">
                         {String(index + 1).padStart(2, '0')}
                       </span>
                       <div className="flex-1 min-w-0">
@@ -206,8 +206,8 @@ export default async function Home() {
       {/* ================================================================ */}
       {/* 3. MAIN CONTENT: 2-COLUMN LAYOUT (Articles + Sidebar)            */}
       {/* ================================================================ */}
-      <main className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <main className="max-w-7xl mx-auto px-4 md:px-6 py-10 md:py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
           
           {/* LEFT COLUMN: Publikasi Terbaru */}
           <div className="lg:col-span-8">
@@ -388,7 +388,7 @@ export default async function Home() {
       {/* ================================================================ */}
       {/* 4. FOOTER                                                        */}
       {/* ================================================================ */}
-      <footer className="bg-black text-white py-20 px-6 font-sans border-t border-gray-800">
+      <footer className="bg-black text-white py-12 md:py-20 px-4 md:px-6 font-sans border-t border-gray-800">
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between gap-16">
           
           {/* KOLOM 1: Brand & Deskripsi */}
@@ -444,7 +444,7 @@ export default async function Home() {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-gray-900 flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-600 font-mono uppercase tracking-widest gap-4">
+        <div className="max-w-7xl mx-auto mt-12 md:mt-20 pt-8 border-t border-gray-900 flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-600 font-mono uppercase tracking-widest gap-4">
           <span>© 2026 HEGEMONI LEX PORTAL.</span>
           <span>DIBUAT DENGAN NEXT.JS OLEH TIM MAHASISWA</span>
         </div>

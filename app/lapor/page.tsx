@@ -79,7 +79,7 @@ export default function ReportPage() {
             {/* Pilihan Tipe Laporan */}
             <div className="space-y-2">
                 <label className="text-xs font-bold uppercase tracking-widest text-gray-500">Jenis Laporan</label>
-                <div className="flex gap-4">
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                     <button 
                         type="button"
                         onClick={() => setType("BUG")}

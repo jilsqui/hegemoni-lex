@@ -32,7 +32,7 @@ export default async function ArchivePage() {
             <span className="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2 block">
                 Arsip Publikasi
             </span>
-            <h1 className="text-5xl md:text-7xl font-serif font-medium text-gray-900 tracking-tight">
+            <h1 className="text-3xl md:text-5xl lg:text-7xl font-serif font-medium text-gray-900 tracking-tight">
                 Semua Artikel
             </h1>
         </div>

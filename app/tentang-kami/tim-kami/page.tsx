@@ -19,14 +19,14 @@ export default function TimKamiPage() {
           Saya tambahkan 'pt-32' (Padding Top) di bawah ini agar judul tidak tertutup Navbar.
       */}
 
-      <main className="max-w-7xl mx-auto px-6 pt-32 pb-20">
+      <main className="max-w-7xl mx-auto px-4 md:px-6 pt-24 md:pt-32 pb-12 md:pb-20">
         
         {/* HEADER SECTION */}
-        <div className="text-center max-w-3xl mx-auto mb-20">
+        <div className="text-center max-w-3xl mx-auto mb-12 md:mb-20">
             <span className="inline-block py-1 px-3 border border-gray-300 text-[10px] font-bold uppercase tracking-[0.2em] mb-8 text-gray-500">
               Redaksi & Kontributor
             </span>
-            <h1 className="text-5xl md:text-6xl font-serif font-medium mb-6 leading-tight">
+            <h1 className="text-3xl md:text-6xl font-serif font-medium mb-6 leading-tight">
               Di Balik Hegemoni Lex
             </h1>
             <p className="text-gray-500 text-sm md:text-base leading-relaxed font-light">
@@ -78,7 +78,7 @@ export default function TimKamiPage() {
         </div>
 
         {/* JOIN US SECTION */}
-        <div className="mt-32 border-t border-gray-100 pt-20 text-center">
+        <div className="mt-16 md:mt-32 border-t border-gray-100 pt-12 md:pt-20 text-center">
             <h2 className="text-2xl font-serif font-bold mb-4">Ingin Berkontribusi?</h2>
             <p className="text-gray-500 text-sm mb-8 max-w-xl mx-auto">
                 Ruang redaksi kami selalu terbuka untuk gagasan baru. Jika Anda memiliki tulisan opini atau analisis hukum, mari bergabung.
