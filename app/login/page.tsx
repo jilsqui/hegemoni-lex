@@ -151,7 +151,7 @@ export default function LoginPage() {
                 <div className="relative w-16 h-16">
                     <Image src="/logohl.png" alt="Hegemoni LEX Logo" fill className="object-contain invert"/>
                 </div>
-                <div className="text-2xl font-serif font-bold">Hegemoni LEX</div>
+              <div className="text-2xl font-serif font-bold">HEGEMONI LEX</div>
              </div>
         </div>
         <div className="relative z-10">

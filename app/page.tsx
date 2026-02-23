@@ -448,7 +448,7 @@ export default async function Home() {
               <div className="relative w-10 h-10">
                 <Image src="/logohl.png" alt="Hegemoni LEX Logo" fill className="object-contain invert"/>
               </div>
-              <div className="text-xl font-serif font-bold tracking-tight">Hegemoni LEX</div>
+              <div className="text-xl font-serif font-bold tracking-tight">HEGEMONI LEX</div>
             </div>
             <p className="text-gray-500 text-sm leading-[1.8] font-light mb-6">
               Ruang perjumpaan gagasan hukum untuk membongkar sekat-sekat ketidaktahuan. Kritis, Berdaya, Berkeadilan.

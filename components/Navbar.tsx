@@ -32,7 +32,7 @@ export default function Navbar() {
              <div className="relative w-8 h-8 md:w-16 md:h-16"> 
                 <Image src="/logohl.png" alt="Logo" fill className="object-contain" /> 
              </div>
-             <span className="font-serif font-bold text-lg md:text-4xl tracking-tight leading-none group-hover:opacity-70 transition-opacity text-black">Hegemoni <span className="text-lg md:text-4xl font-black">LEX</span></span>
+             <span className="font-serif font-bold text-lg md:text-4xl tracking-tight leading-none group-hover:opacity-70 transition-opacity text-black">HEGEMONI <span className="text-lg md:text-4xl font-black">LEX</span></span>
         </Link>
 
         {/* ================= 2. DESKTOP MENU ================= */}
@@ -149,48 +149,42 @@ export default function Navbar() {
       {/* Mobile Menu (Responsive) */}
       {isMobileMenuOpen && (
         <div className="md:hidden fixed inset-0 top-16 bg-white z-40 overflow-y-auto pb-24 border-t border-gray-100 overscroll-contain">
-             <div className="flex flex-col p-4 space-y-3">
+             <div className="flex flex-col p-4">
                 {/* Mobile Search */}
-                <form action="/artikel" className="flex items-center gap-2 border-b border-gray-200 pb-3 mb-1">
+                <form action="/artikel" className="flex items-center gap-2 border-b border-gray-200 pb-3 mb-2">
                   <input type="text" name="q" placeholder="Cari artikel..." className="text-sm w-full outline-none placeholder:text-gray-400 text-black bg-transparent py-1" />
                   <button type="submit" className="text-gray-500 hover:text-black transition-colors flex-shrink-0 p-1">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                   </button>
                 </form>
 
-                <Link href="/" className="font-bold text-sm uppercase tracking-widest py-2.5 active:text-gray-500" onClick={() => setIsMobileMenuOpen(false)}>Beranda</Link>
-                
-                <div className="border-l-2 border-gray-200 pl-4 space-y-2">
-                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest pt-1">Profil</p>
-                    <Link href="/tentang-kami/tim-kami" className="block text-sm py-1.5 active:text-gray-500" onClick={() => setIsMobileMenuOpen(false)}>Tim Kami</Link>
-                    <Link href="/hubungi-kami" className="block text-sm py-1.5 active:text-gray-500" onClick={() => setIsMobileMenuOpen(false)}>Hubungi Kami</Link>
-                    <Link href="/artikel" className="block text-sm py-1.5 active:text-gray-500" onClick={() => setIsMobileMenuOpen(false)}>Publikasi</Link>
-                    <Link href="/galeri" className="block text-sm py-1.5 active:text-gray-500" onClick={() => setIsMobileMenuOpen(false)}>Galeri</Link>
-                </div>
-                
-                <div className="border-l-2 border-gray-200 pl-4 space-y-2">
-                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest pt-1">Dukung Kami</p>
-                    <Link href="/donasi" className="block text-sm py-1.5 active:text-gray-500" onClick={() => setIsMobileMenuOpen(false)}>Donasi</Link>
-                    <Link href="/merch" className="block text-sm py-1.5 active:text-gray-500" onClick={() => setIsMobileMenuOpen(false)}>Merch</Link>
-                </div>
+                <Link href="/" className="font-bold text-sm uppercase tracking-widest py-3 border-b border-gray-100 active:text-gray-500 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Beranda</Link>
+                <Link href="/tentang-kami/tim-kami" className="font-bold text-sm uppercase tracking-widest py-3 border-b border-gray-100 active:text-gray-500 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Tim Kami</Link>
+                <Link href="/hubungi-kami" className="font-bold text-sm uppercase tracking-widest py-3 border-b border-gray-100 active:text-gray-500 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Hubungi Kami</Link>
+                <Link href="/artikel" className="font-bold text-sm uppercase tracking-widest py-3 border-b border-gray-100 active:text-gray-500 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Publikasi</Link>
+                <Link href="/galeri" className="font-bold text-sm uppercase tracking-widest py-3 border-b border-gray-100 active:text-gray-500 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Galeri</Link>
+                <Link href="/donasi" className="font-bold text-sm uppercase tracking-widest py-3 border-b border-gray-100 active:text-gray-500 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Donasi</Link>
+                <Link href="/merch" className="font-bold text-sm uppercase tracking-widest py-3 border-b border-gray-100 active:text-gray-500 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Merch</Link>
+                <Link href="/lapor" className="font-bold text-sm uppercase tracking-widest py-3 border-b border-gray-100 active:text-gray-500 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Lapor Masalah</Link>
 
-                <Link href="/lapor" className="font-bold text-sm uppercase tracking-widest py-2.5 active:text-gray-500" onClick={() => setIsMobileMenuOpen(false)}>Lapor Masalah</Link>
-                
-                <div className="border-l-2 border-gray-200 pl-4 space-y-2">
-                     <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest pt-1">Kategori Hukum</p>
-                     {categories.map((cat) => (
-                        <Link key={cat} href={`/artikel?q=${cat}`} className="block text-sm py-1.5 active:text-gray-500" onClick={() => setIsMobileMenuOpen(false)}>
-                            {cat}
-                        </Link>
-                     ))}
+                {/* Kategori Hukum */}
+                <div className="py-3 border-b border-gray-100">
+                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-2">Kategori Hukum</p>
+                  <div className="flex flex-wrap gap-2">
+                    {categories.map((cat) => (
+                      <Link key={cat} href={`/artikel?q=${cat}`} className="text-[11px] font-bold uppercase tracking-wider bg-gray-100 px-3 py-2 active:bg-black active:text-white transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
+                        {cat}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
 
                 {/* Mobile Auth */}
-                <div className="border-t border-gray-200 pt-4 mt-4">
+                <div className="pt-4 mt-1">
                   {status === 'authenticated' ? (
                     <div className="space-y-3">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-black text-white rounded-full text-xs font-bold flex items-center justify-center">
+                        <div className="w-9 h-9 bg-black text-white rounded-full text-xs font-bold flex items-center justify-center">
                           {session.user?.name?.charAt(0).toUpperCase() || 'U'}
                         </div>
                         <div>
@@ -199,15 +193,15 @@ export default function Navbar() {
                         </div>
                       </div>
                       {session.user?.role === 'ADMIN' && (
-                        <Link href="/dashboard/admin" className="block text-sm py-2 font-bold" onClick={() => setIsMobileMenuOpen(false)}>📊 Dashboard Admin</Link>
+                        <Link href="/dashboard/admin" className="block text-sm py-2.5 font-bold active:text-gray-500" onClick={() => setIsMobileMenuOpen(false)}>📊 Dashboard Admin</Link>
                       )}
                       {session.user?.role === 'WRITER' && (
-                        <Link href="/dashboard/writer/posts" className="block text-sm py-2 font-bold" onClick={() => setIsMobileMenuOpen(false)}>✍️ Dashboard Penulis</Link>
+                        <Link href="/dashboard/writer/posts" className="block text-sm py-2.5 font-bold active:text-gray-500" onClick={() => setIsMobileMenuOpen(false)}>✍️ Dashboard Penulis</Link>
                       )}
-                      <button onClick={() => { signOut(); setIsMobileMenuOpen(false); }} className="block w-full text-left text-sm py-2 font-bold text-red-500">🚪 Logout</button>
+                      <button onClick={() => { signOut(); setIsMobileMenuOpen(false); }} className="block w-full text-left text-sm py-2.5 font-bold text-red-500 active:text-red-300">🚪 Logout</button>
                     </div>
                   ) : (
-                    <Link href="/login" className="block w-full text-center bg-black text-white py-3 text-xs font-bold uppercase tracking-widest" onClick={() => setIsMobileMenuOpen(false)}>Login</Link>
+                    <Link href="/login" className="block w-full text-center bg-black text-white py-3.5 text-xs font-bold uppercase tracking-widest active:bg-gray-800" onClick={() => setIsMobileMenuOpen(false)}>Login</Link>
                   )}
                 </div>
              </div>
