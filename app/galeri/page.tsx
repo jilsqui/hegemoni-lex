@@ -29,8 +29,8 @@ export default async function GaleriPage() {
   return (
     <div className="min-h-screen bg-white">
         {/* --- HEADER --- */}
-        <div className="pt-32 pb-12 px-6 text-center bg-gray-50">
-            <h1 className="font-serif font-bold text-4xl mb-2">Galeri Kegiatan</h1>
+        <div className="pt-20 md:pt-32 pb-8 md:pb-12 px-4 md:px-6 text-center bg-gray-50">
+            <h1 className="font-serif font-bold text-3xl md:text-4xl mb-2">Galeri Kegiatan</h1>
             <p className="text-xs uppercase tracking-widest text-gray-500">Dokumentasi Aktivitas Hegemoni Lex</p>
             
             {/* TOMBOL UPLOAD (Hanya untuk ADMIN & WRITER) */}
@@ -41,7 +41,7 @@ export default async function GaleriPage() {
             )}
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 py-12">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12">
             
             {/* --- SECTION ADMIN: MENUNGGU PERSETUJUAN --- */}
             {userRole === 'ADMIN' && pendingGalleries.length > 0 && (
@@ -49,7 +49,7 @@ export default async function GaleriPage() {
                     <h2 className="font-bold text-lg mb-4 flex items-center gap-2">
                         ⚠️ Menunggu Persetujuan ({pendingGalleries.length})
                     </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
                         {pendingGalleries.map((item) => (
                             <AdminApprovalCard key={item.id} item={item} />
                         ))}
@@ -64,7 +64,7 @@ export default async function GaleriPage() {
                     <p className="mt-4 text-gray-400 font-bold uppercase text-xs">Belum ada dokumentasi</p>
                 </div>
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-1">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-0.5 md:gap-1">
                     {approvedGalleries.map((item) => (
                         <div key={item.id} className="group relative aspect-square bg-gray-100 cursor-pointer overflow-hidden">
                             <Image 

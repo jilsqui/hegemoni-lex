@@ -61,14 +61,14 @@ export default async function ArticleDetailPage({ params }: PageProps) {
       {/* View Counter (invisible, tracks views) */}
       <ViewCounter articleId={article.id} />
       
-      <article className="max-w-3xl mx-auto px-4 md:px-6 pt-20 md:pt-28">
+      <article className="max-w-3xl mx-auto px-4 md:px-6 pt-16 md:pt-28">
         
         {/* KATEGORI & TANGGAL */}
-        <div className="flex flex-wrap items-center gap-3 md:gap-4 mb-6 border-b border-gray-100 pb-6">
-            <span className="bg-black text-white px-2 py-1 text-[9px] font-bold uppercase tracking-widest">
+        <div className="flex flex-wrap items-center gap-3 md:gap-4 mb-5 md:mb-6 border-b border-gray-100 pb-5 md:pb-6">
+            <span className="bg-black text-white px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest">
                 {article.category}
             </span>
-            <span className="text-[10px] md:text-xs text-gray-500 font-mono uppercase">
+            <span className="text-[11px] md:text-xs text-gray-500 font-mono uppercase">
                 {article.publishedAt 
                   ? new Date(article.publishedAt).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) 
                   : ''}
@@ -76,17 +76,17 @@ export default async function ArticleDetailPage({ params }: PageProps) {
         </div>
 
         {/* JUDUL UTAMA */}
-        <h1 className="text-2xl md:text-5xl font-serif font-bold leading-tight mb-6 md:mb-8 text-gray-900">
+        <h1 className="text-[22px] md:text-5xl font-serif font-bold leading-tight mb-5 md:mb-8 text-gray-900">
             {article.title}
         </h1>
 
         {/* INFO PENULIS */}
-        <div className="flex items-center gap-3 mb-8 md:mb-10">
-            <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center font-serif font-bold text-gray-500">
+        <div className="flex items-center gap-3 mb-6 md:mb-10">
+            <div className="w-9 h-9 md:w-10 md:h-10 bg-gray-200 rounded-full flex items-center justify-center font-serif font-bold text-gray-500 text-sm md:text-base">
                 {(article.author.name || article.author.email).charAt(0).toUpperCase()}
             </div>
             <div className="flex flex-col">
-                <span className="text-xs font-bold uppercase tracking-wide">
+                <span className="text-[11px] md:text-xs font-bold uppercase tracking-wide">
                     {article.author.name || "Tim Redaksi"}
                 </span>
                 <span className="text-[10px] text-gray-500 uppercase tracking-widest">
@@ -97,7 +97,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
 
         {/* GAMBAR UTAMA */}
         {article.image && (
-            <div className="w-full aspect-video bg-gray-100 mb-8 md:mb-12 relative overflow-hidden border border-black">
+            <div className="w-full aspect-video bg-gray-100 mb-6 md:mb-12 relative overflow-hidden border border-black">
                 <img 
                     src={article.image} 
                     alt={article.title} 
@@ -107,7 +107,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
         )}
 
         {/* ISI KONTEN */}
-        <div className="prose prose-base md:prose-lg prose-gray max-w-none font-serif leading-relaxed text-gray-800 whitespace-pre-wrap first-letter:text-4xl md:first-letter:text-5xl first-letter:font-bold first-letter:mr-2 md:first-letter:mr-3 first-letter:float-left">
+        <div className="prose prose-sm md:prose-lg prose-gray max-w-none font-serif leading-relaxed text-gray-800 whitespace-pre-wrap first-letter:text-3xl md:first-letter:text-5xl first-letter:font-bold first-letter:mr-1.5 md:first-letter:mr-3 first-letter:float-left">
             {article.content}
         </div>
 
@@ -119,7 +119,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
 </div>
 
       {/* FOOTER KECIL */}
-      <div className="max-w-3xl mx-auto px-4 md:px-6 mt-12 md:mt-20 pt-10 border-t border-black">
+      <div className="max-w-3xl mx-auto px-4 md:px-6 mt-10 md:mt-20 pt-8 md:pt-10 border-t border-black">
         <p className="text-center text-[10px] uppercase tracking-widest text-gray-400">
             © 2026 Hegemoni Lex Portal
         </p>

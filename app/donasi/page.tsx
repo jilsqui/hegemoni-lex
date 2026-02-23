@@ -12,11 +12,11 @@ export default function DonasiPage() {
           <span className="inline-block py-1 px-3 border border-gray-800 text-[10px] font-bold uppercase tracking-[0.2em] mb-8 text-gray-600">
             Dukung Kami
           </span>
-          <h1 className="text-3xl md:text-6xl font-serif font-bold mb-6 leading-tight">
+          <h1 className="text-2xl md:text-6xl font-serif font-bold mb-4 md:mb-6 leading-tight">
             Donasi untuk <br />
             <span className="italic border-b-2 border-black pb-1">Literasi Hukum</span>
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed font-light">
+          <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed font-light">
             Setiap kontribusi Anda membantu kami menyediakan edukasi hukum yang berkualitas, independen, 
             dan dapat diakses oleh seluruh masyarakat Indonesia.
           </p>

@@ -91,8 +91,8 @@ export default function ArticleListClient({ initialArticles }: { initialArticles
   return (
     <div>
        {/* --- 1. FILTER BAR (SCROLLABLE) --- */}
-       <div className="mb-10 overflow-x-auto pb-4 scrollbar-hide">
-          <div className="flex gap-3 min-w-max">
+       <div className="mb-8 md:mb-10 overflow-x-auto pb-4 scrollbar-hide">
+          <div className="flex gap-2 md:gap-3 min-w-max">
             {categories.map((cat) => {
                 const isActive = selectedCategory === cat;
                 return (
@@ -100,10 +100,10 @@ export default function ArticleListClient({ initialArticles }: { initialArticles
                         key={cat}
                         onClick={() => handleCategoryChange(cat)}
                         className={`
-                            px-5 py-2 text-[10px] font-bold uppercase tracking-widest rounded-full transition-all duration-300 border
+                            px-4 py-2.5 text-[10px] font-bold uppercase tracking-widest rounded-full transition-all duration-300 border active:scale-95
                             ${isActive 
                                 ? "bg-black text-white border-black scale-105 shadow-lg" 
-                                : "bg-white text-gray-500 border-gray-200 hover:border-black hover:text-black"
+                                : "bg-white text-gray-500 border-gray-200 hover:border-black hover:text-black active:bg-gray-100"
                             }
                         `}
                     >
@@ -115,7 +115,7 @@ export default function ArticleListClient({ initialArticles }: { initialArticles
        </div>
 
        {/* --- 2. SEARCH BAR --- */}
-       <div className="mb-8 relative max-w-md">
+       <div className="mb-6 md:mb-8 relative max-w-md">
             <input 
                 type="text" 
                 placeholder="Cari judul artikel..." 
@@ -125,7 +125,7 @@ export default function ArticleListClient({ initialArticles }: { initialArticles
                     // Jika user mengetik, otomatis reset kategori ke SEMUA agar pencarian global
                     if(selectedCategory !== "SEMUA") setSelectedCategory("SEMUA");
                 }}
-                className="w-full border-b-2 border-gray-200 py-3 pr-10 outline-none focus:border-black font-serif transition-colors bg-transparent text-black placeholder:text-gray-400"
+                className="w-full border-b-2 border-gray-200 py-3 pr-10 outline-none focus:border-black font-serif transition-colors bg-transparent text-black placeholder:text-gray-400 text-base"
             />
             <span className="absolute right-0 top-3 text-gray-400">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -135,7 +135,7 @@ export default function ArticleListClient({ initialArticles }: { initialArticles
        {/* --- 3. GRID ARTIKEL (DENGAN ANIMASI) --- */}
        <div 
           className={`
-            grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 transition-all duration-500 ease-in-out
+            grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 md:gap-x-8 gap-y-10 md:gap-y-12 transition-all duration-500 ease-in-out
             ${isAnimating ? "opacity-0 translate-y-4 scale-95" : "opacity-100 translate-y-0 scale-100"}
           `}
        >
@@ -155,11 +155,11 @@ export default function ArticleListClient({ initialArticles }: { initialArticles
              </div>
           ) : (
             filteredArticles.map((article) => (
-                <Link href={`/artikel/${article.slug}`} key={article.id} className="group cursor-pointer block h-full">
+                <Link href={`/artikel/${article.slug}`} key={article.id} className="group cursor-pointer block h-full active:opacity-80">
                     <article className="flex flex-col h-full">
                     
                     {/* GAMBAR */}
-                    <div className="aspect-[4/3] w-full bg-gray-100 border border-gray-200 mb-5 relative overflow-hidden hover-elegant">
+                    <div className="aspect-[4/3] w-full bg-gray-100 border border-gray-200 mb-4 md:mb-5 relative overflow-hidden hover-elegant">
                         {article.image ? (
                             <img 
                                 src={article.image} 
@@ -176,21 +176,21 @@ export default function ArticleListClient({ initialArticles }: { initialArticles
 
                     <div className="flex-1">
                         <div className="flex items-center gap-3 mb-3">
-                        <span className="bg-black text-white text-[9px] font-bold px-2 py-1 uppercase tracking-widest">
+                        <span className="bg-black text-white text-[10px] font-bold px-2.5 py-1 uppercase tracking-widest">
                             {article.category.replace(/_/g, " ")}
                         </span>
-                        <span className="text-xs text-gray-500 font-mono">
+                        <span className="text-[11px] md:text-xs text-gray-500 font-mono">
                             {article.publishedAt 
                                 ? new Date(article.publishedAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
                                 : ''}
                         </span>
                         </div>
 
-                        <h3 className="text-2xl font-serif font-medium mb-3 leading-snug group-hover:underline decoration-1 underline-offset-4 line-clamp-2">
+                        <h3 className="text-xl md:text-2xl font-serif font-medium mb-2 md:mb-3 leading-snug group-hover:underline decoration-1 underline-offset-4 line-clamp-2">
                         {article.title}
                         </h3>
                         
-                        <p className="text-gray-600 text-sm leading-relaxed line-clamp-3 font-light mb-4">
+                        <p className="text-gray-600 text-[13px] md:text-sm leading-relaxed line-clamp-3 font-light mb-3 md:mb-4">
                         {article.excerpt || article.content.substring(0, 150) + "..."}
                         </p>
 

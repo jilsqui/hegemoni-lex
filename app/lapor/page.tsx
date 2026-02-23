@@ -45,12 +45,12 @@ export default function ReportPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-32 pb-20 px-6">
-      <div className="max-w-2xl mx-auto bg-white border border-gray-200 p-8 shadow-sm">
+    <div className="min-h-screen bg-gray-50 pt-20 md:pt-32 pb-16 md:pb-20 px-4 md:px-6">
+      <div className="max-w-2xl mx-auto bg-white border border-gray-200 p-5 md:p-8 shadow-sm">
         
         {/* Header Form */}
-        <div className="mb-8 border-b border-gray-100 pb-6">
-            <h1 className="text-3xl font-serif font-bold mb-2">Pusat Bantuan & Laporan</h1>
+        <div className="mb-6 md:mb-8 border-b border-gray-100 pb-5 md:pb-6">
+            <h1 className="text-2xl md:text-3xl font-serif font-bold mb-2">Pusat Bantuan & Laporan</h1>
             <p className="text-gray-500 text-sm">
                 Temukan bug atau punya saran untuk pengembangan website Hegemoni Lex? Sampaikan di sini.
             </p>
@@ -58,7 +58,7 @@ export default function ReportPage() {
 
         {/* DETEKSI IDENTITAS OTOMATIS */}
         {session ? (
-            <div className="bg-blue-50 border border-blue-100 p-4 mb-8 flex items-center gap-4 rounded-sm">
+            <div className="bg-blue-50 border border-blue-100 p-3 md:p-4 mb-6 md:mb-8 flex items-center gap-3 md:gap-4 rounded-sm">
                 <div className="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold">
                     {session.user?.name?.charAt(0).toUpperCase()}
                 </div>
@@ -69,7 +69,7 @@ export default function ReportPage() {
                 </div>
             </div>
         ) : (
-            <div className="bg-yellow-50 border border-yellow-100 p-4 mb-8 rounded-sm text-sm text-yellow-800">
+            <div className="bg-yellow-50 border border-yellow-100 p-3 md:p-4 mb-6 md:mb-8 rounded-sm text-sm text-yellow-800">
                 ⚠️ Anda melapor sebagai <b>Pengunjung Tamu (Anonim)</b>. <Link href="/login" className="underline font-bold">Login di sini</Link> agar kami bisa membalas laporan Anda.
             </div>
         )}

@@ -61,28 +61,28 @@ export default function LoginPage() {
     <div className="min-h-screen flex bg-white font-sans selection:bg-black selection:text-white text-black">
       
       {/* 1. BAGIAN KIRI - FORMULIR LOGIN */}
-      <div className="w-full lg:w-1/2 flex flex-col justify-center p-8 md:p-16 lg:p-24 lg:border-r-2 border-black relative">
+      <div className="w-full lg:w-1/2 flex flex-col justify-center p-6 md:p-16 lg:p-24 lg:border-r-2 border-black relative">
         
-        <div className="absolute top-8 left-8 md:top-12 md:left-12 lg:top-12 lg:left-24">
-            <Link href="/" className="group flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:opacity-70 transition-opacity text-black">
+        <div className="absolute top-20 left-6 md:top-12 md:left-12 lg:top-12 lg:left-24 z-10">
+            <Link href="/" className="group flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:opacity-70 transition-opacity text-black active:opacity-50">
                 <span className="group-hover:-translate-x-1 transition-transform">←</span> Kembali ke Beranda
             </Link>
         </div>
 
         <div className="max-w-md w-full mx-auto">
             {/* Logo Mobile */}
-            <div className="lg:hidden mb-12 flex justify-center">
+            <div className="lg:hidden mb-8 md:mb-12 flex justify-center">
                 <div className="relative w-16 h-16">
                     <Image src="/logohl.png" alt="Logo" fill className="object-contain" />
                 </div>
             </div>
 
-            <div className="mb-12">
-                <span className="inline-block py-1 px-3 border border-black text-[10px] font-bold uppercase tracking-[0.2em] mb-6 text-black">
+            <div className="mb-8 md:mb-12">
+                <span className="inline-block py-1 px-3 border border-black text-[10px] font-bold uppercase tracking-[0.2em] mb-4 md:mb-6 text-black">
                   Akun Pengguna
                 </span>
-                <h1 className="text-4xl md:text-5xl font-serif font-medium mb-4 text-black">Selamat Datang</h1>
-                <p className="text-black font-normal leading-relaxed">Masuk untuk mengelola konten atau mengakses fitur premium.</p>
+                <h1 className="text-3xl md:text-5xl font-serif font-medium mb-3 md:mb-4 text-black">Selamat Datang</h1>
+                <p className="text-black font-normal leading-relaxed text-sm md:text-base">Masuk untuk mengelola konten atau mengakses fitur premium.</p>
             </div>
 
             {error && (
@@ -100,7 +100,7 @@ export default function LoginPage() {
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="nama@email.com"
                         required
-                        className="w-full bg-white border-2 border-black p-4 outline-none focus:bg-gray-50 transition-colors font-medium placeholder:text-gray-400 text-black"
+                        className="w-full bg-white border-2 border-black p-3.5 md:p-4 outline-none focus:bg-gray-50 transition-colors font-medium placeholder:text-gray-400 text-black"
                     />
                 </div>
 
@@ -115,7 +115,7 @@ export default function LoginPage() {
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="••••••••"
                         required
-                        className="w-full bg-white border-2 border-black p-4 outline-none focus:bg-gray-50 transition-colors font-medium placeholder:text-gray-400 text-black"
+                        className="w-full bg-white border-2 border-black p-3.5 md:p-4 outline-none focus:bg-gray-50 transition-colors font-medium placeholder:text-gray-400 text-black"
                     />
                 </div>
 

@@ -40,7 +40,7 @@ export default function TimKamiPage() {
             
             {/* CONTOH CARD MEMBER 1 (NOEL - Sesuai Screenshot) */}
             <div className="group text-center">
-                <div className="relative w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden border border-gray-100 grayscale group-hover:grayscale-0 transition-all duration-500">
+                <div className="relative w-36 h-36 md:w-48 md:h-48 mx-auto mb-4 md:mb-6 rounded-full overflow-hidden border border-gray-100 grayscale group-hover:grayscale-0 transition-all duration-500">
                     {/* Placeholder Image - Ganti dengan foto asli */}
                     <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400 font-serif italic">
                         <img src="/noel.jpg" alt="Noel Kumaat" className="w-full h-full object-cover" />
@@ -55,7 +55,7 @@ export default function TimKamiPage() {
 
             {/* CONTOH CARD MEMBER 2 */}
             <div className="group text-center">
-                <div className="relative w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden border border-gray-100 grayscale group-hover:grayscale-0 transition-all duration-500">
+                <div className="relative w-36 h-36 md:w-48 md:h-48 mx-auto mb-4 md:mb-6 rounded-full overflow-hidden border border-gray-100 grayscale group-hover:grayscale-0 transition-all duration-500">
                      <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400 font-serif italic">
                         Photo
                     </div>
@@ -66,7 +66,7 @@ export default function TimKamiPage() {
 
              {/* CONTOH CARD MEMBER 3 */}
              <div className="group text-center">
-                <div className="relative w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden border border-gray-100 grayscale group-hover:grayscale-0 transition-all duration-500">
+                <div className="relative w-36 h-36 md:w-48 md:h-48 mx-auto mb-4 md:mb-6 rounded-full overflow-hidden border border-gray-100 grayscale group-hover:grayscale-0 transition-all duration-500">
                      <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400 font-serif italic">
                         Photo
                     </div>

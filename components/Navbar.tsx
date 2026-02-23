@@ -28,11 +28,11 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 md:h-24 flex justify-between items-center">
         
         {/* ================= 1. LOGO ================= */}
-        <Link href="/" className="flex items-center gap-2 md:gap-3 group z-50">
-             <div className="relative w-10 h-10 md:w-16 md:h-16"> 
+        <Link href="/" className="flex items-center gap-1.5 md:gap-3 group z-50 flex-shrink-0">
+             <div className="relative w-8 h-8 md:w-16 md:h-16"> 
                 <Image src="/logohl.png" alt="Logo" fill className="object-contain" /> 
              </div>
-             <span className="font-serif font-bold text-xl md:text-4xl tracking-tight leading-none group-hover:opacity-70 transition-opacity text-black">Hegemoni <span className="text-xl md:text-4xl font-black">LEX</span></span>
+             <span className="font-serif font-bold text-lg md:text-4xl tracking-tight leading-none group-hover:opacity-70 transition-opacity text-black">Hegemoni <span className="text-lg md:text-4xl font-black">LEX</span></span>
         </Link>
 
         {/* ================= 2. DESKTOP MENU ================= */}
@@ -148,38 +148,38 @@ export default function Navbar() {
       
       {/* Mobile Menu (Responsive) */}
       {isMobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 top-16 bg-white z-40 overflow-y-auto pb-20 border-t border-gray-100">
-             <div className="flex flex-col p-5 space-y-4">
+        <div className="md:hidden fixed inset-0 top-16 bg-white z-40 overflow-y-auto pb-24 border-t border-gray-100 overscroll-contain">
+             <div className="flex flex-col p-4 space-y-3">
                 {/* Mobile Search */}
-                <form action="/artikel" className="flex items-center gap-2 border-b border-gray-200 pb-4 mb-2">
-                  <input type="text" name="q" placeholder="Cari artikel..." className="text-sm w-full outline-none placeholder:text-gray-400 text-black bg-transparent" />
-                  <button type="submit" className="text-gray-500 hover:text-black transition-colors flex-shrink-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <form action="/artikel" className="flex items-center gap-2 border-b border-gray-200 pb-3 mb-1">
+                  <input type="text" name="q" placeholder="Cari artikel..." className="text-sm w-full outline-none placeholder:text-gray-400 text-black bg-transparent py-1" />
+                  <button type="submit" className="text-gray-500 hover:text-black transition-colors flex-shrink-0 p-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                   </button>
                 </form>
 
-                <Link href="/" className="font-bold text-sm uppercase tracking-widest py-2" onClick={() => setIsMobileMenuOpen(false)}>Beranda</Link>
+                <Link href="/" className="font-bold text-sm uppercase tracking-widest py-2.5 active:text-gray-500" onClick={() => setIsMobileMenuOpen(false)}>Beranda</Link>
                 
-                <div className="border-l-2 border-gray-200 pl-4 space-y-3">
-                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Profil</p>
-                    <Link href="/tentang-kami/tim-kami" className="block text-sm py-1" onClick={() => setIsMobileMenuOpen(false)}>Tim Kami</Link>
-                    <Link href="/hubungi-kami" className="block text-sm py-1" onClick={() => setIsMobileMenuOpen(false)}>Hubungi Kami</Link>
-                    <Link href="/artikel" className="block text-sm py-1" onClick={() => setIsMobileMenuOpen(false)}>Publikasi</Link>
-                    <Link href="/galeri" className="block text-sm py-1" onClick={() => setIsMobileMenuOpen(false)}>Galeri</Link>
+                <div className="border-l-2 border-gray-200 pl-4 space-y-2">
+                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest pt-1">Profil</p>
+                    <Link href="/tentang-kami/tim-kami" className="block text-sm py-1.5 active:text-gray-500" onClick={() => setIsMobileMenuOpen(false)}>Tim Kami</Link>
+                    <Link href="/hubungi-kami" className="block text-sm py-1.5 active:text-gray-500" onClick={() => setIsMobileMenuOpen(false)}>Hubungi Kami</Link>
+                    <Link href="/artikel" className="block text-sm py-1.5 active:text-gray-500" onClick={() => setIsMobileMenuOpen(false)}>Publikasi</Link>
+                    <Link href="/galeri" className="block text-sm py-1.5 active:text-gray-500" onClick={() => setIsMobileMenuOpen(false)}>Galeri</Link>
                 </div>
                 
-                <div className="border-l-2 border-gray-200 pl-4 space-y-3">
-                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Dukung Kami</p>
-                    <Link href="/donasi" className="block text-sm py-1" onClick={() => setIsMobileMenuOpen(false)}>Donasi</Link>
-                    <Link href="/merch" className="block text-sm py-1" onClick={() => setIsMobileMenuOpen(false)}>Merch</Link>
+                <div className="border-l-2 border-gray-200 pl-4 space-y-2">
+                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest pt-1">Dukung Kami</p>
+                    <Link href="/donasi" className="block text-sm py-1.5 active:text-gray-500" onClick={() => setIsMobileMenuOpen(false)}>Donasi</Link>
+                    <Link href="/merch" className="block text-sm py-1.5 active:text-gray-500" onClick={() => setIsMobileMenuOpen(false)}>Merch</Link>
                 </div>
 
-                <Link href="/lapor" className="font-bold text-sm uppercase tracking-widest py-2" onClick={() => setIsMobileMenuOpen(false)}>Lapor Masalah</Link>
+                <Link href="/lapor" className="font-bold text-sm uppercase tracking-widest py-2.5 active:text-gray-500" onClick={() => setIsMobileMenuOpen(false)}>Lapor Masalah</Link>
                 
-                <div className="border-l-2 border-gray-200 pl-4 space-y-3">
-                     <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Kategori Hukum</p>
+                <div className="border-l-2 border-gray-200 pl-4 space-y-2">
+                     <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest pt-1">Kategori Hukum</p>
                      {categories.map((cat) => (
-                        <Link key={cat} href={`/artikel?q=${cat}`} className="block text-sm py-1" onClick={() => setIsMobileMenuOpen(false)}>
+                        <Link key={cat} href={`/artikel?q=${cat}`} className="block text-sm py-1.5 active:text-gray-500" onClick={() => setIsMobileMenuOpen(false)}>
                             {cat}
                         </Link>
                      ))}
