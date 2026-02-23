@@ -41,18 +41,59 @@ body {
   }
 }
 
-/* Hover shake animation for article images */
-@keyframes shake {
-  0%, 100% { transform: rotate(0deg); }
-  10% { transform: rotate(-2deg) scale(1.02); }
-  20% { transform: rotate(2deg) scale(1.02); }
-  30% { transform: rotate(-1deg) scale(1.01); }
-  40% { transform: rotate(1deg) scale(1.01); }
-  50% { transform: rotate(0deg) scale(1.02); }
+/* Elegant hover effect for article images */
+.hover-elegant {
+  overflow: hidden;
+  position: relative;
 }
 
-.hover-shake:hover img {
-  animation: shake 0.6s ease-in-out;
+.hover-elegant img {
+  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.7s ease;
+}
+
+.hover-elegant:hover img {
+  transform: scale(1.04);
+  filter: brightness(1.05) contrast(1.02);
+}
+
+.hover-elegant::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.08), transparent 50%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hover-elegant:hover::after {
+  opacity: 1;
+}
+
+/* Elegant card lift effect */
+.card-lift {
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s ease;
+}
+
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px -12px rgba(0, 0, 0, 0.15);
+}
+
+/* Subtle underline grow effect for titles */
+.title-underline {
+  position: relative;
+  display: inline;
+  background-image: linear-gradient(to right, #000, #000);
+  background-size: 0% 1px;
+  background-position: left bottom;
+  background-repeat: no-repeat;
+  transition: background-size 0.4s ease;
+}
+
+.title-underline:hover {
+  background-size: 100% 1px;
 }
 
 /* Mobile scroll pop-out animation */

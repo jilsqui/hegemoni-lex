@@ -159,7 +159,7 @@ export default function ArticleListClient({ initialArticles }: { initialArticles
                     <article className="flex flex-col h-full">
                     
                     {/* GAMBAR */}
-                    <div className="aspect-[4/3] w-full bg-gray-100 border border-black mb-5 relative overflow-hidden hover-shake">
+                    <div className="aspect-[4/3] w-full bg-gray-100 border border-gray-200 mb-5 relative overflow-hidden hover-elegant">
                         {article.image ? (
                             <img 
                                 src={article.image} 

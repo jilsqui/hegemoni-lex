@@ -32,7 +32,7 @@ export default function Navbar() {
              <div className="relative w-10 h-10 md:w-16 md:h-16"> 
                 <Image src="/logohl.png" alt="Logo" fill className="object-contain" /> 
              </div>
-             <span className="font-serif font-bold text-xl md:text-4xl tracking-tight leading-none group-hover:opacity-70 transition-opacity text-black">HEGEMONI<span className="text-xl md:text-4xl">LEX</span></span>
+             <span className="font-serif font-bold text-xl md:text-4xl tracking-tight leading-none group-hover:opacity-70 transition-opacity text-black">Hegemoni <span className="text-xl md:text-4xl font-black">LEX</span></span>
         </Link>
 
         {/* ================= 2. DESKTOP MENU ================= */}
