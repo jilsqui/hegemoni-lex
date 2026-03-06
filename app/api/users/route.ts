@@ -5,6 +5,57 @@ import * as bcrypt from "bcryptjs";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
+// PATCH: Edit email dan/atau password user (Hanya ADMIN)
+export async function PATCH(req: Request) {
+  try {
+    const session = await getServerSession(authOptions);
+
+    if (!session || session.user.role !== 'ADMIN') {
+      return NextResponse.json({ error: "Akses ditolak. Hanya Admin yang boleh mengedit user." }, { status: 403 });
+    }
+
+    const { searchParams } = new URL(req.url);
+    const userId = searchParams.get('id');
+
+    if (!userId) {
+      return NextResponse.json({ error: "ID user diperlukan" }, { status: 400 });
+    }
+
+    const body = await req.json();
+    const { email, password } = body;
+
+    if (!email) {
+      return NextResponse.json({ error: "Email tidak boleh kosong!" }, { status: 400 });
+    }
+
+    // Cek apakah email sudah dipakai user LAIN
+    const existingUser = await prisma.user.findUnique({ where: { email } });
+    if (existingUser && existingUser.id !== userId) {
+      return NextResponse.json({ error: "Email sudah digunakan oleh user lain!" }, { status: 400 });
+    }
+
+    // Siapkan data yang akan diupdate
+    const updateData: { email: string; password?: string } = { email };
+
+    // Hanya update password jika diisi
+    if (password && password.trim() !== '') {
+      updateData.password = await bcrypt.hash(password, 10);
+    }
+
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data: updateData,
+    });
+
+    const { password: _, ...userWithoutPassword } = updatedUser;
+    return NextResponse.json({ user: userWithoutPassword, message: "User berhasil diperbarui" });
+
+  } catch (error) {
+    console.error("Error updating user:", error);
+    return NextResponse.json({ error: "Gagal memperbarui user" }, { status: 500 });
+  }
+}
+
 export async function POST(req: Request) {
   try {
     // 1. KEAMANAN: Cek apakah yang request ini benar-benar ADMIN?

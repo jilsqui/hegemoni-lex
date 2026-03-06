@@ -4,6 +4,7 @@ import Link from 'next/link';
 import ArticleRating from '@/components/ArticleRating';
 import ViewCounter from '@/components/ViewCounter';
 import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
 
 // Agar halaman ini selalu mengambil data terbaru (tidak cache mati)
 export const revalidate = 0;
@@ -13,6 +14,38 @@ interface PageProps {
   params: Promise<{
     slug: string;
   }>;
+}
+
+// Dynamic SEO Meta Tags per Artikel
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const article = await prisma.article.findUnique({
+    where: { slug, status: 'PUBLISHED' },
+    select: { title: true, excerpt: true, content: true, image: true, category: true },
+  });
+
+  if (!article) return { title: 'Artikel Tidak Ditemukan' };
+
+  const description = article.excerpt || article.content.substring(0, 160);
+
+  return {
+    title: article.title,
+    description,
+    openGraph: {
+      title: article.title,
+      description,
+      type: 'article',
+      url: `https://hegemonilex.com/artikel/${slug}`,
+      images: article.image ? [{ url: article.image, alt: article.title }] : [],
+      siteName: 'HEGEMONI LEX',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: article.title,
+      description,
+      images: article.image ? [article.image] : [],
+    },
+  };
 }
 
 export default async function ArticleDetailPage({ params }: PageProps) {
