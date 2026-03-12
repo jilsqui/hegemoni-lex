@@ -72,7 +72,7 @@ export default async function Home() {
       {/* ================================================================ */}
       {/* 1. HERO SECTION - EDITORIAL MAGAZINE STYLE                       */}
       {/* ================================================================ */}
-      <header className="pt-16 md:pt-28">
+      <header className="pt-16 md:pt-24">
         
         {/* FEATURED ARTICLE - Full Width Hero */}
         {featuredArticle ? (
@@ -168,16 +168,19 @@ export default async function Home() {
             </div>
           </div>
         ) : (
-          <div className="max-w-7xl mx-auto px-6 py-24 text-center">
-            <span className="inline-block py-1.5 px-4 border border-gray-300 text-[10px] font-bold uppercase tracking-[0.2em] mb-8 text-gray-500">
+          <div className="max-w-7xl mx-auto px-6 py-20 md:py-32 text-center">
+            <span className="inline-block py-1.5 px-4 border border-gray-300 text-[10px] font-bold uppercase tracking-[0.2em] mb-6 md:mb-8 text-gray-500">
               Portal Hukum Independen
             </span>
-            <h1 className="text-4xl md:text-6xl font-serif font-light leading-snug mb-8 text-gray-900 tracking-wide">
+            <h1 className="text-3xl md:text-6xl font-serif font-light leading-snug mb-6 md:mb-8 text-gray-900 tracking-wide">
               Menulis. Berefleksi. <span className="font-normal italic border-b border-black pb-1">Berdampak.</span>
             </h1>
-            <p className="text-lg text-gray-500 max-w-md mx-auto leading-relaxed font-light">
+            <p className="text-base md:text-lg text-gray-500 max-w-md mx-auto leading-relaxed font-light mb-8 md:mb-10">
               Ruang menulis dan dialog mengenai hukum dan kebijakan publik.
             </p>
+            <Link href="/artikel" className="inline-block bg-gray-900 text-white text-[10px] font-bold uppercase tracking-[0.15em] px-8 py-3.5 hover:bg-black transition-colors duration-300">
+              Jelajahi Artikel →
+            </Link>
           </div>
         )}
 
@@ -272,8 +275,10 @@ export default async function Home() {
             <div className="w-full h-px bg-gray-200 mb-6 md:mb-10" />
 
             {latestArticles.length === 0 ? (
-              <div className="text-center py-24 bg-gray-50/50 border border-dashed border-gray-200">
-                <p className="text-gray-400 font-serif italic text-xl">Belum ada artikel publikasi lainnya.</p>
+              <div className="text-center py-16 md:py-24 bg-gray-50/50 border border-dashed border-gray-200">
+                <div className="text-4xl mb-4">📝</div>
+                <p className="text-gray-400 font-serif italic text-lg md:text-xl mb-2">Belum ada artikel publikasi.</p>
+                <p className="text-gray-300 text-xs">Artikel akan tampil di sini setelah dipublikasikan.</p>
               </div>
             ) : (
               <div className="space-y-0">
@@ -432,7 +437,7 @@ export default async function Home() {
                   ))}
                 </div>
               ) : (
-                <p className="text-gray-300 text-sm italic font-serif">Belum ada data.</p>
+                <p className="text-gray-300 text-sm italic font-serif">Belum ada data artikel populer.</p>
               )}
 
               {/* KATEGORI SECTION */}

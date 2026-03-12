@@ -31,25 +31,25 @@ export default function Navbar() {
 
   return (
     <nav className="fixed w-full z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 transition-all duration-300">
-      <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 md:h-24 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 md:h-20 flex justify-between items-center">
         
         {/* ================= 1. LOGO ================= */}
-        <Link href="/" className="flex items-center gap-1.5 md:gap-3 group z-50 flex-shrink-0">
-             <div className="relative w-8 h-8 md:w-16 md:h-16"> 
+        <Link href="/" className="flex items-center gap-1.5 md:gap-2.5 group z-50 flex-shrink-0 mr-4 md:mr-8">
+             <div className="relative w-8 h-8 md:w-11 md:h-11"> 
                 <Image src="/logohl.png" alt="Logo" fill className="object-contain" /> 
              </div>
-             <span className="font-serif font-bold text-lg md:text-4xl tracking-tight leading-none group-hover:opacity-70 transition-opacity text-black">HEGEMONI <span className="text-lg md:text-4xl font-black">LEX</span></span>
+             <span className="font-serif font-bold text-lg md:text-2xl tracking-tight leading-none group-hover:opacity-70 transition-opacity text-black">HEGEMONI <span className="text-lg md:text-2xl font-black">LEX</span></span>
         </Link>
 
         {/* ================= 2. DESKTOP MENU ================= */}
-        <div className="hidden md:flex items-center gap-8 h-full">
-            <Link href="/" className={`text-[10px] font-bold uppercase tracking-widest hover:text-gray-500 transition-colors ${pathname === '/' ? 'text-black' : 'text-gray-400'}`}>
+        <div className="hidden md:flex items-center gap-4 lg:gap-6 h-full">
+            <Link href="/" className={`text-[10px] font-bold uppercase tracking-wider hover:text-gray-500 transition-colors ${pathname === '/' ? 'text-black' : 'text-gray-400'}`}>
                 Beranda
             </Link>
             
             {/* --- DROPDOWN PROFIL (FIXED) --- */}
             <div className="relative group h-full flex items-center">
-                <button className={`text-[10px] font-bold uppercase tracking-widest hover:text-gray-500 transition-colors flex items-center gap-1 group-hover:text-black ${pathname?.includes('/tentang-kami') || pathname?.includes('/profil') || pathname === '/galeri' ? 'text-black' : 'text-gray-400'}`}>
+                <button className={`text-[10px] font-bold uppercase tracking-wider hover:text-gray-500 transition-colors flex items-center gap-1 group-hover:text-black ${pathname?.includes('/tentang-kami') || pathname?.includes('/profil') || pathname === '/galeri' ? 'text-black' : 'text-gray-400'}`}>
                     PROFIL ▾
                 </button>
                 
@@ -69,7 +69,7 @@ export default function Navbar() {
 
             {/* --- DROPDOWN HUKUM --- */}
             <div className="relative group h-full flex items-center">
-                <button className={`text-[10px] font-bold uppercase tracking-widest hover:text-gray-500 transition-colors flex items-center gap-1 group-hover:text-black ${pathname?.includes('/artikel') ? 'text-black' : 'text-gray-400'}`}>
+                <button className={`text-[10px] font-bold uppercase tracking-wider hover:text-gray-500 transition-colors flex items-center gap-1 group-hover:text-black ${pathname?.includes('/artikel') ? 'text-black' : 'text-gray-400'}`}>
                     Hukum ▾
                 </button>
                 <div className="absolute top-full left-1/2 -translate-x-1/2 w-56 bg-white border border-gray-200 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.2)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0">
@@ -86,7 +86,7 @@ export default function Navbar() {
 
             {/* --- DROPDOWN KEBIJAKAN PUBLIK --- */}
             <div className="relative group h-full flex items-center">
-                <button className={`text-[10px] font-bold uppercase tracking-widest hover:text-gray-500 transition-colors flex items-center gap-1 group-hover:text-black ${pathname?.includes('/artikel') ? 'text-black' : 'text-gray-400'}`}>
+                <button className={`text-[10px] font-bold uppercase tracking-wider hover:text-gray-500 transition-colors flex items-center gap-1 group-hover:text-black ${pathname?.includes('/artikel') ? 'text-black' : 'text-gray-400'}`}>
                     Kebijakan Publik ▾
                 </button>
                 <div className="absolute top-full left-1/2 -translate-x-1/2 w-56 bg-white border border-gray-200 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.2)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0">
@@ -103,7 +103,7 @@ export default function Navbar() {
 
             {/* --- DROPDOWN DUKUNG KAMI --- */}
             <div className="relative group h-full flex items-center">
-                <button className={`text-[10px] font-bold uppercase tracking-widest hover:text-gray-500 transition-colors flex items-center gap-1 group-hover:text-black ${pathname?.includes('/donasi') || pathname?.includes('/merch') ? 'text-black' : 'text-gray-400'}`}>
+                <button className={`text-[10px] font-bold uppercase tracking-wider hover:text-gray-500 transition-colors flex items-center gap-1 group-hover:text-black ${pathname?.includes('/donasi') || pathname?.includes('/merch') ? 'text-black' : 'text-gray-400'}`}>
                     Dukung Kami ▾
                 </button>
                 <div className="absolute top-full left-1/2 -translate-x-1/2 w-56 bg-white border border-gray-200 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.2)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 p-4">
@@ -116,15 +116,15 @@ export default function Navbar() {
             </div>
 
             {/* Link Lapor Masalah */}
-            <Link href="/lapor" className={`text-[10px] font-bold uppercase tracking-widest hover:text-gray-500 transition-colors ${pathname === '/lapor' ? 'text-black border-b-2 border-black pb-1' : 'text-gray-400'}`}>
-                Lapor Masalah
+            <Link href="/lapor" className={`text-[10px] font-bold uppercase tracking-wider hover:text-gray-500 transition-colors whitespace-nowrap ${pathname === '/lapor' ? 'text-black border-b-2 border-black pb-1' : 'text-gray-400'}`}>
+                Lapor
             </Link>
         </div>
 
         {/* ================= 3. USER & SEARCH ================= */}
         <div className="hidden md:flex items-center gap-6">
              <form action="/artikel" className="flex items-center gap-2">
-                <input type="text" name="q" placeholder="CARI..." className="text-[10px] uppercase font-bold tracking-widest w-28 outline-none placeholder:text-gray-300 text-black bg-transparent border-b border-gray-300 pb-1 focus:border-black transition-colors" />
+                <input type="text" name="q" placeholder="CARI..." className="text-[10px] uppercase font-bold tracking-wider w-24 outline-none placeholder:text-gray-300 text-black bg-transparent border-b border-gray-300 pb-1 focus:border-black transition-colors" />
                 <button type="submit" className="text-gray-500 hover:text-black transition-colors">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                 </button>
@@ -139,7 +139,7 @@ export default function Navbar() {
                         </div>
                     </button>
                     {/* Dropdown User Profile */}
-                    <div className="absolute top-[70px] right-0 w-56 bg-white border border-gray-200 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 z-50">
+                    <div className="absolute top-full right-0 w-56 bg-white border border-gray-200 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 z-50">
                           <div className="p-4 border-b border-gray-100 bg-gray-50">
                              <p className="text-xs font-bold truncate text-black">{session.user?.name}</p>
                              <p className="text-[9px] font-mono text-gray-500 truncate">{session.user?.email}</p>

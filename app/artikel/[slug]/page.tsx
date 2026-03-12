@@ -94,7 +94,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
       {/* View Counter (invisible, tracks views) */}
       <ViewCounter articleId={article.id} />
       
-      <article className="max-w-3xl mx-auto px-4 md:px-6 pt-16 md:pt-28">
+      <article className="max-w-3xl mx-auto px-4 md:px-6 pt-16 md:pt-24">
         
         {/* KATEGORI & TANGGAL */}
         <div className="flex flex-wrap items-center gap-3 md:gap-4 mb-5 md:mb-6 border-b border-gray-100 pb-5 md:pb-6">

@@ -7,7 +7,7 @@ export default function DonasiPage() {
     <div className="min-h-screen bg-white text-black font-sans selection:bg-black selection:text-white">
       
       {/* HERO */}
-      <div className="pt-24 md:pt-36 pb-12 md:pb-20 px-4 md:px-6 border-b border-gray-200">
+      <div className="pt-24 md:pt-32 pb-12 md:pb-20 px-4 md:px-6 border-b border-gray-200">
         <div className="max-w-4xl mx-auto text-center">
           <span className="inline-block py-1 px-3 border border-gray-800 text-[10px] font-bold uppercase tracking-[0.2em] mb-8 text-gray-600">
             Dukung Kami
