@@ -16,8 +16,10 @@ export default function CreateArticlePage() {
   const [coverImage, setCoverImage] = useState("");
 
   const categories = [
-    "LEGISLASI", "OPINI", "HUKUM_PERDATA", "BISNIS", 
-    "KETENAGAKERJAAN", "PROSEDUR", "HUKUM_PIDANA", "HAK_ASASI_MANUSIA"
+    "LEGISLASI", "OPINI", "HUKUM PERDATA", "BISNIS", 
+    "KETENAGAKERJAAN", "HUKUM PIDANA", "HAK ASASI MANUSIA",
+    "REGULASI", "EKONOMI PUBLIK", "SOSIAL & BUDAYA",
+    "LINGKUNGAN", "PENDIDIKAN", "KESEHATAN"
   ];
 
   // FUNGSI SUBMIT (Menangani Draft vs Pending)

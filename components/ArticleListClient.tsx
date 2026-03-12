@@ -29,7 +29,9 @@ export default function ArticleListClient({ initialArticles }: { initialArticles
   const categories = [
     "SEMUA",
     "LEGISLASI", "OPINI", "HUKUM PERDATA", "HUKUM PIDANA", 
-    "BISNIS", "KETENAGAKERJAAN", "HAK ASASI MANUSIA"
+    "BISNIS", "KETENAGAKERJAAN", "HAK ASASI MANUSIA",
+    "REGULASI", "EKONOMI PUBLIK", "SOSIAL & BUDAYA",
+    "LINGKUNGAN", "PENDIDIKAN", "KESEHATAN"
   ];
 
   // STATE

@@ -28,16 +28,23 @@ export const authOptions: NextAuthOptions = {
         }
 
         // Cek Password
-        // (Logika Tambahan: Cek apakah password di DB sudah di-hash atau belum)
-        // Ini penting agar Admin lama (manual DB) dan User baru (Register) bisa login dua-duanya.
         let isPasswordValid = false;
 
         if (user.password.startsWith('$2b$') || user.password.startsWith('$2a$')) {
-            // Jika password terenkripsi (User dari Register / Admin baru)
+            // Password terenkripsi (User dari Register / Admin baru)
             isPasswordValid = await bcrypt.compare(credentials.password, user.password);
         } else {
-            // Jika password masih polos (Admin lama dari input manual DB)
+            // Password masih polos (Admin lama dari input manual DB)
             isPasswordValid = credentials.password === user.password;
+            
+            // Auto-migrate: hash plaintext password for future security
+            if (isPasswordValid) {
+              const hashedPassword = await bcrypt.hash(credentials.password, 10);
+              await prisma.user.update({
+                where: { id: user.id },
+                data: { password: hashedPassword },
+              });
+            }
         }
 
         if (!isPasswordValid) {

@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import UploadGalleryButton from "./components/UploadGalleryButton"; // Kita buat sebentar lagi
 import AdminApprovalCard from "./components/AdminApprovalCard";   // Kita buat sebentar lagi
+import { deleteGallery } from "@/app/action/gallery";
 
 export const dynamic = 'force-dynamic';
 
@@ -84,8 +85,7 @@ export default async function GaleriPage() {
                                 <div className="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100">
                                     <form action={async () => {
                                         'use server';
-                                        await prisma.gallery.delete({ where: { id: item.id }});
-                                        // Note: Idealnya import deleteGallery dari actions, tapi ini shortcut untuk demo
+                                        await deleteGallery(item.id);
                                     }}>
                                         <button className="bg-red-600 text-white text-[10px] px-2 py-1 rounded">Hapus</button>
                                     </form>

@@ -12,8 +12,8 @@ export default withAuth(
       return NextResponse.redirect(new URL("/", req.url));
     }
 
-    // 2. Cegah Pembaca masuk ke Writer Dashboard
-    if (pathname.startsWith("/dashboard/writer") && role !== "WRITER") {
+    // 2. Cegah Pembaca masuk ke Writer Dashboard (Admin diizinkan)
+    if (pathname.startsWith("/dashboard/writer") && role !== "WRITER" && role !== "ADMIN") {
       return NextResponse.redirect(new URL("/", req.url));
     }
   },

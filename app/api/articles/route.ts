@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { ArticleStatus } from '@prisma/client';
 
 export async function POST(request: Request) {
   try {
@@ -49,7 +50,7 @@ export async function POST(request: Request) {
         image,
         
         // PERBAIKAN DISINI:
-        status: articleStatus as any, // PENDING atau DRAFT
+        status: articleStatus as ArticleStatus,
         
         // publishedAt JANGAN DIISI DULU (Nanti diisi Admin saat approve)
         publishedAt: null, 

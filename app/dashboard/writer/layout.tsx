@@ -33,7 +33,7 @@ export default function WriterLayout({ children }: { children: React.ReactNode }
     <div className="min-h-screen bg-gray-50 flex font-sans text-black">
       
       {/* SIDEBAR PENULIS */}
-      <aside className="w-64 bg-white border-r border-gray-200 p-6 pt-32 hidden md:block flex-shrink-0 fixed h-full z-10 top-0 left-0 overflow-y-auto">
+      <aside className="w-64 bg-white border-r border-gray-200 p-6 pt-8 hidden md:block flex-shrink-0 fixed h-full z-10 top-0 left-0 overflow-y-auto">
         
         <div className="mb-8 px-2">
             <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Menu Penulis</span>
@@ -82,7 +82,7 @@ export default function WriterLayout({ children }: { children: React.ReactNode }
       </aside>
 
       {/* KONTEN UTAMA */}
-      <main className="flex-1 md:ml-64 min-h-screen p-8 pt-32 transition-all duration-300">
+      <main className="flex-1 md:ml-64 min-h-screen p-8 pt-8 transition-all duration-300">
         {children} 
       </main>
       

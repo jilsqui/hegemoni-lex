@@ -33,20 +33,14 @@ export default function LoginPage() {
       } else {
         const session = await getSession();
         
-        // --- PERBAIKAN LOGIKA DISINI ---
-        
-        // Jika ADMIN, arahkan ke HOME ('/') juga, jangan ke dashboard
+        // Redirect berdasarkan role
         if (session?.user?.role === 'ADMIN') {
-           router.push('/'); 
-        } 
-        // Penulis & Pembaca juga ke Home
-        else if (session?.user?.role === 'WRITER') {
-           router.push('/'); 
+           router.push('/dashboard/admin'); 
+        } else if (session?.user?.role === 'WRITER') {
+           router.push('/dashboard/writer'); 
         } else {
            router.push('/'); 
         }
-        
-        // Kesimpulan: Semua role diarahkan ke Home setelah login
         
         router.refresh();
       }
@@ -107,7 +101,7 @@ export default function LoginPage() {
                 <div>
                     <div className="flex justify-between items-center mb-2 ml-1">
                         <label className="block text-xs font-bold uppercase tracking-widest text-black">Password</label>
-                        <a href="#" className="text-[10px] font-bold uppercase tracking-widest text-black hover:underline decoration-1 underline-offset-4">Lupa Password?</a>
+                        <a href="mailto:hegemonilex@gmail.com" className="text-[10px] font-bold uppercase tracking-widest text-black hover:underline decoration-1 underline-offset-4">Lupa Password?</a>
                     </div>
                     <input 
                         type="password" 
