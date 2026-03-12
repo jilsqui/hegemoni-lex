@@ -16,7 +16,8 @@ export const metadata: Metadata = {
     "hukum Indonesia", "edukasi hukum", "artikel hukum", "opini hukum",
     "hukum pidana", "hukum perdata", "legislasi", "HAM",
     "Hegemoni Lex", "portal hukum", "literasi hukum",
-    "analisis hukum", "ketenagakerjaan", "bisnis hukum"
+    "analisis hukum", "ketenagakerjaan", "bisnis hukum",
+    "kebijakan publik"
   ],
   authors: [{ name: "Hegemoni Lex", url: "https://hegemonilex.com" }],
   creator: "Hegemoni Lex",
@@ -31,13 +32,13 @@ export const metadata: Metadata = {
     url: "https://hegemonilex.com",
     siteName: "HEGEMONI LEX",
     title: "HEGEMONI LEX — Portal Edukasi Hukum Indonesia",
-    description: "Portal edukasi hukum Indonesia yang menyajikan artikel, opini, dan analisis hukum berkualitas. Kritis, Berdaya, Berkeadilan.",
+    description: "Portal edukasi hukum Indonesia. Ruang menulis dan dialog mengenai hukum dan kebijakan publik. Menulis, Berefleksi, Berdampak.",
     images: [{ url: "/logohl.png", width: 512, height: 512, alt: "HEGEMONI LEX Logo" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "HEGEMONI LEX — Portal Edukasi Hukum Indonesia",
-    description: "Portal edukasi hukum Indonesia. Kritis, Berdaya, Berkeadilan.",
+    description: "Portal edukasi hukum Indonesia. Menulis, Berefleksi, Berdampak.",
     images: ["/logohl.png"],
   },
   robots: {

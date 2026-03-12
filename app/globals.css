@@ -151,3 +151,18 @@ body {
 .scroll-pop-out.is-visible:nth-child(4) { animation-delay: 0.15s; }
 .scroll-pop-out.is-visible:nth-child(5) { animation-delay: 0.25s; }
 .scroll-pop-out.is-visible:nth-child(6) { animation-delay: 0.2s; }
+
+/* Better mobile touch feedback */
+@media (max-width: 768px) {
+  a:active, button:active {
+    opacity: 0.85;
+    transition: opacity 0.1s ease;
+  }
+  
+  /* Safenet-style section dividers on mobile */
+  .mobile-section-divider {
+    border-top: 3px solid #111;
+    padding-top: 1rem;
+    margin-top: 1.5rem;
+  }
+}

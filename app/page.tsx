@@ -173,10 +173,10 @@ export default async function Home() {
               Portal Hukum Independen
             </span>
             <h1 className="text-4xl md:text-6xl font-serif font-light leading-snug mb-8 text-gray-900 tracking-wide">
-              Kritis. Berdaya. <span className="font-normal italic border-b border-black pb-1">Berkeadilan.</span>
+              Menulis. Berefleksi. <span className="font-normal italic border-b border-black pb-1">Berdampak.</span>
             </h1>
             <p className="text-lg text-gray-500 max-w-md mx-auto leading-relaxed font-light">
-              Wadah kolektif untuk diskursus hukum, legislasi, dan hak asasi manusia di Indonesia.
+              Ruang menulis dan dialog mengenai hukum dan kebijakan publik.
             </p>
           </div>
         )}
@@ -187,7 +187,7 @@ export default async function Home() {
         {/* CATEGORY TICKER / MARQUEE BAR */}
         <div className="bg-gray-950 text-white py-2.5 md:py-3 overflow-hidden">
           <div className="animate-marquee whitespace-nowrap">
-            {["LEGISLASI", "OPINI", "HUKUM PERDATA", "HUKUM PIDANA", "BISNIS", "KETENAGAKERJAAN", "HAK ASASI MANUSIA", "LEGISLASI", "OPINI", "HUKUM PERDATA", "HUKUM PIDANA", "BISNIS", "KETENAGAKERJAAN", "HAK ASASI MANUSIA"].map((cat, i) => (
+            {["LEGISLASI", "OPINI", "HUKUM PERDATA", "HUKUM PIDANA", "BISNIS", "KETENAGAKERJAAN", "HAK ASASI MANUSIA", "KEBIJAKAN PUBLIK", "LEGISLASI", "OPINI", "HUKUM PERDATA", "HUKUM PIDANA", "BISNIS", "KETENAGAKERJAAN", "HAK ASASI MANUSIA", "KEBIJAKAN PUBLIK"].map((cat, i) => (
               <Link 
                 key={i} 
                 href={`/artikel?q=${cat}`} 
@@ -201,10 +201,47 @@ export default async function Home() {
       </header>
 
       {/* ================================================================ */}
-      {/* 2. INTERACTIVE QUOTE BAR                                         */}
+      {/* 2. MISI KAMI - INSPIRED BY SAFENET PROGRAM SECTION              */}
       {/* ================================================================ */}
-      <div className="bg-gray-50 text-black py-8 md:py-12 px-4 md:px-6 border-b border-gray-200 flex justify-center items-center group cursor-help transition-all duration-500 hover:bg-white">
-        <div className="relative h-12 md:h-16 w-full max-w-4xl flex items-center justify-center overflow-hidden">
+      <section className="bg-white py-8 md:py-16 px-4 md:px-6 border-b border-gray-200">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-6 md:mb-10">
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-2 block">Misi Kami</span>
+            <h2 className="text-xl md:text-3xl font-serif font-medium text-gray-900">Menulis, Berefleksi, Berdampak</h2>
+            <p className="text-sm md:text-base text-gray-500 mt-2 md:mt-3 max-w-xl mx-auto font-light leading-relaxed">
+              Ruang menulis dan dialog mengenai hukum dan kebijakan publik.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
+            <div className="bg-gray-50 p-4 md:p-6 text-center group hover:bg-gray-900 transition-all duration-300 rounded-sm">
+              <div className="text-2xl md:text-3xl mb-2 md:mb-3">⚖️</div>
+              <h3 className="text-[11px] md:text-xs font-bold uppercase tracking-wider text-gray-900 group-hover:text-white transition-colors">Hukum</h3>
+              <p className="text-[10px] text-gray-400 mt-1 group-hover:text-gray-400 transition-colors font-light hidden md:block">Analisis & opini hukum terkini</p>
+            </div>
+            <div className="bg-gray-50 p-4 md:p-6 text-center group hover:bg-gray-900 transition-all duration-300 rounded-sm">
+              <div className="text-2xl md:text-3xl mb-2 md:mb-3">📋</div>
+              <h3 className="text-[11px] md:text-xs font-bold uppercase tracking-wider text-gray-900 group-hover:text-white transition-colors">Kebijakan Publik</h3>
+              <p className="text-[10px] text-gray-400 mt-1 group-hover:text-gray-400 transition-colors font-light hidden md:block">Kajian kebijakan & regulasi</p>
+            </div>
+            <div className="bg-gray-50 p-4 md:p-6 text-center group hover:bg-gray-900 transition-all duration-300 rounded-sm">
+              <div className="text-2xl md:text-3xl mb-2 md:mb-3">✍️</div>
+              <h3 className="text-[11px] md:text-xs font-bold uppercase tracking-wider text-gray-900 group-hover:text-white transition-colors">Opini</h3>
+              <p className="text-[10px] text-gray-400 mt-1 group-hover:text-gray-400 transition-colors font-light hidden md:block">Perspektif & sudut pandang</p>
+            </div>
+            <div className="bg-gray-50 p-4 md:p-6 text-center group hover:bg-gray-900 transition-all duration-300 rounded-sm">
+              <div className="text-2xl md:text-3xl mb-2 md:mb-3">🎓</div>
+              <h3 className="text-[11px] md:text-xs font-bold uppercase tracking-wider text-gray-900 group-hover:text-white transition-colors">Edukasi</h3>
+              <p className="text-[10px] text-gray-400 mt-1 group-hover:text-gray-400 transition-colors font-light hidden md:block">Literasi hukum untuk semua</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================ */}
+      {/* 3. INTERACTIVE QUOTE BAR                                         */}
+      {/* ================================================================ */}
+      <div className="bg-gray-50 text-black py-6 md:py-12 px-4 md:px-6 border-b border-gray-200 flex justify-center items-center group cursor-help transition-all duration-500 hover:bg-white">
+        <div className="relative h-10 md:h-16 w-full max-w-4xl flex items-center justify-center overflow-hidden">
             <h2 className="absolute transition-all duration-500 ease-in-out opacity-100 group-hover:opacity-0 group-hover:blur-md group-hover:-translate-y-4 font-serif text-lg md:text-2xl italic tracking-wide z-10 text-center text-gray-600">
               &ldquo;Fiat Justitia Ruat Caelum&rdquo;
             </h2>
@@ -215,7 +252,7 @@ export default async function Home() {
       </div>
       
       {/* ================================================================ */}
-      {/* 3. MAIN CONTENT: 2-COLUMN LAYOUT (Articles + Sidebar)            */}
+      {/* 4. MAIN CONTENT: 2-COLUMN LAYOUT (Articles + Sidebar)            */}
       {/* ================================================================ */}
       <main className="max-w-7xl mx-auto px-3 md:px-6 py-8 md:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
@@ -404,7 +441,7 @@ export default async function Home() {
                   <h3 className="text-[11px] md:text-[10px] font-bold uppercase tracking-[0.2em] text-gray-900">Kategori</h3>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  {["LEGISLASI", "OPINI", "HUKUM PERDATA", "HUKUM PIDANA", "BISNIS", "KETENAGAKERJAAN", "HAK ASASI MANUSIA"].map((cat) => (
+                  {["LEGISLASI", "OPINI", "HUKUM PERDATA", "HUKUM PIDANA", "BISNIS", "KETENAGAKERJAAN", "HAK ASASI MANUSIA", "KEBIJAKAN PUBLIK"].map((cat) => (
                     <Link 
                       key={cat}
                       href={`/artikel?q=${cat}`}
@@ -425,7 +462,7 @@ export default async function Home() {
                   <span className="font-serif font-bold text-sm text-gray-900">Hegemoni LEX</span>
                 </div>
                 <p className="text-xs text-gray-500 leading-[1.8] mb-4 font-light">
-                  Ruang perjumpaan gagasan hukum untuk membongkar sekat-sekat ketidaktahuan. Kritis, Berdaya, Berkeadilan.
+                  Ruang menulis dan dialog mengenai hukum dan kebijakan publik. Menulis, Berefleksi, Berdampak.
                 </p>
                 <Link href="/tentang-kami/tim-kami" className="inline-flex items-center gap-1 text-[9px] font-bold uppercase tracking-[0.15em] text-gray-900 hover:text-gray-600 border-b border-gray-900 hover:border-gray-600 pb-0.5 transition-colors duration-300">
                   TENTANG KAMI →
@@ -437,22 +474,28 @@ export default async function Home() {
       </main>
 
       {/* ================================================================ */}
-      {/* 4. FOOTER                                                        */}
+      {/* 5. FOOTER                                                        */}
       {/* ================================================================ */}
       <footer className="bg-gray-950 text-white py-12 md:py-24 px-4 md:px-6 font-sans">
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between gap-16">
+        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between gap-10 md:gap-16">
           
           {/* KOLOM 1: Brand & Deskripsi */}
           <div className="max-w-sm">
-            <div className="flex items-center gap-3 mb-6">
+            <div className="flex items-center gap-3 mb-4 md:mb-6">
               <div className="relative w-10 h-10">
                 <Image src="/logohl.png" alt="Hegemoni LEX Logo" fill className="object-contain invert"/>
               </div>
               <div className="text-xl font-serif font-bold tracking-tight">HEGEMONI LEX</div>
             </div>
-            <p className="text-gray-500 text-sm leading-[1.8] font-light mb-6">
-              Ruang perjumpaan gagasan hukum untuk membongkar sekat-sekat ketidaktahuan. Kritis, Berdaya, Berkeadilan.
+            <p className="text-gray-500 text-sm leading-[1.8] font-light mb-4 md:mb-6">
+              Ruang menulis dan dialog mengenai hukum dan kebijakan publik. Menulis, Berefleksi, Berdampak.
             </p>
+            {/* Contact info - safenet style */}
+            <div className="space-y-2 mb-4 md:mb-6">
+              <a href="mailto:hegemonilex@gmail.com" className="flex items-center gap-2 text-xs text-gray-400 hover:text-white transition-colors">
+                <span>✉</span> hegemonilex@gmail.com
+              </a>
+            </div>
             <div className="flex gap-3">
                 <a href="#" className="text-[10px] font-bold border border-gray-800 px-3 py-1.5 hover:bg-white hover:text-black hover:border-white transition-all duration-300">INSTAGRAM</a>
                 <a href="#" className="text-[10px] font-bold border border-gray-800 px-3 py-1.5 hover:bg-white hover:text-black hover:border-white transition-all duration-300">LINKEDIN</a>

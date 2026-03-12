@@ -18,6 +18,12 @@ export default function Navbar() {
     "BISNIS", "KETENAGAKERJAAN", "HAK ASASI MANUSIA"
   ];
 
+  // Kategori Kebijakan Publik
+  const kebijakanCategories = [
+    "REGULASI", "EKONOMI PUBLIK", "SOSIAL & BUDAYA",
+    "LINGKUNGAN", "PENDIDIKAN", "KESEHATAN"
+  ];
+
   // Sembunyikan Navbar di Dashboard Admin
   if (pathname && pathname.startsWith('/dashboard/admin')) {
     return null; 
@@ -70,6 +76,23 @@ export default function Navbar() {
                     <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-t border-l border-gray-200 rotate-45"></div>
                     <div className="relative bg-white py-2 z-10">
                         {categories.map((cat) => (
+                            <Link key={cat} href={`/artikel?q=${cat}`} className="block px-6 py-3 text-[10px] font-bold text-gray-500 hover:bg-gray-50 hover:text-black hover:tracking-widest transition-all border-b border-gray-50 last:border-0">
+                                {cat}
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            {/* --- DROPDOWN KEBIJAKAN PUBLIK --- */}
+            <div className="relative group h-full flex items-center">
+                <button className={`text-[10px] font-bold uppercase tracking-widest hover:text-gray-500 transition-colors flex items-center gap-1 group-hover:text-black ${pathname?.includes('/artikel') ? 'text-black' : 'text-gray-400'}`}>
+                    Kebijakan Publik ▾
+                </button>
+                <div className="absolute top-full left-1/2 -translate-x-1/2 w-56 bg-white border border-gray-200 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.2)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0">
+                    <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-t border-l border-gray-200 rotate-45"></div>
+                    <div className="relative bg-white py-2 z-10">
+                        {kebijakanCategories.map((cat) => (
                             <Link key={cat} href={`/artikel?q=${cat}`} className="block px-6 py-3 text-[10px] font-bold text-gray-500 hover:bg-gray-50 hover:text-black hover:tracking-widest transition-all border-b border-gray-50 last:border-0">
                                 {cat}
                             </Link>
@@ -172,6 +195,18 @@ export default function Navbar() {
                   <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-2">Kategori Hukum</p>
                   <div className="flex flex-wrap gap-2">
                     {categories.map((cat) => (
+                      <Link key={cat} href={`/artikel?q=${cat}`} className="text-[11px] font-bold uppercase tracking-wider bg-gray-100 px-3 py-2 active:bg-black active:text-white transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
+                        {cat}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Kategori Kebijakan Publik */}
+                <div className="py-3 border-b border-gray-100">
+                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-2">Kebijakan Publik</p>
+                  <div className="flex flex-wrap gap-2">
+                    {kebijakanCategories.map((cat) => (
                       <Link key={cat} href={`/artikel?q=${cat}`} className="text-[11px] font-bold uppercase tracking-wider bg-gray-100 px-3 py-2 active:bg-black active:text-white transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
                         {cat}
                       </Link>
