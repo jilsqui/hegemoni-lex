@@ -4,6 +4,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { getPreviewText } from "@/lib/utils";
 
 // Tipe data artikel
 type Article = {
@@ -30,8 +31,10 @@ export default function ArticleListClient({ initialArticles }: { initialArticles
     "SEMUA",
     "LEGISLASI", "OPINI", "HUKUM PERDATA", "HUKUM PIDANA", 
     "BISNIS", "KETENAGAKERJAAN", "HAK ASASI MANUSIA",
+    "RESENSI BUKU", "RESENSI FILM",
     "REGULASI", "EKONOMI PUBLIK", "SOSIAL & BUDAYA",
-    "LINGKUNGAN", "PENDIDIKAN", "KESEHATAN"
+    "LINGKUNGAN", "PENDIDIKAN", "KESEHATAN",
+    "TEKNOLOGI DAN DIGITAL", "POLITIK DAN PEMERINTAHAN"
   ];
 
   // STATE
@@ -158,10 +161,10 @@ export default function ArticleListClient({ initialArticles }: { initialArticles
           ) : (
             filteredArticles.map((article) => (
                 <Link href={`/artikel/${article.slug}`} key={article.id} className="group cursor-pointer block h-full active:opacity-80">
-                    <article className="flex flex-col h-full">
+                    <article className="flex flex-col h-full rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-[0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_28px_-8px_rgba(0,0,0,0.18)] hover:-translate-y-1 transition-all duration-300">
                     
                     {/* GAMBAR */}
-                    <div className="aspect-[4/3] w-full bg-gray-100 border border-gray-200 mb-4 md:mb-5 relative overflow-hidden hover-elegant">
+                    <div className="aspect-[4/3] w-full bg-gray-100 relative overflow-hidden">
                         {article.image ? (
                             <img 
                                 src={article.image} 
@@ -173,30 +176,30 @@ export default function ArticleListClient({ initialArticles }: { initialArticles
                             Hegemoni Lex
                             </div>
                         )}
-                        <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
+                        <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-8 transition-opacity duration-500"></div>
                     </div>
 
-                    <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-3">
-                        <span className="bg-black text-white text-[10px] font-bold px-2.5 py-1 uppercase tracking-widest">
+                    <div className="flex-1 flex flex-col p-4 md:p-5">
+                        <div className="flex items-center gap-2 mb-3 flex-wrap">
+                        <span className="rounded-md bg-gray-900 text-white text-[10px] font-bold px-2.5 py-1 uppercase tracking-widest">
                             {article.category.replace(/_/g, " ")}
                         </span>
-                        <span className="text-[11px] md:text-xs text-gray-500 font-mono">
+                        <span className="text-[11px] md:text-xs text-gray-400 font-mono">
                             {article.publishedAt 
                                 ? new Date(article.publishedAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
                                 : ''}
                         </span>
                         </div>
 
-                        <h3 className="text-xl md:text-2xl font-serif font-medium mb-2 md:mb-3 leading-snug group-hover:underline decoration-1 underline-offset-4 line-clamp-2">
+                        <h3 className="text-lg md:text-xl font-serif font-semibold mb-2 leading-snug group-hover:text-emerald-700 transition-colors line-clamp-2">
                         {article.title}
                         </h3>
                         
-                        <p className="text-gray-600 text-[13px] md:text-sm leading-relaxed line-clamp-3 font-light mb-3 md:mb-4">
-                        {article.excerpt || article.content.substring(0, 150) + "..."}
+                        <p className="text-gray-500 text-[13px] leading-relaxed line-clamp-3 font-light mb-4 flex-1">
+                        {getPreviewText(article.excerpt, article.content, 150)}
                         </p>
 
-                        <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-widest text-gray-400">
+                        <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-widest text-gray-400 pt-3 border-t border-gray-100">
                             <span>Oleh {article.author.name || "Redaksi"}</span>
                             {typeof article.viewCount === 'number' && (
                               <span className="flex items-center gap-1 text-gray-400">
