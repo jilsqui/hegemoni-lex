@@ -1,7 +1,7 @@
 // components/Navbar.tsx
 'use client';
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
@@ -11,17 +11,21 @@ export default function Navbar() {
   const { data: session, status } = useSession();
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
 
   // Kategori Hukum (Tetap)
   const categories = [
     "LEGISLASI", "OPINI", "HUKUM PERDATA", "HUKUM PIDANA", 
-    "BISNIS", "KETENAGAKERJAAN", "HAK ASASI MANUSIA"
+    "BISNIS", "KETENAGAKERJAAN", "HAK ASASI MANUSIA",
+    "RESENSI BUKU", "RESENSI FILM"
   ];
 
   // Kategori Kebijakan Publik
   const kebijakanCategories = [
     "REGULASI", "EKONOMI PUBLIK", "SOSIAL & BUDAYA",
-    "LINGKUNGAN", "PENDIDIKAN", "KESEHATAN"
+    "LINGKUNGAN", "PENDIDIKAN", "KESEHATAN",
+    "TEKNOLOGI DAN DIGITAL", "POLITIK DAN PEMERINTAHAN"
   ];
 
   // Sembunyikan Navbar di Dashboard Admin
@@ -29,16 +33,42 @@ export default function Navbar() {
     return null; 
   }
 
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+
+    const onScroll = () => {
+      const current = window.scrollY;
+      setIsScrolled(current > 20);
+
+      if (isMobileMenuOpen) {
+        setIsHidden(false);
+      } else if (current > lastScrollY && current > 120) {
+        setIsHidden(true);
+      } else {
+        setIsHidden(false);
+      }
+
+      lastScrollY = current;
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [isMobileMenuOpen]);
+
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
+
   return (
-    <nav className="fixed w-full z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 transition-all duration-300">
-      <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 md:h-20 flex justify-between items-center">
+    <nav className={`fixed top-0 left-0 right-0 w-full z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 transition-all duration-300 ${isScrolled ? 'shadow-md' : 'shadow-sm'} ${isHidden ? '-translate-y-full' : 'translate-y-0'}`}>
+      <div className={`max-w-7xl mx-auto px-4 md:px-6 flex justify-between items-center transition-all duration-300 ${isScrolled ? 'h-14 md:h-16' : 'h-16 md:h-20'}`}>
         
         {/* ================= 1. LOGO ================= */}
-        <Link href="/" className="flex items-center gap-1.5 md:gap-2.5 group z-50 flex-shrink-0 mr-4 md:mr-8">
+           <Link href="/" className="flex items-center gap-1.5 md:gap-2.5 group z-50 min-w-0 mr-2 md:mr-8">
              <div className="relative w-8 h-8 md:w-11 md:h-11"> 
                 <Image src="/logohl.png" alt="Logo" fill className="object-contain" /> 
              </div>
-             <span className="font-serif font-bold text-lg md:text-2xl tracking-tight leading-none group-hover:opacity-70 transition-opacity text-black">HEGEMONI <span className="text-lg md:text-2xl font-black">LEX</span></span>
+             <span className="font-serif font-bold text-base md:text-2xl tracking-tight leading-none group-hover:opacity-70 transition-opacity text-black truncate">HEGEMONI <span className="text-base md:text-2xl font-black">LEX</span></span>
         </Link>
 
         {/* ================= 2. DESKTOP MENU ================= */}
@@ -49,7 +79,7 @@ export default function Navbar() {
             
             {/* --- DROPDOWN PROFIL (FIXED) --- */}
             <div className="relative group h-full flex items-center">
-                <button className={`text-[10px] font-bold uppercase tracking-wider hover:text-gray-500 transition-colors flex items-center gap-1 group-hover:text-black ${pathname?.includes('/tentang-kami') || pathname?.includes('/profil') || pathname === '/galeri' ? 'text-black' : 'text-gray-400'}`}>
+                <button className={`text-[10px] font-bold uppercase tracking-wider hover:text-gray-500 transition-colors flex items-center gap-1 group-hover:text-black ${pathname?.includes('/tentang-kami') || pathname?.includes('/profil') || pathname === '/galeri' || pathname === '/mitra' ? 'text-black' : 'text-gray-400'}`}>
                     PROFIL ▾
                 </button>
                 
@@ -63,6 +93,8 @@ export default function Navbar() {
                          <Link href="/artikel" className="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black hover:pl-2 transition-all">Publikasi</Link>
                          
                          <Link href="/galeri" className="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black hover:pl-2 transition-all">Galeri</Link>
+
+                         <Link href="/mitra" className="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black hover:pl-2 transition-all">Mitra</Link>
                     </div>
                 </div>
             </div>
@@ -162,8 +194,8 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Button */}
-        <div className="md:hidden flex items-center">
-            <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-2 text-black">
+        <div className="md:hidden flex items-center flex-shrink-0">
+          <button aria-label="Toggle menu" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-2 text-black border border-transparent active:border-gray-300">
                 {isMobileMenuOpen ? <span className="text-2xl">✕</span> : <span className="text-2xl">☰</span>}
             </button>
         </div>
@@ -171,72 +203,60 @@ export default function Navbar() {
       
       {/* Mobile Menu (Responsive) */}
       {isMobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 top-16 bg-white z-40 overflow-y-auto pb-24 border-t border-gray-100 overscroll-contain">
-             <div className="flex flex-col p-4">
+         <div className="md:hidden absolute left-0 right-0 top-full h-[calc(100dvh-4rem)] bg-white z-40 border-t border-gray-100 overflow-y-auto overscroll-contain">
+           <div className="min-h-full flex flex-col p-4 gap-4">
                 {/* Mobile Search */}
-                <form action="/artikel" className="flex items-center gap-2 border-b border-gray-200 pb-3 mb-2">
+                <form action="/artikel" className="flex items-center gap-2 border-b border-gray-200 pb-2">
                   <input type="text" name="q" placeholder="Cari artikel..." className="text-sm w-full outline-none placeholder:text-gray-400 text-black bg-transparent py-1" />
                   <button type="submit" className="text-gray-500 hover:text-black transition-colors flex-shrink-0 p-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                   </button>
                 </form>
 
-                <Link href="/" className="font-bold text-sm uppercase tracking-widest py-3 border-b border-gray-100 active:text-gray-500 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Beranda</Link>
-                <Link href="/tentang-kami/tim-kami" className="font-bold text-sm uppercase tracking-widest py-3 border-b border-gray-100 active:text-gray-500 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Tim Kami</Link>
-                <Link href="/hubungi-kami" className="font-bold text-sm uppercase tracking-widest py-3 border-b border-gray-100 active:text-gray-500 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Hubungi Kami</Link>
-                <Link href="/artikel" className="font-bold text-sm uppercase tracking-widest py-3 border-b border-gray-100 active:text-gray-500 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Publikasi</Link>
-                <Link href="/galeri" className="font-bold text-sm uppercase tracking-widest py-3 border-b border-gray-100 active:text-gray-500 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Galeri</Link>
-                <Link href="/donasi" className="font-bold text-sm uppercase tracking-widest py-3 border-b border-gray-100 active:text-gray-500 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Donasi</Link>
-                <Link href="/merch" className="font-bold text-sm uppercase tracking-widest py-3 border-b border-gray-100 active:text-gray-500 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Merch</Link>
-                <Link href="/lapor" className="font-bold text-sm uppercase tracking-widest py-3 border-b border-gray-100 active:text-gray-500 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Lapor Masalah</Link>
-
-                {/* Kategori Hukum */}
-                <div className="py-3 border-b border-gray-100">
-                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-2">Kategori Hukum</p>
-                  <div className="flex flex-wrap gap-2">
-                    {categories.map((cat) => (
-                      <Link key={cat} href={`/artikel?q=${cat}`} className="text-[11px] font-bold uppercase tracking-wider bg-gray-100 px-3 py-2 active:bg-black active:text-white transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
-                        {cat}
-                      </Link>
-                    ))}
-                  </div>
+                {/* Semua menu utama langsung terlihat dalam 1 layar */}
+                <div className="grid grid-cols-2 gap-2">
+                  <Link href="/" className="text-[11px] font-bold uppercase tracking-wider py-2.5 px-3 border border-gray-200 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Beranda</Link>
+                  <Link href="/artikel" className="text-[11px] font-bold uppercase tracking-wider py-2.5 px-3 border border-gray-200 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Publikasi</Link>
+                  <Link href="/tentang-kami/tim-kami" className="text-[11px] font-bold uppercase tracking-wider py-2.5 px-3 border border-gray-200 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Tim Kami</Link>
+                  <Link href="/hubungi-kami" className="text-[11px] font-bold uppercase tracking-wider py-2.5 px-3 border border-gray-200 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Hubungi Kami</Link>
+                  <Link href="/galeri" className="text-[11px] font-bold uppercase tracking-wider py-2.5 px-3 border border-gray-200 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Galeri</Link>
+                  <Link href="/mitra" className="text-[11px] font-bold uppercase tracking-wider py-2.5 px-3 border border-gray-200 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Mitra</Link>
+                  <Link href="/lapor" className="text-[11px] font-bold uppercase tracking-wider py-2.5 px-3 border border-gray-200 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Lapor</Link>
+                  <Link href="/donasi" className="text-[11px] font-bold uppercase tracking-wider py-2.5 px-3 border border-gray-200 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Donasi</Link>
+                  <Link href="/merch" className="text-[11px] font-bold uppercase tracking-wider py-2.5 px-3 border border-gray-200 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Merch</Link>
                 </div>
 
-                {/* Kategori Kebijakan Publik */}
-                <div className="py-3 border-b border-gray-100">
-                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-2">Kebijakan Publik</p>
-                  <div className="flex flex-wrap gap-2">
-                    {kebijakanCategories.map((cat) => (
-                      <Link key={cat} href={`/artikel?q=${cat}`} className="text-[11px] font-bold uppercase tracking-wider bg-gray-100 px-3 py-2 active:bg-black active:text-white transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
-                        {cat}
-                      </Link>
-                    ))}
-                  </div>
+                {/* Quick topic */}
+                <div className="grid grid-cols-2 gap-2">
+                  <Link href={`/artikel?q=${categories[0]}`} className="text-[10px] font-bold uppercase tracking-wider py-2 px-3 bg-gray-100 active:bg-black active:text-white" onClick={() => setIsMobileMenuOpen(false)}>
+                    {categories[0]}
+                  </Link>
+                  <Link href={`/artikel?q=${categories[1]}`} className="text-[10px] font-bold uppercase tracking-wider py-2 px-3 bg-gray-100 active:bg-black active:text-white" onClick={() => setIsMobileMenuOpen(false)}>
+                    {categories[1]}
+                  </Link>
+                  <Link href={`/artikel?q=${kebijakanCategories[0]}`} className="text-[10px] font-bold uppercase tracking-wider py-2 px-3 bg-gray-100 active:bg-black active:text-white" onClick={() => setIsMobileMenuOpen(false)}>
+                    {kebijakanCategories[0]}
+                  </Link>
+                  <Link href={`/artikel?q=${kebijakanCategories[1]}`} className="text-[10px] font-bold uppercase tracking-wider py-2 px-3 bg-gray-100 active:bg-black active:text-white" onClick={() => setIsMobileMenuOpen(false)}>
+                    {kebijakanCategories[1]}
+                  </Link>
                 </div>
 
-                {/* Mobile Auth */}
-                <div className="pt-4 mt-1">
+                <div className="mt-auto pt-2 border-t border-gray-100">
                   {status === 'authenticated' ? (
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 bg-black text-white rounded-full text-xs font-bold flex items-center justify-center">
-                          {session.user?.name?.charAt(0).toUpperCase() || 'U'}
-                        </div>
-                        <div>
-                          <p className="text-sm font-bold">{session.user?.name}</p>
-                          <p className="text-[10px] text-gray-400 font-mono">{session.user?.email}</p>
-                        </div>
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="min-w-0">
+                        <p className="text-xs font-bold truncate">{session.user?.name}</p>
+                        <p className="text-[10px] text-gray-400 font-mono truncate">{session.user?.email}</p>
                       </div>
-                      {session.user?.role === 'ADMIN' && (
-                        <Link href="/dashboard/admin" className="block text-sm py-2.5 font-bold active:text-gray-500" onClick={() => setIsMobileMenuOpen(false)}>📊 Dashboard Admin</Link>
-                      )}
-                      {session.user?.role === 'WRITER' && (
-                        <Link href="/dashboard/writer/posts" className="block text-sm py-2.5 font-bold active:text-gray-500" onClick={() => setIsMobileMenuOpen(false)}>✍️ Dashboard Penulis</Link>
-                      )}
-                      <button onClick={() => { signOut(); setIsMobileMenuOpen(false); }} className="block w-full text-left text-sm py-2.5 font-bold text-red-500 active:text-red-300">🚪 Logout</button>
+                      <button onClick={() => { signOut(); setIsMobileMenuOpen(false); }} className="text-xs font-bold text-red-500 uppercase tracking-wider">
+                        Logout
+                      </button>
                     </div>
                   ) : (
-                    <Link href="/login" className="block w-full text-center bg-black text-white py-3.5 text-xs font-bold uppercase tracking-widest active:bg-gray-800" onClick={() => setIsMobileMenuOpen(false)}>Login</Link>
+                    <Link href="/login" className="block w-full text-center bg-black text-white py-3 text-xs font-bold uppercase tracking-widest active:bg-gray-800" onClick={() => setIsMobileMenuOpen(false)}>
+                      Login
+                    </Link>
                   )}
                 </div>
              </div>
