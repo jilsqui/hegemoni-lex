@@ -98,7 +98,12 @@ export default async function PostsPage() {
                             })}
                         </td>
                         <td className="p-4 text-right">
-                            {article.status === 'PUBLISHED' && (
+                          {(article.status === 'DRAFT' || article.status === 'REJECTED') && (
+                            <Link href={`/dashboard/writer/create?draftId=${article.id}`} className="text-xs font-bold text-black hover:underline mr-4 uppercase tracking-wider">
+                              Lanjutkan
+                            </Link>
+                          )}
+                          {article.status === 'PUBLISHED' && (
                                 <Link href={`/artikel/${article.slug}`} className="text-xs font-bold text-blue-600 hover:underline mr-4 uppercase tracking-wider">
                                     Lihat
                                 </Link>

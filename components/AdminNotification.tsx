@@ -62,7 +62,7 @@ export default function AdminNotification({ pendingPosts, recentApproved }: Noti
                     pendingPosts.map((post) => (
                         <Link 
                             key={post.id} 
-                            href={`/dashboard/admin/posts`} // Arahkan ke halaman kelola
+                            href={`/dashboard/admin/approval`}
                             className="block px-4 py-3 hover:bg-blue-50 border-b border-gray-50 transition-colors group"
                             onClick={() => setIsOpen(false)}
                         >

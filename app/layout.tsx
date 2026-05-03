@@ -1,17 +1,19 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { NextAuthProvider } from "./providers";
 import Navbar from "@/components/Navbar"; // <--- 1. Import ini
+import VisitorTracker from "@/components/VisitorTracker";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    default: "HEGEMONI LEX — Portal Edukasi Hukum Indonesia",
+    default: "HEGEMONI LEX",
     template: "%s | HEGEMONI LEX",
   },
-  description: "Portal edukasi hukum Indonesia yang menyajikan artikel, opini, dan analisis hukum berkualitas. Kritis, Berdaya, Berkeadilan.",
+  description: "Platform literasi hukum dan kebijakan publik; Bertumbuh dan Berdampak",
   keywords: [
     "hukum Indonesia", "edukasi hukum", "artikel hukum", "opini hukum",
     "hukum pidana", "hukum perdata", "legislasi", "HAM",
@@ -31,14 +33,14 @@ export const metadata: Metadata = {
     locale: "id_ID",
     url: "https://hegemonilex.com",
     siteName: "HEGEMONI LEX",
-    title: "HEGEMONI LEX — Portal Edukasi Hukum Indonesia",
-    description: "Portal edukasi hukum Indonesia. Ruang menulis dan dialog mengenai hukum dan kebijakan publik. Menulis, Berefleksi, Berdampak.",
+    title: "HEGEMONI LEX",
+    description: "Platform literasi hukum dan kebijakan publik; Bertumbuh dan Berdampak",
     images: [{ url: "/logohl.png", width: 512, height: 512, alt: "HEGEMONI LEX Logo" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "HEGEMONI LEX — Portal Edukasi Hukum Indonesia",
-    description: "Portal edukasi hukum Indonesia. Menulis, Berefleksi, Berdampak.",
+    title: "HEGEMONI LEX",
+    description: "Platform literasi hukum dan kebijakan publik; Bertumbuh dan Berdampak",
     images: ["/logohl.png"],
   },
   robots: {
@@ -58,6 +60,12 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -67,8 +75,31 @@ export default function RootLayout({
     <html lang="id">
       <body className={inter.className}>
         <NextAuthProvider>
+          <Script id="anti-stale-cache" strategy="afterInteractive">{`
+            (function () {
+              try {
+                if ('serviceWorker' in navigator) {
+                  navigator.serviceWorker.getRegistrations().then(function (registrations) {
+                    registrations.forEach(function (registration) {
+                      registration.unregister();
+                    });
+                  });
+                }
+                if ('caches' in window) {
+                  caches.keys().then(function (keys) {
+                    keys.forEach(function (key) {
+                      caches.delete(key);
+                    });
+                  });
+                }
+              } catch (_) {
+                // no-op
+              }
+            })();
+          `}</Script>
           
           <Navbar /> {/* <--- 2. Pasang di sini agar muncul di semua halaman */}
+          <VisitorTracker />
           
           {children}
           

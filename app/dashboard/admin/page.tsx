@@ -7,6 +7,8 @@ import AdminChart from '@/components/AdminChart';
 import AdminNotification from '@/components/AdminNotification'; 
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
+
 export default async function AdminDashboard() {
   const session = await getServerSession(authOptions);
 
@@ -17,11 +19,29 @@ export default async function AdminDashboard() {
   // --- 1. AMBIL DATA STATISTIK UTAMA ---
   const totalUsers = await prisma.user.count();
   const countPending = await prisma.article.count({ where: { status: 'PENDING' } });
-  const countPublished = await prisma.article.count({ where: { status: 'PUBLISHED' } });
+  const countPublished = await prisma.article.count({ where: { status: 'PUBLISHED', isArchived: false } });
+
+  const startOfToday = new Date();
+  startOfToday.setHours(0, 0, 0, 0);
+  const endOfToday = new Date(startOfToday);
+  endOfToday.setDate(endOfToday.getDate() + 1);
   
   // Hitung Total Pengunjung (Visitor)
-  // Karena tabel Visitor baru dibuat, mungkin masih 0.
   const totalVisitors = await prisma.visitor.count();
+  const todayVisitors = await prisma.visitor.count({
+    where: {
+      createdAt: {
+        gte: startOfToday,
+        lt: endOfToday,
+      },
+    },
+  });
+
+  const todayArticleViews = await prisma.articleView.count({
+    where: {
+      viewDate: startOfToday,
+    },
+  });
 
   // Hitung Total Komentar
   const totalComments = await prisma.comment.count();
@@ -47,6 +67,10 @@ export default async function AdminDashboard() {
   // --- 3. DATA GRAFIK ARTIKEL ---
   const articlesByCategory = await prisma.article.groupBy({
     by: ['category'],
+    where: {
+      status: 'PUBLISHED',
+      isArchived: false,
+    },
     _count: { category: true },
   });
   const articleChartData = articlesByCategory.map((item) => ({
@@ -69,26 +93,85 @@ export default async function AdminDashboard() {
   });
 
   // Format data: { "12 Jan": 5, "13 Jan": 10, ... }
-  const visitorMap = new Map<string, number>();
+  const visitorMap = new Map<string, { date: string; jumlah: number }>();
   
   // Inisialisasi map dengan 0 untuk 30 hari terakhir agar grafik tidak bolong
   for (let i = 0; i < 30; i++) {
     const d = new Date();
     d.setDate(d.getDate() - (29 - i));
-    const label = d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' }); // "27 Des"
-    visitorMap.set(label, 0);
+    const dayKey = d.toISOString().slice(0, 10);
+    visitorMap.set(dayKey, {
+      date: d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' }),
+      jumlah: 0,
+    });
   }
 
   // Isi map dengan data asli dari database
   rawVisitors.forEach(v => {
-      const label = v.createdAt.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' });
-      if (visitorMap.has(label)) {
-          visitorMap.set(label, (visitorMap.get(label) || 0) + 1);
+      const dayKey = v.createdAt.toISOString().slice(0, 10);
+      if (visitorMap.has(dayKey)) {
+          const current = visitorMap.get(dayKey)!;
+          visitorMap.set(dayKey, { ...current, jumlah: current.jumlah + 1 });
       }
   });
 
   // Convert ke Array untuk Recharts
-  const visitorChartData = Array.from(visitorMap).map(([date, jumlah]) => ({ date, jumlah }));
+  const visitorChartData = Array.from(visitorMap.values());
+
+  const rawArticleViews = await prisma.articleView.groupBy({
+    by: ['viewDate'],
+    where: {
+      viewDate: {
+        gte: thirtyDaysAgo,
+      },
+    },
+    _count: { id: true },
+    orderBy: { viewDate: 'asc' },
+  });
+
+  const articleViewMap = new Map<string, { date: string; jumlah: number }>();
+  for (let i = 0; i < 30; i++) {
+    const d = new Date();
+    d.setDate(d.getDate() - (29 - i));
+    const dayKey = d.toISOString().slice(0, 10);
+    articleViewMap.set(dayKey, {
+      date: d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' }),
+      jumlah: 0,
+    });
+  }
+
+  rawArticleViews.forEach((v) => {
+    const dayKey = v.viewDate.toISOString().slice(0, 10);
+    if (articleViewMap.has(dayKey)) {
+      const current = articleViewMap.get(dayKey)!;
+      articleViewMap.set(dayKey, { ...current, jumlah: v._count.id });
+    }
+  });
+
+  const articleViewChartData = Array.from(articleViewMap.values());
+
+  const topArticleIdsToday = await prisma.articleView.groupBy({
+    by: ['articleId'],
+    where: { viewDate: startOfToday },
+    _count: { articleId: true },
+    orderBy: { _count: { articleId: 'desc' } },
+    take: 5,
+  });
+
+  const topArticles = topArticleIdsToday.length
+    ? await prisma.article.findMany({
+        where: {
+          id: { in: topArticleIdsToday.map((item) => item.articleId) },
+        },
+        select: { id: true, title: true },
+      })
+    : [];
+
+  const titleById = new Map(topArticles.map((item) => [item.id, item.title]));
+  const topArticleData = topArticleIdsToday.map((item) => ({
+    name: titleById.get(item.articleId) || 'Artikel',
+    jumlah: item._count.articleId,
+  }));
 
 
   return (
@@ -117,8 +200,8 @@ export default async function AdminDashboard() {
       </header>
 
 
-      {/* STATS CARDS GRID (Sekarang ada 4 Kolom) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      {/* STATS CARDS GRID */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4 mb-6">
         
         {/* 1. PENDING */}
         <div className="bg-white p-5 border-l-4 border-yellow-400 shadow-sm rounded-r-md flex justify-between items-center relative overflow-hidden">
@@ -129,17 +212,25 @@ export default async function AdminDashboard() {
             <span className="absolute right-2 bottom-0 text-5xl text-yellow-400 opacity-10 font-serif font-bold">!</span>
         </div>
 
-        {/* 2. PENGUNJUNG (BARU - DI SAMPING PENDING) */}
+          {/* 2. PENGUNJUNG HARI INI */}
         <div className="bg-white p-5 border-l-4 border-purple-500 shadow-sm rounded-r-md flex justify-between items-center relative overflow-hidden">
              <div className="relative z-10">
-                <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Pengunjung</h3>
-                <div className="text-3xl font-serif font-bold text-black">{totalVisitors}</div>
+               <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Pengunjung Hari Ini</h3>
+               <div className="text-3xl font-serif font-bold text-black">{todayVisitors.toLocaleString()}</div>
              </div>
-             {/* Icon Mata Sederhana */}
              <span className="absolute right-2 bottom-2 text-3xl text-purple-500 opacity-20">👁</span>
         </div>
 
-        {/* 3. TAYANG */}
+          {/* 3. TOTAL PENGUNJUNG */}
+          <div className="bg-white p-5 border-l-4 border-fuchsia-500 shadow-sm rounded-r-md flex justify-between items-center relative overflow-hidden">
+             <div className="relative z-10">
+               <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Total Pengunjung</h3>
+               <div className="text-3xl font-serif font-bold text-black">{totalVisitors.toLocaleString()}</div>
+             </div>
+             <span className="absolute right-2 bottom-2 text-3xl text-fuchsia-500 opacity-20">◎</span>
+          </div>
+
+          {/* 4. TAYANG */}
         <div className="bg-white p-5 border-l-4 border-green-500 shadow-sm rounded-r-md flex justify-between items-center relative overflow-hidden">
              <div className="relative z-10">
                 <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Artikel Tayang</h3>
@@ -148,7 +239,7 @@ export default async function AdminDashboard() {
              <span className="absolute right-2 bottom-0 text-5xl text-green-500 opacity-10 font-serif font-bold">✓</span>
         </div>
 
-        {/* 4. USERS */}
+        {/* 5. USERS */}
         <div className="bg-white p-5 border-l-4 border-blue-500 shadow-sm rounded-r-md flex justify-between items-center relative overflow-hidden">
              <div className="relative z-10">
                 <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Total User</h3>
@@ -160,7 +251,7 @@ export default async function AdminDashboard() {
       </div>
 
       {/* STATS ROW 2: Views & Komentar (Private - Hanya Admin) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div className="bg-white p-5 border-l-4 border-indigo-500 shadow-sm rounded-r-md flex justify-between items-center relative overflow-hidden">
              <div className="relative z-10">
                 <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Total Views (Semua Artikel)</h3>
@@ -169,6 +260,14 @@ export default async function AdminDashboard() {
              </div>
              <span className="absolute right-2 bottom-2 text-3xl text-indigo-500 opacity-20">👁</span>
         </div>
+          <div className="bg-white p-5 border-l-4 border-pink-500 shadow-sm rounded-r-md flex justify-between items-center relative overflow-hidden">
+             <div className="relative z-10">
+               <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">View Artikel Hari Ini</h3>
+               <div className="text-3xl font-serif font-bold text-black">{todayArticleViews.toLocaleString()}</div>
+               <p className="text-[9px] text-gray-400 mt-1 uppercase tracking-wider">Unique per perangkat per hari</p>
+             </div>
+             <span className="absolute right-2 bottom-2 text-3xl text-pink-500 opacity-20">↗</span>
+          </div>
         <div className="bg-white p-5 border-l-4 border-orange-500 shadow-sm rounded-r-md flex justify-between items-center relative overflow-hidden">
              <div className="relative z-10">
                 <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Total Komentar</h3>
@@ -183,6 +282,8 @@ export default async function AdminDashboard() {
       <AdminChart 
         articleData={articleChartData} 
         visitorData={visitorChartData} 
+        articleViewData={articleViewChartData}
+        topArticleData={topArticleData}
       />
 
     </div>

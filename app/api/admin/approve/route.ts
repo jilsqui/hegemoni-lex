@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { revalidatePath } from 'next/cache';
 
 export async function PUT(request: Request) {
   try {
@@ -49,6 +50,14 @@ export async function PUT(request: Request) {
         where: { id: articleId },
         data: updateData,
     });
+
+    revalidatePath('/');
+    revalidatePath('/artikel');
+    revalidatePath('/dashboard/admin');
+    revalidatePath('/dashboard/admin/approval');
+    if (updatedArticle.slug) {
+      revalidatePath(`/artikel/${updatedArticle.slug}`);
+    }
 
     return NextResponse.json({ message: "Sukses", data: updatedArticle });
 

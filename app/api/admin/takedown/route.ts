@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { revalidatePath } from 'next/cache';
 
 export async function PUT(request: Request) {
   try {
@@ -26,6 +27,12 @@ export async function PUT(request: Request) {
         isFeatured: false, // Pastikan tidak featured lagi
       }
     });
+
+    revalidatePath('/');
+    revalidatePath('/artikel');
+    if (updatedArticle.slug) {
+      revalidatePath(`/artikel/${updatedArticle.slug}`);
+    }
 
     return NextResponse.json({ message: "Artikel berhasil di-takedown", data: updatedArticle });
 

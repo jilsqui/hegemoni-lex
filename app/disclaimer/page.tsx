@@ -9,12 +9,12 @@ export default function DisclaimerPage() {
         <h1 className="text-4xl md:text-5xl font-serif font-bold mb-8">Disclaimer</h1>
         <p className="text-gray-500 text-sm mb-12 uppercase tracking-widest font-bold">Terakhir Diperbarui: Februari 2026</p>
 
-        <div className="prose prose-lg text-gray-800 leading-relaxed space-y-8 text-justify">
+        <div className="prose prose-lg text-gray-800 leading-relaxed space-y-8 text-left">
             
             <section>
                 <h3 className="text-xl font-bold font-serif mb-3">1. Identitas Platform</h3>
                 <p>
-                    Hegemoni Lex adalah platform edukasi hukum independen yang dikelola oleh tim pengembang dan mahasiswa hukum. Platform ini <strong>bukan merupakan firma hukum, kantor advokat, lembaga bantuan hukum (LBH), atau instansi pemerintah</strong> dalam bentuk apa pun. Hegemoni Lex tidak terafiliasi dengan institusi pemerintahan, organisasi politik, maupun badan hukum tertentu.
+                    Hegemonilex merupakan platform literasi hukum dan kebijakan publik yang dikelola secara swadaya oleh orang muda independen. Platform ini <strong>bukan merupakan firma hukum, kantor advokat, lembaga bantuan hukum (LBH), atau instansi pemerintah</strong> dalam bentuk apa pun. Hegemoni Lex tidak terafiliasi dengan institusi pemerintahan, organisasi politik, maupun badan hukum tertentu.
                 </p>
                 <p>
                     Seluruh konten yang dipublikasikan dalam situs ini ditujukan semata-mata untuk kepentingan <strong>edukasi, literasi hukum, dan diskursus akademik</strong>.

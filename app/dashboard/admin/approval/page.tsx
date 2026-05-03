@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { markdownLikeToHtml } from '@/lib/articleFormatting';
 
 // UPDATE: Menambahkan 'content' dan 'image' agar bisa dibaca di Modal
 interface Article {
@@ -173,10 +174,10 @@ export default function ApprovalPage() {
                         </div>
                     )}
 
-                    {/* Isi Artikel (Preserve Whitespace) */}
-                    <div className="prose prose-lg max-w-none font-serif text-gray-800 leading-relaxed whitespace-pre-wrap">
-                        {readingArticle.content}
-                    </div>
+                    <div
+                        className="article-prose prose prose-lg prose-p:whitespace-pre-wrap prose-li:whitespace-pre-wrap prose-blockquote:border-l-2 prose-blockquote:border-gray-300 prose-blockquote:pl-4 max-w-none font-serif text-gray-800 leading-relaxed"
+                        dangerouslySetInnerHTML={{ __html: markdownLikeToHtml(readingArticle.content || '') }}
+                    />
                 </div>
 
                 {/* Footer Modal (Aksi Cepat) */}

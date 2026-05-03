@@ -9,13 +9,15 @@ import {
 type ChartProps = {
   articleData: { name: string; jumlah: number }[];
   visitorData: { date: string; jumlah: number }[];
+  articleViewData: { date: string; jumlah: number }[];
+  topArticleData: { name: string; jumlah: number }[];
 };
 
 const COLORS = ['#000000', '#4b5563', '#9ca3af', '#d1d5db'];
 
-export default function AdminChart({ articleData, visitorData }: ChartProps) {
+export default function AdminChart({ articleData, visitorData, articleViewData, topArticleData }: ChartProps) {
   // State untuk menyimpan pilihan grafik (default: visitor)
-  const [activeTab, setActiveTab] = useState<'visitor' | 'article'>('visitor');
+  const [activeTab, setActiveTab] = useState<'visitor' | 'articleView' | 'article'>('visitor');
 
   return (
     <div className="bg-white p-1 md:p-4 border border-gray-200 shadow-sm rounded-xl">
@@ -24,12 +26,18 @@ export default function AdminChart({ articleData, visitorData }: ChartProps) {
       <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4 px-2">
          <div>
             <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500">
-                {activeTab === 'visitor' ? 'Tren Kunjungan Website' : 'Distribusi Artikel'}
+                {activeTab === 'visitor'
+                  ? 'Tren Kunjungan Website'
+                  : activeTab === 'articleView'
+                    ? 'Views Artikel Harian'
+                    : 'Distribusi Artikel'}
             </h3>
             <p className="text-[10px] text-gray-400 mt-1">
                 {activeTab === 'visitor' 
                     ? 'Data jumlah pengunjung harian dalam 30 hari terakhir.' 
-                    : 'Jumlah artikel berdasarkan kategori hukum.'}
+                    : activeTab === 'articleView'
+                      ? 'Data real harian: berapa view artikel per hari (30 hari terakhir).'
+                      : 'Jumlah artikel berdasarkan kategori hukum.'}
             </p>
          </div>
 
@@ -44,6 +52,16 @@ export default function AdminChart({ articleData, visitorData }: ChartProps) {
                 }`}
              >
                 Grafik Pengunjung
+             </button>
+             <button
+               onClick={() => setActiveTab('articleView')}
+               className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest rounded-md transition-all ${
+                  activeTab === 'articleView'
+                  ? 'bg-white text-black shadow-sm'
+                  : 'text-gray-400 hover:text-gray-600'
+               }`}
+             >
+               View Artikel
              </button>
              <button
                 onClick={() => setActiveTab('article')}
@@ -96,6 +114,40 @@ export default function AdminChart({ articleData, visitorData }: ChartProps) {
                     fill="url(#colorVisit)" 
                 />
             </AreaChart>
+              ) : activeTab === 'articleView' ? (
+              <AreaChart data={articleViewData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="colorArticleView" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#111827" stopOpacity={0.16}/>
+                    <stop offset="95%" stopColor="#111827" stopOpacity={0}/>
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f4f6" />
+                <XAxis
+                  dataKey="date"
+                  tick={{ fontSize: 10, fill: '#9ca3af' }}
+                  axisLine={false}
+                  tickLine={false}
+                  dy={10}
+                />
+                <YAxis
+                  tick={{ fontSize: 10, fill: '#9ca3af' }}
+                  axisLine={false}
+                  tickLine={false}
+                />
+                <Tooltip
+                  contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                  itemStyle={{ fontSize: '12px', fontWeight: 'bold' }}
+                />
+                <Area
+                  type="monotone"
+                  dataKey="jumlah"
+                  stroke="#111827"
+                  strokeWidth={2}
+                  fillOpacity={1}
+                  fill="url(#colorArticleView)"
+                />
+              </AreaChart>
           ) : (
             // GRAFIK 2: ARTIKEL (BAR CHART)
             <BarChart data={articleData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
@@ -121,6 +173,22 @@ export default function AdminChart({ articleData, visitorData }: ChartProps) {
             </BarChart>
           )}
         </ResponsiveContainer>
+      </div>
+
+      <div className="mt-4 border-t border-gray-100 pt-4 px-2">
+        <h4 className="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-3">Konten Paling Dilihat Hari Ini</h4>
+        <div className="space-y-2">
+          {topArticleData.length === 0 ? (
+            <p className="text-xs text-gray-400">Belum ada view artikel hari ini.</p>
+          ) : (
+            topArticleData.map((item, index) => (
+              <div key={`${item.name}-${index}`} className="flex items-center justify-between bg-gray-50 border border-gray-100 px-3 py-2 rounded-md">
+                <span className="text-xs text-gray-700 truncate pr-3">{index + 1}. {item.name}</span>
+                <span className="text-[11px] font-bold text-gray-900">{item.jumlah}</span>
+              </div>
+            ))
+          )}
+        </div>
       </div>
 
     </div>

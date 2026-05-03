@@ -12,8 +12,8 @@ export async function GET() {
     }
 
     const articles = await prisma.article.findMany({
-      where: { status: 'PUBLISHED' },
-      orderBy: { publishedAt: 'desc' },
+      where: { status: 'PUBLISHED', isArchived: false },
+      orderBy: [{ publishedAt: 'desc' }, { createdAt: 'desc' }],
       include: { author: { select: { name: true, email: true } } },
     });
     return NextResponse.json(articles);

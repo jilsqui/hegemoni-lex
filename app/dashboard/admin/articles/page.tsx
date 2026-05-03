@@ -2,6 +2,7 @@
 'use client';
 
 import { useState, useEffect } from "react";
+import Link from 'next/link';
 
 interface Article {
   id: string;
@@ -238,6 +239,14 @@ export default function AdminArticlesPage() {
 
                 {/* RIGHT: Actions */}
                 <div className="flex items-center gap-2 flex-wrap lg:flex-nowrap">
+                  <Link
+                    href={`/dashboard/admin/articles/${article.id}/edit`}
+                    className="px-3 py-2 text-[10px] font-bold uppercase tracking-widest rounded border border-blue-300 text-blue-700 hover:bg-blue-50 transition-all"
+                    title="Edit Artikel"
+                  >
+                    ✏ Edit
+                  </Link>
+
                   {/* Set Featured */}
                   <button
                     onClick={() => handleSetFeatured(article.id)}

@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { revalidatePath } from 'next/cache';
 
 export async function PUT(request: Request) {
   try {
@@ -31,6 +32,9 @@ export async function PUT(request: Request) {
         data: { isFeatured: true }
       })
     ]);
+
+    revalidatePath('/');
+    revalidatePath('/artikel');
 
     return NextResponse.json({ message: "Fokus Utama berhasil diperbarui" });
 

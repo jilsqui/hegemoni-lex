@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import ArticleRating from '@/components/ArticleRating';
 import ViewCounter from '@/components/ViewCounter';
+import ArticleContent from '@/components/ArticleContent';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { markdownLikeToHtml } from '@/lib/articleFormatting';
@@ -230,9 +231,9 @@ export default async function ArticleDetailPage({ params }: PageProps) {
 
           <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
             <div className="lg:col-span-8">
-              <div
+              <ArticleContent
+                html={markdownLikeToHtml(article.content || '')}
                 className="article-prose prose prose-sm md:prose-lg prose-gray prose-p:whitespace-pre-wrap prose-li:whitespace-pre-wrap prose-blockquote:border-l-2 prose-blockquote:border-gray-300 prose-blockquote:pl-4 max-w-none font-serif leading-relaxed text-gray-800"
-                dangerouslySetInnerHTML={{ __html: markdownLikeToHtml(article.content || '') }}
               />
 
               {Array.isArray(article.references) && article.references.length > 0 && (

@@ -23,6 +23,11 @@ body {
   overflow-x: hidden;
 }
 
+html,
+body {
+  max-width: 100%;
+}
+
 /* Force light mode — override system dark preference */
 @media (prefers-color-scheme: dark) {
   :root {
@@ -59,9 +64,20 @@ body {
   animation: marquee 30s linear infinite;
 }
 
+.animate-marquee-cards {
+  display: flex;
+  flex-wrap: nowrap;
+  width: max-content;
+  animation: marquee 32s linear infinite;
+}
+
 @media (max-width: 768px) {
   .animate-marquee {
     animation: marquee 15s linear infinite;
+  }
+
+  .animate-marquee-cards {
+    animation: marquee 18s linear infinite;
   }
 }
 
@@ -152,6 +168,447 @@ body {
 .scroll-pop-out.is-visible:nth-child(5) { animation-delay: 0.25s; }
 .scroll-pop-out.is-visible:nth-child(6) { animation-delay: 0.2s; }
 
+/* Long-form article readability on detail page */
+.article-prose p {
+  text-align: left;
+  text-justify: auto;
+  hyphens: manual;
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+.article-prose p + p {
+  text-indent: 0;
+  margin-top: 0;
+}
+
+.article-prose li {
+  text-align: left;
+}
+
+.article-prose,
+.article-prose * {
+  max-width: 100%;
+}
+
+.article-prose p,
+.article-prose li,
+.article-prose a,
+.article-prose code,
+.article-prose blockquote {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.article-prose img,
+.article-prose iframe,
+.article-prose pre {
+  max-width: 100%;
+}
+
+.article-prose table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5rem 0;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+}
+
+.article-prose th,
+.article-prose td {
+  border: 1px solid #e5e7eb;
+  padding: 0.75rem 0.85rem;
+  vertical-align: top;
+}
+
+.article-prose th {
+  background: #f9fafb;
+  font-weight: 700;
+}
+
+/* ============================================
+   HEGEMONI LEX — PERBAIKAN TABEL MOBILE
+   Scope: HANYA elemen table di konten artikel
+   ============================================ */
+
+/* --- Wrapper container scrollable --- */
+.table-scroll-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 8px;
+  border: 1px solid #e0e0dc;
+  margin-bottom: 8px;
+  position: relative;
+}
+
+/* --- Tabel di dalam wrapper --- */
+.table-scroll-wrapper table {
+  min-width: 600px;
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0;
+  border: none;
+}
+
+/* --- Header tabel --- */
+.table-scroll-wrapper th {
+  background: #1a1a1a;
+  color: #ffffff;
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 700;
+  white-space: nowrap;
+  font-size: 0.82rem;
+  letter-spacing: 0.3px;
+  border: none;
+}
+
+/* --- Cell tabel --- */
+.table-scroll-wrapper td {
+  padding: 10px 16px;
+  border-bottom: 1px solid #eeeeee;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  vertical-align: top;
+  line-height: 1.55;
+  font-size: 0.82rem;
+}
+
+.table-scroll-wrapper tr:last-child td {
+  border-bottom: none;
+}
+
+.table-scroll-wrapper tr:nth-child(even) td {
+  background: #fafaf8;
+}
+
+/* --- Indikator "Geser" (HANYA muncul di mobile) --- */
+.table-scroll-hint {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .table-scroll-hint {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    color: #27ae60;
+    font-weight: 700;
+    margin-bottom: 6px;
+    font-family: sans-serif;
+    animation: hintPulse 2s infinite;
+  }
+}
+
+@keyframes hintPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* --- Animasi panah geser --- */
+.scroll-arrows {
+  display: flex;
+  gap: 2px;
+}
+
+.scroll-arrows span {
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-right: 2px solid #27ae60;
+  border-top: 2px solid #27ae60;
+  transform: rotate(45deg);
+  animation: arrowAnim 1.6s infinite;
+  opacity: 0;
+}
+
+.scroll-arrows span:nth-child(1) { animation-delay: 0s; }
+.scroll-arrows span:nth-child(2) { animation-delay: 0.2s; }
+.scroll-arrows span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes arrowAnim {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+/* --- Shadow kanan (efek "ada konten di sana") di mobile --- */
+@media (max-width: 768px) {
+  .table-scroll-wrapper {
+    background:
+      linear-gradient(to right, white 30%, rgba(255,255,255,0)),
+      linear-gradient(to right, rgba(255,255,255,0), white 70%) 0 100%,
+      radial-gradient(farthest-side at 0% 50%, rgba(0,0,0,0.08), rgba(0,0,0,0)),
+      radial-gradient(farthest-side at 100% 50%, rgba(0,0,0,0.08), rgba(0,0,0,0)) 0 100%;
+    background-repeat: no-repeat;
+    background-color: white;
+    background-size: 40px 100%, 40px 100%, 12px 100%, 12px 100%;
+    background-attachment: local, local, scroll, scroll;
+  }
+}
+
+.writer-editor .ProseMirror {
+  min-height: 420px;
+  outline: none;
+}
+
+.writer-editor .ProseMirror p {
+  margin-bottom: 1rem;
+}
+
+.writer-editor .ProseMirror table {
+  width: 100%;
+  min-width: min(100%, 220px);
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  overflow: hidden;
+  border: 1px solid var(--hl-table-border, #e5e7eb);
+  table-layout: fixed;
+}
+
+.writer-editor .ProseMirror table[data-table-show-borders='0'] {
+  border: none;
+}
+
+.writer-editor .ProseMirror th,
+.writer-editor .ProseMirror td {
+  border: 1px solid var(--hl-table-border, #d1d5db);
+  padding: var(--hl-table-cell-padding, 12px);
+  vertical-align: top;
+  min-width: 80px;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.writer-editor .ProseMirror table[data-table-show-borders='0'] th,
+.writer-editor .ProseMirror table[data-table-show-borders='0'] td {
+  border: none;
+}
+
+.writer-editor .ProseMirror th {
+  background: #f9fafb;
+}
+
+.writer-editor .ProseMirror .tableWrapper {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  scrollbar-width: thin;
+  scrollbar-color: #9ca3af #f3f4f6;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x pan-y;
+}
+
+.writer-editor .ProseMirror .tableWrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.writer-editor .ProseMirror .tableWrapper::-webkit-scrollbar-thumb {
+  background: #9ca3af;
+  border-radius: 999px;
+}
+
+.writer-editor .ProseMirror .tableWrapper::-webkit-scrollbar-track {
+  background: #f3f4f6;
+}
+
+.writer-editor .ProseMirror .column-resize-handle {
+  position: absolute;
+  right: -2px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: transparent;
+  transition: background 0.2s ease;
+}
+
+.writer-editor .ProseMirror .column-resize-handle:hover {
+  background: #6b7280;
+}
+
+.writer-editor .ProseMirror.resize-cursor {
+  cursor: col-resize;
+}
+
+.writer-editor .ProseMirror table.is-resizing {
+  transition: none;
+}
+
+.writer-table-scale-handle {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #111827;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: nwse-resize;
+  box-shadow: 0 8px 20px -12px rgba(0, 0, 0, 0.45);
+}
+
+.writer-table-context-menu {
+  position: fixed;
+  z-index: 40;
+  min-width: 220px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 20px 40px -24px rgba(0, 0, 0, 0.45);
+  padding: 6px;
+}
+
+.writer-table-context-menu button {
+  width: 100%;
+  border: none;
+  background: transparent;
+  text-align: left;
+  font-size: 12px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  color: #1f2937;
+}
+
+.writer-table-context-menu button:hover {
+  background: #f3f4f6;
+}
+
+.writer-table-context-menu hr {
+  border: none;
+  border-top: 1px solid #e5e7eb;
+  margin: 4px 0;
+}
+
+.writer-table-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 45;
+  background: rgba(15, 23, 42, 0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.writer-table-modal {
+  width: min(420px, 100%);
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  padding: 16px;
+  box-shadow: 0 24px 48px -30px rgba(0, 0, 0, 0.55);
+}
+
+.writer-table-modal h4 {
+  margin: 0 0 12px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #111827;
+}
+
+.writer-table-modal label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin-bottom: 12px;
+}
+
+.writer-table-modal input[type='number'],
+.writer-table-modal input[type='color'] {
+  height: 38px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 0 10px;
+  font-size: 14px;
+  color: #111827;
+}
+
+.writer-table-modal .checkbox-row {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: #374151;
+}
+
+.writer-table-modal .modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.writer-table-modal .modal-actions button {
+  border: 1px solid #d1d5db;
+  background: #fff;
+  color: #111827;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.writer-table-modal .modal-actions button.primary {
+  background: #111827;
+  color: #fff;
+  border-color: #111827;
+}
+
+.writer-table-modal .size-preview-wrap {
+  margin-top: 2px;
+  margin-bottom: 12px;
+}
+
+.writer-table-modal .size-preview-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin-bottom: 8px;
+}
+
+.writer-table-modal .size-preview-track {
+  border-radius: 999px;
+  background: #f3f4f6;
+  height: 10px;
+  overflow: hidden;
+}
+
+.writer-table-modal .size-preview-bar {
+  height: 100%;
+  background: #111827;
+  border-radius: 999px;
+}
+
+.article-prose pre {
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+.overflow-wrap-anywhere {
+  overflow-wrap: anywhere;
+}
+
 /* Better mobile touch feedback */
 @media (max-width: 768px) {
   a:active, button:active {
@@ -164,5 +621,23 @@ body {
     border-top: 3px solid #111;
     padding-top: 1rem;
     margin-top: 1.5rem;
+  }
+
+  .writer-editor .ProseMirror th,
+  .writer-editor .ProseMirror td {
+    min-width: 72px;
+    padding: 0.62rem 0.65rem;
+    font-size: 13px;
+  }
+
+  .writer-editor .ProseMirror .column-resize-handle {
+    width: 8px;
+    right: -4px;
+  }
+
+  .writer-table-scale-handle {
+    width: 44px;
+    height: 44px;
+    font-size: 14px;
   }
 }

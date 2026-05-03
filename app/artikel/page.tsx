@@ -1,17 +1,22 @@
 // app/artikel/page.tsx
 import { prisma } from '@/lib/prisma';
+import { Suspense } from 'react';
 import ArticleListClient from '@/components/ArticleListClient';
 
-export const revalidate = 0;
+export const revalidate = 180;
 
 export default async function ArchivePage() {
-  
-  const articles = await prisma.article.findMany({
-    where: { status: 'PUBLISHED' },
-    orderBy: { publishedAt: 'desc' },
-    include: { author: { select: { name: true, email: true } } },
-    // viewCount is included by default as a scalar field
-  });
+  let articles: any[] = [];
+
+  try {
+    articles = await prisma.article.findMany({
+      where: { status: 'PUBLISHED', isArchived: false },
+      orderBy: [{ publishedAt: 'desc' }, { createdAt: 'desc' }],
+      include: { author: { select: { name: true, email: true } } },
+    });
+  } catch (error) {
+    console.error('Archive page DB fallback:', error);
+  }
 
   return (
     <div className="min-h-screen bg-[#F8F9FA] text-black font-sans selection:bg-black selection:text-white pb-20 relative overflow-hidden">
@@ -38,7 +43,9 @@ export default async function ArchivePage() {
         </div>
 
         {/* PEMANGGILAN KOMPONEN CLIENT (GRID ARTIKEL) */}
-        <ArticleListClient initialArticles={articles} />
+        <Suspense fallback={<div className="text-sm text-gray-400">Memuat artikel...</div>}>
+          <ArticleListClient initialArticles={articles} />
+        </Suspense>
 
       </main>
 

@@ -15,6 +15,10 @@ export default function LoginPage() {
   
   const router = useRouter();
 
+  const handleGoRegister = () => {
+    router.push('/register');
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -101,7 +105,7 @@ export default function LoginPage() {
                 <div>
                     <div className="flex justify-between items-center mb-2 ml-1">
                         <label className="block text-xs font-bold uppercase tracking-widest text-black">Password</label>
-                        <a href="mailto:hegemonilex@gmail.com" className="text-[10px] font-bold uppercase tracking-widest text-black hover:underline decoration-1 underline-offset-4">Lupa Password?</a>
+                    <Link href="/forgot-password" className="text-[10px] font-bold uppercase tracking-widest text-black hover:underline decoration-1 underline-offset-4">Lupa Password?</Link>
                     </div>
                     <input 
                         type="password" 
@@ -122,9 +126,16 @@ export default function LoginPage() {
                 </button>
 
                 <div className="text-center mt-6">
-                    <p className="text-xs font-bold uppercase tracking-widest text-gray-500">
-                        Belum punya akun? <Link href="/register" className="text-black underline decoration-2 underline-offset-4 hover:opacity-70">Daftar Sekarang</Link>
-                    </p>
+                  <p className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-3">
+                    Belum punya akun?
+                  </p>
+                  <button
+                    type="button"
+                    onClick={handleGoRegister}
+                    className="w-full border-2 border-black py-3 text-xs font-bold uppercase tracking-widest text-black hover:bg-black hover:text-white active:opacity-80 transition-all"
+                  >
+                    Daftar Sekarang
+                  </button>
                 </div>
             </form>
         </div>
