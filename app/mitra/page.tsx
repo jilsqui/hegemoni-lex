@@ -6,19 +6,16 @@ const partners = [
     name: 'BPAN (Barisan Pemuda Adat Nusantara)',
     shortName: 'BPAN',
     logo: '/Logo BPAN.png',
-    description: 'Kolaborasi literasi kebijakan dan pengawasan publik yang berpihak pada warga.',
   },
   {
     name: 'XR Indonesia (Extinction Rebellion)',
     shortName: 'XRID',
     logo: '/XRID_logo.png',
-    description: 'Kemitraan untuk penguatan advokasi lingkungan, hak sipil, dan partisipasi sosial.',
   },
   {
     name: 'Pomanara',
     shortName: 'Pomanara',
     logo: '',
-    description: 'Kolaborasi penguatan jejaring warga untuk pendidikan publik, advokasi, dan gerakan komunitas.',
   },
 ];
 
@@ -46,16 +43,7 @@ export default function MitraPage() {
               key={partner.shortName}
               className="group bg-white border border-gray-200 rounded-sm p-6 md:p-8 shadow-sm hover:shadow-[0_16px_48px_-24px_rgba(0,0,0,0.35)] hover:-translate-y-1 transition-all duration-300"
             >
-              <div className="flex items-center justify-between gap-3 mb-6">
-                <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-gray-400">
-                  Mitra Resmi
-                </span>
-                <span className="text-[10px] font-bold uppercase tracking-[0.16em] px-2.5 py-1 border border-gray-200 text-gray-500">
-                  {partner.shortName}
-                </span>
-              </div>
-
-              <div className="h-28 md:h-32 bg-gray-50 border border-gray-100 rounded-sm flex items-center justify-center p-4 md:p-6 mb-6">
+              <div className="h-28 md:h-32 bg-gray-50 border border-gray-100 rounded-sm flex items-center justify-center p-4 md:p-6 mb-5">
                 {partner.logo ? (
                   <Image
                     src={partner.logo}
@@ -66,17 +54,14 @@ export default function MitraPage() {
                   />
                 ) : (
                   <span className="text-lg md:text-xl font-serif font-bold text-gray-400 tracking-widest uppercase">
-                    {partner.shortName}
+                    {partner.name}
                   </span>
                 )}
               </div>
 
-              <h2 className="text-xl md:text-2xl font-serif font-bold mb-2 group-hover:text-gray-700 transition-colors">
+              <h2 className="text-xl md:text-2xl font-serif font-bold group-hover:text-gray-700 transition-colors">
                 {partner.name}
               </h2>
-              <p className="text-sm text-gray-500 leading-relaxed">
-                {partner.description}
-              </p>
             </article>
           ))}
         </div>
