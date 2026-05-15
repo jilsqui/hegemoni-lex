@@ -15,7 +15,7 @@ const partners = [
   {
     name: 'Pomanara',
     shortName: 'Pomanara',
-    logo: '',
+    logo: '/Pomanara.png',
   },
 ];
 
