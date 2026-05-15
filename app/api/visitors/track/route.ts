@@ -1,9 +1,22 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import crypto from 'crypto';
+import { checkRateLimit, getClientIp } from '@/lib/rateLimit';
 
 export async function POST(request: Request) {
   try {
+    const ip = getClientIp(request);
+    const rate = checkRateLimit(`visitors-track:${ip}`, 90, 60_000);
+    if (!rate.allowed) {
+      return NextResponse.json(
+        { error: 'Terlalu banyak request. Coba lagi nanti.' },
+        {
+          status: 429,
+          headers: { 'Retry-After': String(rate.retryAfterSeconds) },
+        }
+      );
+    }
+
     const body = await request.json().catch(() => ({}));
     const clientFingerprint = typeof body?.fingerprint === 'string' ? body.fingerprint : '';
     const userAgent = request.headers.get('user-agent') || '';
@@ -41,10 +54,7 @@ export async function POST(request: Request) {
       });
     }
 
-    // Cache response: 60 seconds (visitor tracking doesn't need to be instant)
-    const response = NextResponse.json({ ok: true });
-    response.headers.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
-    return response;
+    return NextResponse.json({ ok: true });
   } catch (error) {
     console.error('Visitor tracking error:', error);
     return NextResponse.json({ error: 'Gagal menyimpan visitor.' }, { status: 500 });

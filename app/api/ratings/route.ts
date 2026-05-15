@@ -1,6 +1,7 @@
 // app/api/ratings/route.ts
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { checkRateLimit, getClientIp } from '@/lib/rateLimit';
 
 // 1. GET: Ambil Data Rating (Rata-rata, Jumlah, & Punya User)
 export async function GET(request: Request) {
@@ -9,7 +10,10 @@ export async function GET(request: Request) {
   const userEmail = searchParams.get('userEmail'); // Bisa null jika user belum login
 
   if (!articleId) {
-    return NextResponse.json({ average: 0, count: 0, userRating: 0 });
+    return NextResponse.json(
+      { average: 0, count: 0, userRating: 0 },
+      { headers: { 'Cache-Control': 'public, max-age=30, stale-while-revalidate=120' } }
+    );
   }
 
   try {
@@ -37,16 +41,34 @@ export async function GET(request: Request) {
        }
     }
 
-    return NextResponse.json({ average, count, userRating });
+    return NextResponse.json(
+      { average, count, userRating },
+      { headers: { 'Cache-Control': 'public, max-age=30, stale-while-revalidate=120' } }
+    );
 
   } catch (error) {
-    return NextResponse.json({ average: 0, count: 0, userRating: 0 });
+    return NextResponse.json(
+      { average: 0, count: 0, userRating: 0 },
+      { headers: { 'Cache-Control': 'public, max-age=30, stale-while-revalidate=120' } }
+    );
   }
 }
 
 // 2. POST: Simpan Rating User
 export async function POST(request: Request) {
   try {
+    const ip = getClientIp(request);
+    const rate = checkRateLimit(`ratings:${ip}`, 40, 60_000);
+    if (!rate.allowed) {
+      return NextResponse.json(
+        { error: 'Terlalu banyak request rating. Coba lagi nanti.' },
+        {
+          status: 429,
+          headers: { 'Retry-After': String(rate.retryAfterSeconds) },
+        }
+      );
+    }
+
     const body = await request.json();
     const { articleId, userEmail, value } = body;
 

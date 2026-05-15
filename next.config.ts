@@ -13,6 +13,17 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
+        // Security hardening headers for all responses
+        source: '/:path*',
+        headers: [
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+          { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
+        ],
+      },
+      {
         // ISR-compatible cache headers: Allow CDN caching with revalidation
         source: '/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|api).*)',
         headers: [
@@ -21,10 +32,10 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        // API routes: short cache with revalidation
+        // API routes should not be publicly cached by intermediaries
         source: '/api/:path*',
         headers: [
-          { key: 'Cache-Control', value: 'public, max-age=60, stale-while-revalidate=300' },
+          { key: 'Cache-Control', value: 'no-store' },
         ],
       },
       {

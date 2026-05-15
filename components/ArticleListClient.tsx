@@ -1,9 +1,9 @@
 // components/ArticleListClient.tsx
 'use client';
 
-import { useState, useEffect } from "react";
+import { FormEvent, useMemo, useState } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { getPreviewText } from "@/lib/utils";
 
 // Tipe data artikel
@@ -23,75 +23,69 @@ type Article = {
   };
 };
 
-export default function ArticleListClient({ initialArticles }: { initialArticles: Article[] }) {
-  const searchParams = useSearchParams();
-  
-  // Daftar Kategori
-  const categories = [
-    "SEMUA",
-    "LEGISLASI", "OPINI", "HUKUM PERDATA", "HUKUM PIDANA", 
-    "BISNIS", "KETENAGAKERJAAN", "HAK ASASI MANUSIA",
-    "RESENSI BUKU", "RESENSI FILM",
-    "REGULASI", "EKONOMI PUBLIK", "SOSIAL & BUDAYA",
-    "LINGKUNGAN", "PENDIDIKAN", "KESEHATAN",
-    "TEKNOLOGI DAN DIGITAL", "POLITIK DAN PEMERINTAHAN"
-  ];
+const categories = [
+  "SEMUA",
+  "LEGISLASI", "OPINI", "HUKUM PERDATA", "HUKUM PIDANA",
+  "BISNIS", "KETENAGAKERJAAN", "HAK ASASI MANUSIA",
+  "RESENSI BUKU", "RESENSI FILM",
+  "REGULASI", "EKONOMI PUBLIK", "SOSIAL & BUDAYA",
+  "LINGKUNGAN", "PENDIDIKAN", "KESEHATAN",
+  "TEKNOLOGI DAN DIGITAL", "POLITIK DAN PEMERINTAHAN"
+];
 
-  // STATE
-  const [selectedCategory, setSelectedCategory] = useState("SEMUA");
-  const [searchQuery, setSearchQuery] = useState("");
+type Props = {
+  initialArticles: Article[];
+  currentPage: number;
+  pageSize: number;
+  totalArticles: number;
+  initialQuery: string;
+  isCategoryQuery: boolean;
+};
+
+export default function ArticleListClient({
+  initialArticles,
+  currentPage,
+  pageSize,
+  totalArticles,
+  initialQuery,
+  isCategoryQuery,
+}: Props) {
+  const router = useRouter();
   const [isAnimating, setIsAnimating] = useState(false);
+  const [searchQuery, setSearchQuery] = useState(isCategoryQuery ? "" : initialQuery);
+  const selectedCategory = isCategoryQuery && initialQuery ? initialQuery.toUpperCase() : "SEMUA";
 
-  // LOGIKA UTAMA: Deteksi perubahan URL (Navbar)
-  useEffect(() => {
-    const paramQ = searchParams.get("q") || ""; // Ambil nilai ?q=...
+  const totalPages = Math.max(1, Math.ceil(totalArticles / pageSize));
 
-    if (paramQ) {
-      // Cek apakah 'q' ini adalah salah satu nama Kategori?
-      const isCategory = categories.includes(paramQ);
-
-      if (isCategory) {
-        // Jika YA: Aktifkan tombol kategori, kosongkan search
-        setSelectedCategory(paramQ);
-        setSearchQuery("");
-      } else {
-        // Jika TIDAK: Anggap sebagai pencarian judul, reset kategori ke SEMUA
-        setSelectedCategory("SEMUA");
-        setSearchQuery(paramQ);
-      }
-    } else {
-      // Jika URL kosong, reset ke default
-      setSelectedCategory("SEMUA");
-      setSearchQuery("");
-    }
-  }, [searchParams]); // Jalankan setiap kali URL berubah
-
-  // LOGIKA FILTER DATA
-  const filteredArticles = initialArticles.filter((article) => {
-    // 1. Cek Kategori
-    // (Replace spasi dengan underscore karena di Database biasanya HUKUM_PERDATA)
-    const dbCategory = article.category.replace(/_/g, " "); 
-    const matchCategory = selectedCategory === "SEMUA" 
-      ? true 
-      : dbCategory === selectedCategory;
-
-    // 2. Cek Pencarian (Judul)
-    const matchSearch = article.title.toLowerCase().includes(searchQuery.toLowerCase());
-
-    return matchCategory && matchSearch;
-  });
-
-  // Fungsi Manual Klik Kategori (di halaman itu sendiri)
-  const handleCategoryChange = (cat: string) => {
-    if (cat === selectedCategory) return;
-    
-    setIsAnimating(true); 
-    setTimeout(() => {
-        setSelectedCategory(cat);
-        setSearchQuery(""); // Kosongkan search bar jika user klik kategori
-        setIsAnimating(false);
-    }, 200); 
+  const buildArchiveUrl = (query: string, page: number) => {
+    const params = new URLSearchParams();
+    if (query.trim()) params.set("q", query.trim());
+    if (page > 1) params.set("page", String(page));
+    const qs = params.toString();
+    return qs ? `/artikel?${qs}` : "/artikel";
   };
+
+  const handleCategoryChange = (cat: string) => {
+    const query = cat === "SEMUA" ? "" : cat;
+    setIsAnimating(true);
+    setTimeout(() => {
+      router.push(buildArchiveUrl(query, 1));
+    }, 120);
+  };
+
+  const handleSearchSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const query = searchQuery.trim();
+    router.push(buildArchiveUrl(query, 1));
+  };
+
+  const paginationItems = useMemo(() => {
+    const items: number[] = [];
+    const start = Math.max(1, currentPage - 2);
+    const end = Math.min(totalPages, currentPage + 2);
+    for (let i = start; i <= end; i += 1) items.push(i);
+    return items;
+  }, [currentPage, totalPages]);
 
   return (
     <div>
@@ -120,22 +114,18 @@ export default function ArticleListClient({ initialArticles }: { initialArticles
        </div>
 
        {/* --- 2. SEARCH BAR --- */}
-       <div className="mb-6 md:mb-8 relative max-w-md">
+       <form onSubmit={handleSearchSubmit} className="mb-6 md:mb-8 relative max-w-md">
             <input 
                 type="text" 
                 placeholder="Cari judul artikel..." 
                 value={searchQuery}
-                onChange={(e) => {
-                    setSearchQuery(e.target.value);
-                    // Jika user mengetik, otomatis reset kategori ke SEMUA agar pencarian global
-                    if(selectedCategory !== "SEMUA") setSelectedCategory("SEMUA");
-                }}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full border-b-2 border-gray-200 py-3 pr-10 outline-none focus:border-black font-serif transition-colors bg-transparent text-black placeholder:text-gray-400 text-base"
             />
             <span className="absolute right-0 top-3 text-gray-400">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             </span>
-       </div>
+       </form>
 
        {/* --- 3. GRID ARTIKEL (DENGAN ANIMASI) --- */}
        <div 
@@ -144,22 +134,22 @@ export default function ArticleListClient({ initialArticles }: { initialArticles
             ${isAnimating ? "opacity-0 translate-y-4 scale-95" : "opacity-100 translate-y-0 scale-100"}
           `}
        >
-          {filteredArticles.length === 0 ? (
+            {initialArticles.length === 0 ? (
              <div className="col-span-full py-20 text-center border border-dashed border-gray-200 rounded-lg bg-white/50">
                 <p className="text-xl font-serif italic text-gray-400">
-                    {searchQuery 
-                        ? `Tidak ada artikel dengan judul "${searchQuery}"` 
+                {initialQuery
+                  ? `Tidak ada artikel untuk pencarian "${initialQuery}"`
                         : `Belum ada artikel di kategori ${selectedCategory}.`}
                 </p>
                 <button 
-                    onClick={() => { setSelectedCategory("SEMUA"); setSearchQuery(""); }}
+                onClick={() => router.push('/artikel')}
                     className="mt-4 text-xs font-bold underline"
                 >
                     Lihat Semua Artikel
                 </button>
              </div>
           ) : (
-            filteredArticles.map((article) => (
+            initialArticles.map((article) => (
                 <Link href={`/artikel/${article.slug}`} key={article.id} className="group cursor-pointer block h-full active:opacity-80">
                     <article className="flex flex-col h-full rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-[0_1px_4px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_28px_-8px_rgba(0,0,0,0.18)] hover:-translate-y-1 transition-all duration-300">
                     
@@ -213,6 +203,35 @@ export default function ArticleListClient({ initialArticles }: { initialArticles
             ))
           )}
        </div>
+
+       {/* --- 4. PAGINATION --- */}
+       {totalPages > 1 && (
+        <div className="mt-10 md:mt-12 flex flex-wrap items-center justify-center gap-2">
+          <Link
+            href={buildArchiveUrl(initialQuery, Math.max(1, currentPage - 1))}
+            className={`px-3 py-2 text-xs font-bold uppercase tracking-wider border ${currentPage <= 1 ? 'pointer-events-none opacity-40 border-gray-200 text-gray-400' : 'border-gray-300 text-gray-700 hover:border-black hover:text-black'}`}
+          >
+            Sebelumnya
+          </Link>
+
+          {paginationItems.map((page) => (
+            <Link
+              key={page}
+              href={buildArchiveUrl(initialQuery, page)}
+              className={`min-w-9 text-center px-3 py-2 text-xs font-bold border ${page === currentPage ? 'bg-black text-white border-black' : 'border-gray-300 text-gray-700 hover:border-black hover:text-black'}`}
+            >
+              {page}
+            </Link>
+          ))}
+
+          <Link
+            href={buildArchiveUrl(initialQuery, Math.min(totalPages, currentPage + 1))}
+            className={`px-3 py-2 text-xs font-bold uppercase tracking-wider border ${currentPage >= totalPages ? 'pointer-events-none opacity-40 border-gray-200 text-gray-400' : 'border-gray-300 text-gray-700 hover:border-black hover:text-black'}`}
+          >
+            Berikutnya
+          </Link>
+        </div>
+       )}
     </div>
   );
 }

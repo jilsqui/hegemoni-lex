@@ -2,9 +2,22 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import crypto from 'crypto';
+import { checkRateLimit, getClientIp } from '@/lib/rateLimit';
 
 export async function POST(request: Request) {
   try {
+    const ip = getClientIp(request);
+    const rate = checkRateLimit(`article-view:${ip}`, 120, 60_000);
+    if (!rate.allowed) {
+      return NextResponse.json(
+        { error: 'Terlalu banyak request. Coba lagi nanti.' },
+        {
+          status: 429,
+          headers: { 'Retry-After': String(rate.retryAfterSeconds) },
+        }
+      );
+    }
+
     const body = await request.json();
     const { articleId, fingerprint } = body;
 
@@ -29,10 +42,7 @@ export async function POST(request: Request) {
         },
         select: { viewCount: true },
       });
-
-      const response = NextResponse.json({ viewCount: updatedArticle.viewCount, counted: true });
-      response.headers.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
-      return response;
+      return NextResponse.json({ viewCount: updatedArticle.viewCount, counted: true });
     }
 
     const existing = await prisma.articleView.findUnique({
@@ -51,10 +61,7 @@ export async function POST(request: Request) {
         where: { id: articleId },
         select: { viewCount: true },
       });
-
-      const response = NextResponse.json({ viewCount: currentArticle?.viewCount || 0, counted: false });
-      response.headers.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
-      return response;
+      return NextResponse.json({ viewCount: currentArticle?.viewCount || 0, counted: false });
     }
 
     const [, updatedArticle] = await prisma.$transaction([
@@ -74,9 +81,7 @@ export async function POST(request: Request) {
       }),
     ]);
 
-    const response = NextResponse.json({ viewCount: updatedArticle.viewCount, counted: true });
-    response.headers.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
-    return response;
+    return NextResponse.json({ viewCount: updatedArticle.viewCount, counted: true });
 
   } catch (error: any) {
     // Jika race condition unique constraint terjadi, anggap request duplikat harian.

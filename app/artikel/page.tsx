@@ -5,14 +5,67 @@ import ArticleListClient from '@/components/ArticleListClient';
 
 export const revalidate = 180;
 
-export default async function ArchivePage() {
+const PAGE_SIZE = 18;
+const CATEGORIES = [
+  'LEGISLASI', 'OPINI', 'HUKUM PERDATA', 'HUKUM PIDANA',
+  'BISNIS', 'KETENAGAKERJAAN', 'HAK ASASI MANUSIA',
+  'RESENSI BUKU', 'RESENSI FILM',
+  'REGULASI', 'EKONOMI PUBLIK', 'SOSIAL & BUDAYA',
+  'LINGKUNGAN', 'PENDIDIKAN', 'KESEHATAN',
+  'TEKNOLOGI DAN DIGITAL', 'POLITIK DAN PEMERINTAHAN',
+];
+
+interface ArchivePageProps {
+  searchParams: Promise<{ q?: string; page?: string }>;
+}
+
+export default async function ArchivePage({ searchParams }: ArchivePageProps) {
+  const params = await searchParams;
+  const rawQuery = (params.q || '').trim();
+  const normalizedQuery = rawQuery.toUpperCase();
+  const isCategoryQuery = CATEGORIES.includes(normalizedQuery);
+
+  const requestedPage = Number.parseInt(params.page || '1', 10);
+  const currentPage = Number.isFinite(requestedPage) && requestedPage > 0 ? requestedPage : 1;
+  let resolvedPage = currentPage;
+
   let articles: any[] = [];
+  let totalArticles = 0;
 
   try {
+    const baseWhere: any = { status: 'PUBLISHED', isArchived: false };
+
+    const whereClause = rawQuery
+      ? isCategoryQuery
+        ? {
+            ...baseWhere,
+            OR: [
+              { category: normalizedQuery },
+              { category: normalizedQuery.replace(/ /g, '_') },
+            ],
+          }
+        : {
+            ...baseWhere,
+            OR: [
+              { title: { contains: rawQuery, mode: 'insensitive' } },
+              { content: { contains: rawQuery, mode: 'insensitive' } },
+            ],
+          }
+      : baseWhere;
+
+    totalArticles = await prisma.article.count({ where: whereClause });
+
+    const totalPages = Math.max(1, Math.ceil(totalArticles / PAGE_SIZE));
+    const safePage = Math.min(currentPage, totalPages);
+    resolvedPage = safePage;
+    const skip = (safePage - 1) * PAGE_SIZE;
+
     articles = await prisma.article.findMany({
-      where: { status: 'PUBLISHED', isArchived: false },
+      where: whereClause,
       orderBy: [{ publishedAt: 'desc' }, { createdAt: 'desc' }],
       include: { author: { select: { name: true, email: true } } },
+      skip,
+      take: PAGE_SIZE,
     });
   } catch (error) {
     console.error('Archive page DB fallback:', error);
@@ -44,7 +97,14 @@ export default async function ArchivePage() {
 
         {/* PEMANGGILAN KOMPONEN CLIENT (GRID ARTIKEL) */}
         <Suspense fallback={<div className="text-sm text-gray-400">Memuat artikel...</div>}>
-          <ArticleListClient initialArticles={articles} />
+          <ArticleListClient
+            initialArticles={articles}
+            currentPage={resolvedPage}
+            pageSize={PAGE_SIZE}
+            totalArticles={totalArticles}
+            initialQuery={rawQuery}
+            isCategoryQuery={isCategoryQuery}
+          />
         </Suspense>
 
       </main>

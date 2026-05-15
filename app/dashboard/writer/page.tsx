@@ -5,8 +5,6 @@ import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 
-export const dynamic = 'force-dynamic';
-
 export default async function WriterDashboard() {
   const session = await getServerSession(authOptions);
 
@@ -22,22 +20,13 @@ export default async function WriterDashboard() {
     redirect('/login');
   }
 
-  // Ambil statistik real dari database
-  const countPublished = await prisma.article.count({
-    where: { authorId: user.id, status: 'PUBLISHED' },
-  });
-
-  const countPending = await prisma.article.count({
-    where: { authorId: user.id, status: 'PENDING' },
-  });
-
-  const countDraft = await prisma.article.count({
-    where: { authorId: user.id, status: 'DRAFT' },
-  });
-
-  const totalArticles = await prisma.article.count({
-    where: { authorId: user.id },
-  });
+  // Ambil statistik real dari database secara paralel
+  const [countPublished, countPending, countDraft, totalArticles] = await Promise.all([
+    prisma.article.count({ where: { authorId: user.id, status: 'PUBLISHED' } }),
+    prisma.article.count({ where: { authorId: user.id, status: 'PENDING' } }),
+    prisma.article.count({ where: { authorId: user.id, status: 'DRAFT' } }),
+    prisma.article.count({ where: { authorId: user.id } }),
+  ]);
 
   return (
     <div>

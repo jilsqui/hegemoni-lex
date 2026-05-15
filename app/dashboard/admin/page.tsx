@@ -7,8 +7,6 @@ import AdminChart from '@/components/AdminChart';
 import AdminNotification from '@/components/AdminNotification'; 
 import Link from 'next/link';
 
-export const dynamic = 'force-dynamic';
-
 export default async function AdminDashboard() {
   const session = await getServerSession(authOptions);
 
@@ -16,81 +14,79 @@ export default async function AdminDashboard() {
     redirect('/');
   }
 
-  // --- 1. AMBIL DATA STATISTIK UTAMA ---
-  const totalUsers = await prisma.user.count();
-  const countPending = await prisma.article.count({ where: { status: 'PENDING' } });
-  const countPublished = await prisma.article.count({ where: { status: 'PUBLISHED', isArchived: false } });
-
   const startOfToday = new Date();
   startOfToday.setHours(0, 0, 0, 0);
   const endOfToday = new Date(startOfToday);
   endOfToday.setDate(endOfToday.getDate() + 1);
-  
-  // Hitung Total Pengunjung (Visitor)
-  const totalVisitors = await prisma.visitor.count();
-  const todayVisitors = await prisma.visitor.count({
-    where: {
-      createdAt: {
-        gte: startOfToday,
-        lt: endOfToday,
+
+  // --- 1. AMBIL DATA STATISTIK UTAMA (PARALLEL) ---
+  const [
+    totalUsers,
+    countPending,
+    countPublished,
+    totalVisitors,
+    todayVisitors,
+    todayArticleViews,
+    totalComments,
+    totalViewsAgg,
+    pendingPosts,
+    recentApproved,
+    articlesByCategory,
+  ] = await Promise.all([
+    prisma.user.count(),
+    prisma.article.count({ where: { status: 'PENDING' } }),
+    prisma.article.count({ where: { status: 'PUBLISHED', isArchived: false } }),
+    prisma.visitor.count(),
+    prisma.visitor.count({
+      where: {
+        createdAt: {
+          gte: startOfToday,
+          lt: endOfToday,
+        },
       },
-    },
-  });
+    }),
+    prisma.articleView.count({ where: { viewDate: startOfToday } }),
+    prisma.comment.count(),
+    prisma.article.aggregate({ _sum: { viewCount: true } }),
+    prisma.article.findMany({
+      where: { status: 'PENDING' },
+      include: { author: true },
+      orderBy: { createdAt: 'desc' },
+      take: 5,
+    }),
+    prisma.article.findMany({
+      where: { status: 'PUBLISHED' },
+      orderBy: { updatedAt: 'desc' },
+      take: 3,
+    }),
+    prisma.article.groupBy({
+      by: ['category'],
+      where: {
+        status: 'PUBLISHED',
+        isArchived: false,
+      },
+      _count: { category: true },
+    }),
+  ]);
 
-  const todayArticleViews = await prisma.articleView.count({
-    where: {
-      viewDate: startOfToday,
-    },
-  });
-
-  // Hitung Total Komentar
-  const totalComments = await prisma.comment.count();
-
-  // Hitung Total Views (Semua Artikel)
-  const totalViewsAgg = await prisma.article.aggregate({ _sum: { viewCount: true } });
   const totalViews = totalViewsAgg._sum.viewCount || 0;
 
-  // --- 2. DATA UNTUK NOTIFIKASI ---
-  const pendingPosts = await prisma.article.findMany({
-    where: { status: 'PENDING' },
-    include: { author: true },
-    orderBy: { createdAt: 'desc' },
-    take: 5
-  });
-
-  const recentApproved = await prisma.article.findMany({
-    where: { status: 'PUBLISHED' },
-    orderBy: { updatedAt: 'desc' },
-    take: 3
-  });
-
-  // --- 3. DATA GRAFIK ARTIKEL ---
-  const articlesByCategory = await prisma.article.groupBy({
-    by: ['category'],
-    where: {
-      status: 'PUBLISHED',
-      isArchived: false,
-    },
-    _count: { category: true },
-  });
   const articleChartData = articlesByCategory.map((item) => ({
     name: item.category,
     jumlah: item._count.category,
   }));
 
   // --- 4. DATA GRAFIK PENGUNJUNG (30 HARI TERAKHIR) ---
-  // Kita ambil raw data visitor, lalu kelompokkan berdasarkan tanggal di JS
   const thirtyDaysAgo = new Date();
   thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-  const rawVisitors = await prisma.visitor.findMany({
-    where: {
-        createdAt: {
-            gte: thirtyDaysAgo
-        }
-    },
-    orderBy: { createdAt: 'asc' }
-  });
+  const rawVisitors = await prisma.$queryRaw<Array<{ day: Date; total: number }>>`
+    SELECT DATE_TRUNC('day', "createdAt") AS day, COUNT(*)::int AS total
+    FROM "Visitor"
+    WHERE "createdAt" >= ${thirtyDaysAgo}
+    GROUP BY 1
+    ORDER BY 1 ASC
+  `;
 
   // Format data: { "12 Jan": 5, "13 Jan": 10, ... }
   const visitorMap = new Map<string, { date: string; jumlah: number }>();
@@ -106,12 +102,12 @@ export default async function AdminDashboard() {
     });
   }
 
-  // Isi map dengan data asli dari database
-  rawVisitors.forEach(v => {
-      const dayKey = v.createdAt.toISOString().slice(0, 10);
+    // Isi map dengan data agregat dari database
+    rawVisitors.forEach((v) => {
+      const dayKey = new Date(v.day).toISOString().slice(0, 10);
       if (visitorMap.has(dayKey)) {
-          const current = visitorMap.get(dayKey)!;
-          visitorMap.set(dayKey, { ...current, jumlah: current.jumlah + 1 });
+        const current = visitorMap.get(dayKey)!;
+        visitorMap.set(dayKey, { ...current, jumlah: Number(v.total) || 0 });
       }
   });
 

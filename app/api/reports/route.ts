@@ -2,9 +2,22 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import nodemailer from 'nodemailer';
+import { checkRateLimit, getClientIp } from '@/lib/rateLimit';
 
 export async function POST(request: Request) {
   try {
+        const ip = getClientIp(request);
+        const rate = checkRateLimit(`reports:${ip}`, 12, 10 * 60_000);
+        if (!rate.allowed) {
+            return NextResponse.json(
+                { error: 'Terlalu banyak laporan. Coba lagi beberapa menit lagi.' },
+                {
+                    status: 429,
+                    headers: { 'Retry-After': String(rate.retryAfterSeconds) },
+                }
+            );
+        }
+
     const body = await request.json();
     const { subject, message, type, userEmail } = body;
 
