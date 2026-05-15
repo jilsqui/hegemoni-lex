@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { NextAuthProvider } from "./providers";
 import Navbar from "@/components/Navbar"; // <--- 1. Import ini
@@ -79,6 +81,9 @@ export default function RootLayout({
           
           {children}
           
+          {/* Vercel Analytics & Speed Insights untuk monitoring performance */}
+          <Analytics />
+          <SpeedInsights />
         </NextAuthProvider>
       </body>
     </html>
