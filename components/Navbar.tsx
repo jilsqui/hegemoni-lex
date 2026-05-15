@@ -94,7 +94,7 @@ export default function Navbar() {
                          
                          <Link href="/galeri" className="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black hover:pl-2 transition-all">Galeri</Link>
 
-                         <Link href="/mitra" className="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black hover:pl-2 transition-all">Mitra</Link>
+                         <Link href="/mitra" className="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black hover:pl-2 transition-all">Jaringan</Link>
                     </div>
                 </div>
             </div>
@@ -220,7 +220,7 @@ export default function Navbar() {
                   <Link href="/tentang-kami/tim-kami" className="text-[11px] font-bold uppercase tracking-wider py-2.5 px-3 border border-gray-200 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Tim Kami</Link>
                   <Link href="/hubungi-kami" className="text-[11px] font-bold uppercase tracking-wider py-2.5 px-3 border border-gray-200 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Hubungi Kami</Link>
                   <Link href="/galeri" className="text-[11px] font-bold uppercase tracking-wider py-2.5 px-3 border border-gray-200 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Galeri</Link>
-                  <Link href="/mitra" className="text-[11px] font-bold uppercase tracking-wider py-2.5 px-3 border border-gray-200 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Mitra</Link>
+                  <Link href="/mitra" className="text-[11px] font-bold uppercase tracking-wider py-2.5 px-3 border border-gray-200 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Jaringan</Link>
                   <Link href="/lapor" className="text-[11px] font-bold uppercase tracking-wider py-2.5 px-3 border border-gray-200 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Lapor</Link>
                   <Link href="/donasi" className="text-[11px] font-bold uppercase tracking-wider py-2.5 px-3 border border-gray-200 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Donasi</Link>
                   <Link href="/merch" className="text-[11px] font-bold uppercase tracking-wider py-2.5 px-3 border border-gray-200 active:bg-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Merch</Link>
