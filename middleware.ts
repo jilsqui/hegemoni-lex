@@ -1,30 +1,57 @@
-// middleware.ts
+// middleware.ts - Next.js 16 edge middleware for role-based access control
 import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 
+/**
+ * Edge middleware untuk proteksi dashboard berdasarkan role user
+ * Dijalankan di CDN edge untuk response time minimal
+ */
 export default withAuth(
   function middleware(req) {
-    const role = req.nextauth.token?.role;
+    const token = req.nextauth.token;
     const pathname = req.nextUrl.pathname;
+    
+    // Jika tidak ada token, izinkan withAuth menangani redirect ke login
+    if (!token) {
+      return NextResponse.next();
+    }
 
-    // 1. Cegah Pembaca/Writer masuk ke Admin Dashboard
+    const role = token.role;
+
+    // 1. Proteksi Admin Dashboard - hanya ADMIN
     if (pathname.startsWith("/dashboard/admin") && role !== "ADMIN") {
       return NextResponse.redirect(new URL("/", req.url));
     }
 
-    // 2. Cegah Pembaca masuk ke Writer Dashboard (Admin diizinkan)
-    if (pathname.startsWith("/dashboard/writer") && role !== "WRITER" && role !== "ADMIN") {
+    // 2. Proteksi Writer Dashboard - WRITER atau ADMIN
+    if (
+      pathname.startsWith("/dashboard/writer") &&
+      role !== "WRITER" &&
+      role !== "ADMIN"
+    ) {
       return NextResponse.redirect(new URL("/", req.url));
     }
+
+    return NextResponse.next();
   },
   {
     callbacks: {
-      authorized: ({ token }) => !!token, // Pastikan user sudah login dulu
+      // Hanya izinkan user yang sudah authenticated
+      authorized: ({ token }) => {
+        return !!token;
+      },
+    },
+    pages: {
+      signIn: "/login",
     },
   }
 );
 
-// Tentukan halaman mana saja yang dijaga satpam
+/**
+ * Matcher untuk middleware - hanya jalankan di path dashboard
+ * Mencegah middleware overhead pada routes lainnya
+ */
 export const config = {
-  matcher: ["/dashboard/:path*"], 
+  matcher: ["/dashboard/:path*"],
 };
+
