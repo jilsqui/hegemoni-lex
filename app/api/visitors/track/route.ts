@@ -20,6 +20,7 @@ export async function POST(request: Request) {
     const endOfDay = new Date(startOfDay);
     endOfDay.setDate(endOfDay.getDate() + 1);
 
+    // 🚀 OPTIMIZED: Only check if visitor already tracked today (avoid duplicate)
     const existing = await prisma.visitor.findFirst({
       where: {
         fingerprint: hash,
@@ -40,7 +41,10 @@ export async function POST(request: Request) {
       });
     }
 
-    return NextResponse.json({ ok: true });
+    // Cache response: 60 seconds (visitor tracking doesn't need to be instant)
+    const response = NextResponse.json({ ok: true });
+    response.headers.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
+    return response;
   } catch (error) {
     console.error('Visitor tracking error:', error);
     return NextResponse.json({ error: 'Gagal menyimpan visitor.' }, { status: 500 });

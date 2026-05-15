@@ -30,7 +30,9 @@ export async function POST(request: Request) {
         select: { viewCount: true },
       });
 
-      return NextResponse.json({ viewCount: updatedArticle.viewCount, counted: true });
+      const response = NextResponse.json({ viewCount: updatedArticle.viewCount, counted: true });
+      response.headers.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
+      return response;
     }
 
     const existing = await prisma.articleView.findUnique({
@@ -50,7 +52,9 @@ export async function POST(request: Request) {
         select: { viewCount: true },
       });
 
-      return NextResponse.json({ viewCount: currentArticle?.viewCount || 0, counted: false });
+      const response = NextResponse.json({ viewCount: currentArticle?.viewCount || 0, counted: false });
+      response.headers.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
+      return response;
     }
 
     const [, updatedArticle] = await prisma.$transaction([
@@ -70,7 +74,9 @@ export async function POST(request: Request) {
       }),
     ]);
 
-    return NextResponse.json({ viewCount: updatedArticle.viewCount, counted: true });
+    const response = NextResponse.json({ viewCount: updatedArticle.viewCount, counted: true });
+    response.headers.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
+    return response;
 
   } catch (error: any) {
     // Jika race condition unique constraint terjadi, anggap request duplikat harian.

@@ -13,12 +13,25 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        // Force fresh HTML/doc fetches to avoid stale navbar/script state on some mobile browsers.
-        source: '/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)',
+        // ISR-compatible cache headers: Allow CDN caching with revalidation
+        source: '/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|api).*)',
         headers: [
-          { key: 'Cache-Control', value: 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0' },
-          { key: 'Pragma', value: 'no-cache' },
-          { key: 'Expires', value: '0' },
+          // ISR pages: cache for 1 hour, revalidate in background
+          { key: 'Cache-Control', value: 'public, s-maxage=3600, stale-while-revalidate=86400' },
+        ],
+      },
+      {
+        // API routes: short cache with revalidation
+        source: '/api/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=60, stale-while-revalidate=300' },
+        ],
+      },
+      {
+        // Static assets: long cache
+        source: '/_next/static/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
         ],
       },
     ];

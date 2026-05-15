@@ -19,69 +19,40 @@ export default async function Home() {
   let hamWidgetArticles: any[] = [];
 
   try {
-    // 1. AMBIL FOKUS UTAMA (Featured)
-    featuredArticle = await prisma.article.findFirst({
-      where: {
-          status: 'PUBLISHED',
-          isArchived: false,
-          isFeatured: true
-      },
-      include: { author: true }
-    });
-
-    // Fallback: Jika admin lupa set fokus utama, ambil artikel published paling baru
-    if (!featuredArticle) {
-      featuredArticle = await prisma.article.findFirst({
-          where: { status: 'PUBLISHED', isArchived: false },
-          orderBy: [{ publishedAt: 'desc' }, { createdAt: 'desc' }],
-          include: { author: true }
-      });
-    }
-
-    // 2. AMBIL ARTIKEL TERBARU (Kecuali featured)
-    latestArticles = await prisma.article.findMany({
+    // 🚀 OPTIMIZED: Combine all queries into 2 database calls instead of 5
+    // Query 1: Get featured article
+    const featuredResult = await prisma.article.findFirst({
       where: {
         status: 'PUBLISHED',
         isArchived: false,
-        NOT: { id: featuredArticle?.id || '' }
+        isFeatured: true,
       },
-      orderBy: [{ publishedAt: 'desc' }, { createdAt: 'desc' }],
-      take: 9,
-      include: { author: { select: { name: true } } },
+      include: { author: true },
     });
 
-    // 3. AMBIL ARTIKEL POPULER (by viewCount)
-    popularArticles = await prisma.article.findMany({
-      where: { status: 'PUBLISHED', isArchived: false },
-      orderBy: [{ viewCount: 'desc' }, { publishedAt: 'desc' }],
-      take: 5,
-      include: { author: { select: { name: true } } },
-    });
-
-    // 4. AMBIL TRENDING (4 artikel terbaru untuk strip sidebar, exclude featured)
-    trendingArticles = await prisma.article.findMany({
+    // Query 2: Get 40 articles for all sections (latest, popular, trending, grouped)
+    const allArticles = await prisma.article.findMany({
       where: {
         status: 'PUBLISHED',
         isArchived: false,
-        NOT: { id: featuredArticle?.id || '' }
-      },
-      orderBy: [{ publishedAt: 'desc' }, { createdAt: 'desc' }],
-      take: 4,
-    });
-
-    const groupedSourceArticles = await prisma.article.findMany({
-      where: {
-        status: 'PUBLISHED',
-        isArchived: false,
-        NOT: { id: featuredArticle?.id || '' }
+        NOT: { id: featuredResult?.id || '' },
       },
       orderBy: [{ publishedAt: 'desc' }, { createdAt: 'desc' }],
       take: 40,
       include: { author: { select: { name: true } } },
     });
 
+    // If featured not set, use first article from allArticles
+    featuredArticle = featuredResult || allArticles[0] || null;
+
+    // 📊 Process in JavaScript to extract different views
+    latestArticles = allArticles.slice(0, 9);
+    popularArticles = [...allArticles].sort((a, b) => (b.viewCount || 0) - (a.viewCount || 0)).slice(0, 5);
+    trendingArticles = allArticles.slice(0, 4);
+
+    // Group by category
     const buckets = new Map<string, any[]>();
-    groupedSourceArticles.forEach((article) => {
+    allArticles.forEach((article) => {
       const key = article.category || 'LAINNYA';
       if (!buckets.has(key)) buckets.set(key, []);
       buckets.get(key)!.push(article);
@@ -144,9 +115,9 @@ export default async function Home() {
       'EKONOMI PUBLIK',
     ]);
 
-    opinionWidgetArticles = groupedSourceArticles.filter((article) => article.category === 'OPINI').slice(0, 4);
-    legalWidgetArticles = groupedSourceArticles.filter((article) => legalCategories.has(article.category)).slice(0, 4);
-    hamWidgetArticles = groupedSourceArticles.filter((article) => article.category === 'HAK ASASI MANUSIA').slice(0, 4);
+    opinionWidgetArticles = allArticles.filter((article) => article.category === 'OPINI').slice(0, 4);
+    legalWidgetArticles = allArticles.filter((article) => legalCategories.has(article.category)).slice(0, 4);
+    hamWidgetArticles = allArticles.filter((article) => article.category === 'HAK ASASI MANUSIA').slice(0, 4);
   } catch (error) {
     console.error('Home page DB fallback:', error);
   }
