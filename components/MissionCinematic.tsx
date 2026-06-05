@@ -12,7 +12,7 @@ type MissionItem = {
 };
 
 export default function MissionCinematic({ items }: { items: MissionItem[] }) {
-  const themeAccents = ['#1e40af', '#059669', '#d97706', '#7c3aed'];
+  const themeAccents = ['#1B365D', '#0E5A43', '#A35C1D', '#5D3D79'];
   const clonedItems = [...items, ...items];
 
   return (
