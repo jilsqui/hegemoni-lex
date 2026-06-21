@@ -191,11 +191,7 @@ export default function ArticleListClient({
 
                         <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-widest text-gray-400 pt-3 border-t border-gray-100">
                             <span>Oleh {article.author.name || "Redaksi"}</span>
-                            {typeof article.viewCount === 'number' && (
-                              <span className="flex items-center gap-1 text-gray-400">
-                                👁 {article.viewCount.toLocaleString()}
-                              </span>
-                            )}
+                            {/* Views sengaja disembunyikan dari UI publik (data tetap di-track di backend) */}
                         </div>
                     </div>
                     </article>
