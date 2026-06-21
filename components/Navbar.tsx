@@ -28,13 +28,9 @@ export default function Navbar() {
     "TEKNOLOGI DAN DIGITAL", "POLITIK DAN PEMERINTAHAN"
   ];
 
-  // Sembunyikan Navbar di Dashboard Admin
-  if (pathname && pathname.startsWith('/dashboard/admin')) {
-    return null; 
-  }
-
   useEffect(() => {
     let lastScrollY = window.scrollY;
+
 
     const onScroll = () => {
       const current = window.scrollY;
@@ -59,7 +55,16 @@ export default function Navbar() {
     setIsMobileMenuOpen(false);
   }, [pathname]);
 
+  // Sembunyikan Navbar di Dashboard Admin.
+  // Penting: pengecekan ini diletakkan SETELAH semua hook dipanggil agar
+  // jumlah hook tetap konsisten di setiap render (mencegah client-side exception
+  // "Rendered fewer hooks than expected" saat berpindah dari/ke route admin).
+  if (pathname && pathname.startsWith('/dashboard/admin')) {
+    return null;
+  }
+
   return (
+
     <nav className={`fixed top-0 left-0 right-0 w-full z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 transition-all duration-300 ${isScrolled ? 'shadow-md' : 'shadow-sm'} ${isHidden ? '-translate-y-full' : 'translate-y-0'}`}>
       <div className={`max-w-7xl mx-auto px-4 md:px-6 flex justify-between items-center transition-all duration-300 ${isScrolled ? 'h-14 md:h-16' : 'h-16 md:h-20'}`}>
         
@@ -94,7 +99,7 @@ export default function Navbar() {
                          
                          <Link href="/galeri" className="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black hover:pl-2 transition-all">Galeri</Link>
 
-                         <Link href="/mitra" className="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black hover:pl-2 transition-all">Jaringan</Link>
+                         <Link href="/mitra" className="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black hover:pl-2 transition-all">Mitra</Link>
                     </div>
                 </div>
             </div>
