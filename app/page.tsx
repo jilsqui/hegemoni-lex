@@ -921,10 +921,7 @@ export default async function Home() {
                           <span className="text-[11px] md:text-[10px] text-gray-500 font-medium">
                             {article.author.name || 'Redaksi'}
                           </span>
-                          <span className="text-gray-300">·</span>
-                          <span className="text-[11px] md:text-[10px] text-gray-400 font-light">
-                            {article.viewCount} views
-                          </span>
+                          {/* Label views disembunyikan dari UI publik. Urutan ranking tetap berdasarkan viewCount (lihat sorting popularArticles). */}
                         </div>
                       </div>
                     </Link>
