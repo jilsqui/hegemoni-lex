@@ -57,12 +57,33 @@ export default async function MerchDetailPage({ params }: { params: Promise<{ sl
   return (
     <main className="min-h-screen bg-white text-black font-sans selection:bg-black selection:text-white">
 
-      {/* HERO WITH COVER */}
-      <section className="relative pt-24 md:pt-32 pb-0 border-b border-gray-200 bg-gray-50 overflow-hidden">
-        {/* Subtle background pattern */}
+      {/* HERO WITH COVER — Landscape image fading into text */}
+      <section className="relative pt-24 md:pt-32 pb-0 border-b border-gray-200 bg-gray-50 overflow-hidden min-h-[420px] md:min-h-[480px]">
+        {/* Background landscape image — positioned right, fades left toward text */}
+        <div className="absolute inset-0">
+          <img
+            src={product.imageUrl || "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=1600&q=80"}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full object-cover object-center"
+            style={{
+              maskImage: 'linear-gradient(to right, transparent 0%, transparent 15%, rgba(0,0,0,0.03) 25%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.5) 55%, rgba(0,0,0,0.85) 70%, black 85%)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, transparent 15%, rgba(0,0,0,0.03) 25%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.5) 55%, rgba(0,0,0,0.85) 70%, black 85%)',
+            }}
+          />
+          {/* Bottom fade for clean transition to content below */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background: 'linear-gradient(to bottom, transparent 0%, transparent 60%, rgb(249 250 251) 100%)',
+            }}
+          />
+        </div>
+
+        {/* Subtle background pattern — only visible on the left text area */}
         <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")' }} />
 
-        <div className="mx-auto max-w-6xl px-4 md:px-6 relative">
+        <div className="mx-auto max-w-6xl px-4 md:px-6 relative z-10">
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-gray-500 mb-6">
             <Link href="/merch" className="hover:text-black transition-colors">Merchandise</Link>
@@ -70,94 +91,76 @@ export default async function MerchDetailPage({ params }: { params: Promise<{ sl
             <span className="text-gray-400">{product.category || "Buku"}</span>
           </div>
 
-          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 pb-10 md:pb-16">
-            {/* Left: Info */}
-            <div className="flex-1 flex flex-col justify-center lg:max-w-[55%]">
-              {/* Badges */}
-              <div className="flex items-center gap-2 flex-wrap mb-4">
-                <span className="inline-block py-1 px-3 border border-gray-400 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-600 rounded-full">
-                  {product.category || "Buku"}
+          <div className="pb-10 md:pb-16 lg:max-w-[55%]">
+            {/* Badges */}
+            <div className="flex items-center gap-2 flex-wrap mb-4">
+              <span className="inline-block py-1 px-3 border border-gray-400 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-600 rounded-full backdrop-blur-sm bg-white/60">
+                {product.category || "Buku"}
+              </span>
+              {isPreOrder && (
+                <span className="inline-flex items-center gap-1 rounded-full bg-black/90 backdrop-blur-sm px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
+                  🔥 Pre Order
                 </span>
-                {isPreOrder && (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-black px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
-                    🔥 Pre Order
-                  </span>
-                )}
-                {product.isFeatured && (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-amber-400 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-black">
-                    ⭐ Unggulan
-                  </span>
-                )}
-              </div>
-
-              <h1 className="text-3xl md:text-5xl font-serif font-bold leading-tight">
-                {product.title}
-              </h1>
-
-              {product.subtitle && (
-                <p className="mt-4 text-base md:text-lg text-gray-600 leading-relaxed font-light italic">
-                  {product.subtitle}
-                </p>
               )}
-
-              {/* Author & Year */}
-              {isBook && meta && (
-                <div className="mt-5 flex items-center gap-3">
-                  {meta.author && (
-                    <span className="text-sm font-semibold text-gray-800">
-                      oleh {meta.author}
-                    </span>
-                  )}
-                  {meta.releaseYear && (
-                    <>
-                      <span className="text-gray-300">·</span>
-                      <span className="text-sm text-gray-500">{meta.releaseYear}</span>
-                    </>
-                  )}
-                </div>
-              )}
-
-              {/* Quick Info Pills */}
-              {isBook && meta && (
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {meta.pages && (
-                    <span className="inline-flex items-center gap-1 rounded-full bg-white border border-gray-200 px-3 py-1.5 text-xs text-gray-600 shadow-sm">
-                      📄 {meta.pages} halaman
-                    </span>
-                  )}
-                  {meta.format && (
-                    <span className="inline-flex items-center gap-1 rounded-full bg-white border border-gray-200 px-3 py-1.5 text-xs text-gray-600 shadow-sm">
-                      📦 {meta.format}
-                    </span>
-                  )}
-                  {meta.dimensions && (
-                    <span className="inline-flex items-center gap-1 rounded-full bg-white border border-gray-200 px-3 py-1.5 text-xs text-gray-600 shadow-sm">
-                      📐 {meta.dimensions}
-                    </span>
-                  )}
-                  {meta.isbn && (
-                    <span className="inline-flex items-center gap-1 rounded-full bg-white border border-gray-200 px-3 py-1.5 text-xs text-gray-600 shadow-sm">
-                      🔖 ISBN: {meta.isbn}
-                    </span>
-                  )}
-                </div>
+              {product.isFeatured && (
+                <span className="inline-flex items-center gap-1 rounded-full bg-amber-400/90 backdrop-blur-sm px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-black">
+                  ⭐ Unggulan
+                </span>
               )}
             </div>
 
-            {/* Right: Cover Image */}
-            <div className="flex-shrink-0 flex justify-center lg:justify-end">
-              <div className="relative group">
-                <div className="w-64 md:w-72 lg:w-80 overflow-hidden rounded-3xl border border-gray-200 shadow-2xl transition-transform duration-500 group-hover:scale-[1.02]">
-                  <img
-                    src={product.imageUrl || "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=900&q=80"}
-                    alt={product.title}
-                    className="w-full h-auto object-cover aspect-[3/4]"
-                  />
-                </div>
-                {/* Decorative shadow */}
-                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-[85%] h-8 bg-black/10 blur-2xl rounded-full" />
+            <h1 className="text-3xl md:text-5xl font-serif font-bold leading-tight drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]">
+              {product.title}
+            </h1>
+
+            {product.subtitle && (
+              <p className="mt-4 text-base md:text-lg text-gray-700 leading-relaxed font-light italic drop-shadow-[0_1px_1px_rgba(255,255,255,0.6)]">
+                {product.subtitle}
+              </p>
+            )}
+
+            {/* Author & Year */}
+            {isBook && meta && (
+              <div className="mt-5 flex items-center gap-3">
+                {meta.author && (
+                  <span className="text-sm font-semibold text-gray-800 drop-shadow-[0_1px_1px_rgba(255,255,255,0.6)]">
+                    oleh {meta.author}
+                  </span>
+                )}
+                {meta.releaseYear && (
+                  <>
+                    <span className="text-gray-400">·</span>
+                    <span className="text-sm text-gray-600">{meta.releaseYear}</span>
+                  </>
+                )}
               </div>
-            </div>
+            )}
+
+            {/* Quick Info Pills */}
+            {isBook && meta && (
+              <div className="mt-5 flex flex-wrap gap-2">
+                {meta.pages && (
+                  <span className="inline-flex items-center gap-1 rounded-full bg-white/70 backdrop-blur-sm border border-gray-200/80 px-3 py-1.5 text-xs text-gray-700 shadow-sm">
+                    📄 {meta.pages} halaman
+                  </span>
+                )}
+                {meta.format && (
+                  <span className="inline-flex items-center gap-1 rounded-full bg-white/70 backdrop-blur-sm border border-gray-200/80 px-3 py-1.5 text-xs text-gray-700 shadow-sm">
+                    📦 {meta.format}
+                  </span>
+                )}
+                {meta.dimensions && (
+                  <span className="inline-flex items-center gap-1 rounded-full bg-white/70 backdrop-blur-sm border border-gray-200/80 px-3 py-1.5 text-xs text-gray-700 shadow-sm">
+                    📐 {meta.dimensions}
+                  </span>
+                )}
+                {meta.isbn && (
+                  <span className="inline-flex items-center gap-1 rounded-full bg-white/70 backdrop-blur-sm border border-gray-200/80 px-3 py-1.5 text-xs text-gray-700 shadow-sm">
+                    🔖 ISBN: {meta.isbn}
+                  </span>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </section>
