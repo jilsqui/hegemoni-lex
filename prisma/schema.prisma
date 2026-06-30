@@ -34,6 +34,12 @@ enum GalleryStatus {
   REJECTED  // Ditolak
 }
 
+enum MerchandiseStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
 // 3. MODEL USER
 model User {
   id            String    @id @default(cuid())
@@ -164,4 +170,46 @@ model Gallery {
   uploaderId  String?       
   
   createdAt   DateTime      @default(now())
+}
+
+model MerchandiseProduct {
+  id            String            @id @default(cuid())
+  slug          String            @unique
+  title         String
+  subtitle      String?
+  price         Decimal           @db.Decimal(10, 2)
+  currency      String            @default("IDR")
+  imageUrl      String?
+  category      String            @default("Buku")
+  orderContact  String?
+  isFeatured    Boolean           @default(false)
+  status        MerchandiseStatus @default(PUBLISHED)
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  bookMetadata  BookMetadata?
+
+  @@index([status, isFeatured])
+  @@index([category])
+}
+
+model BookMetadata {
+  id            String             @id @default(cuid())
+  productId     String             @unique
+  author        String?
+  publisher     String?
+  isbn          String?
+  releaseYear   Int?
+  synopsis      String?            @db.Text
+  readingLevel  String?
+  format        String?
+  pages         Int?
+  dimensions    String?
+  edition       String?
+  language      String             @default("Indonesia")
+  tags          String[]           @default([])
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+
+  product       MerchandiseProduct @relation(fields: [productId], references: [id], onDelete: Cascade)
 }

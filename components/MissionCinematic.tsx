@@ -11,8 +11,14 @@ type MissionItem = {
   linkCategory?: string;
 };
 
+const MISSION_ACCENTS: Record<string, string> = {
+  Hukum: '#1B365D',
+  'Kebijakan Publik': '#0E5A43',
+  Opini: '#A35C1D',
+  Edukasi: '#5D3D79',
+};
+
 export default function MissionCinematic({ items }: { items: MissionItem[] }) {
-  const themeAccents = ['#1B365D', '#0E5A43', '#A35C1D', '#5D3D79'];
   const clonedItems = [...items, ...items];
 
   return (
@@ -29,7 +35,7 @@ export default function MissionCinematic({ items }: { items: MissionItem[] }) {
         <div className="overflow-hidden">
           <div className="animate-marquee-cards gap-4 md:gap-5 lg:gap-6 hover:[animation-play-state:paused]">
             {clonedItems.map((item, index) => {
-              const accent = themeAccents[index % 4];
+              const accent = MISSION_ACCENTS[item.title] || '#1B365D';
 
               return (
                 <Link
@@ -39,7 +45,7 @@ export default function MissionCinematic({ items }: { items: MissionItem[] }) {
                   style={{ outlineColor: accent }}
                   aria-label={`Buka topik ${item.title}`}
                 >
-                  <div className="relative aspect-[16/10] overflow-hidden">
+                  <div className="relative aspect-[16/10] overflow-hidden grayscale filter">
                     <Image
                       src={item.image}
                       alt={item.title}

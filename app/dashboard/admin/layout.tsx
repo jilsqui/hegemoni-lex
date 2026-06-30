@@ -86,7 +86,19 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
              <span>👥</span> Kelola User
           </Link>
 
-          {/* MENU 5: LOG AKTIVITAS */}
+          {/* MENU 5: MERCHANDISE */}
+          <Link 
+            href="/dashboard/admin/merchandise" 
+            className={`flex items-center gap-3 px-4 py-3 rounded transition-all ${
+                pathname.includes('/dashboard/admin/merchandise') 
+                ? 'bg-white text-black' 
+                : 'text-gray-400 hover:text-white hover:bg-gray-800'
+            }`}
+          >
+             <span>📚</span> Merchandise
+          </Link>
+
+          {/* MENU 6: LOG AKTIVITAS */}
           <Link 
             href="/dashboard/admin/activity" 
             className={`flex items-center gap-3 px-4 py-3 rounded transition-all ${
