@@ -17,6 +17,11 @@ const partners = [
     shortName: 'Pomanara',
     logo: '/Pomanara.png',
   },
+  {
+    name: 'Kadera',
+    shortName: 'Kadera',
+    logo: '/Kadera.jpeg',
+  },
 ];
 
 export default function MitraPage() {
