@@ -225,7 +225,7 @@ export default function AdminArticlesPage() {
                     )}
                   </div>
 
-                  <h3 className="text-lg font-serif font-bold mb-2 truncate">{article.title}</h3>
+                  <h3 className="text-lg font-serif font-bold mb-2 break-words leading-snug">{article.title}</h3>
 
                   <div className="flex items-center gap-4 text-[10px] text-gray-500 uppercase tracking-wider font-bold flex-wrap">
                     <span>✍️ {article.author.name || article.author.email}</span>
