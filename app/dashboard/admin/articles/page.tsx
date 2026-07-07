@@ -130,35 +130,35 @@ export default function AdminArticlesPage() {
   const archivedCount = articles.filter(a => a.isArchived).length;
 
   return (
-    <div className="p-3 sm:p-4 md:p-6 bg-gray-50 min-h-screen w-full overflow-x-hidden">
+    <div className="p-3 sm:p-4 md:p-6 bg-gray-50 min-h-screen w-full max-w-full overflow-x-hidden box-border">
       {/* HEADER */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-serif font-bold mb-2">Kelola Artikel</h1>
-        <p className="text-gray-500 text-sm">Atur highlight, takedown, arsip, dan pantau views artikel.</p>
+      <div className="mb-6">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-serif font-bold mb-1">Kelola Artikel</h1>
+        <p className="text-gray-500 text-xs sm:text-sm">Atur highlight, takedown, arsip, dan pantau views artikel.</p>
       </div>
 
       {/* STATS BAR */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
-        <div className="bg-white p-4 border-l-4 border-blue-500 shadow-sm rounded-r-md">
-          <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Total Artikel</h3>
-          <div className="text-2xl font-serif font-bold">{articles.length}</div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 mb-4 sm:mb-6">
+        <div className="bg-white p-3 sm:p-4 border-l-4 border-blue-500 shadow-sm rounded-r-md min-w-0">
+          <h3 className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Total Artikel</h3>
+          <div className="text-xl sm:text-2xl font-serif font-bold">{articles.length}</div>
         </div>
-        <div className="bg-white p-4 border-l-4 border-purple-500 shadow-sm rounded-r-md">
-          <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Total Views</h3>
-          <div className="text-2xl font-serif font-bold">{totalViews.toLocaleString()}</div>
+        <div className="bg-white p-3 sm:p-4 border-l-4 border-purple-500 shadow-sm rounded-r-md min-w-0">
+          <h3 className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Total Views</h3>
+          <div className="text-xl sm:text-2xl font-serif font-bold">{totalViews.toLocaleString()}</div>
         </div>
-        <div className="bg-white p-4 border-l-4 border-yellow-500 shadow-sm rounded-r-md">
-          <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Fokus Utama</h3>
-          <div className="text-2xl font-serif font-bold">{featuredCount}</div>
+        <div className="bg-white p-3 sm:p-4 border-l-4 border-yellow-500 shadow-sm rounded-r-md min-w-0">
+          <h3 className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Fokus Utama</h3>
+          <div className="text-xl sm:text-2xl font-serif font-bold">{featuredCount}</div>
         </div>
-        <div className="bg-white p-4 border-l-4 border-gray-500 shadow-sm rounded-r-md">
-          <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Diarsipkan</h3>
-          <div className="text-2xl font-serif font-bold">{archivedCount}</div>
+        <div className="bg-white p-3 sm:p-4 border-l-4 border-gray-500 shadow-sm rounded-r-md min-w-0">
+          <h3 className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Diarsipkan</h3>
+          <div className="text-xl sm:text-2xl font-serif font-bold">{archivedCount}</div>
         </div>
       </div>
 
       {/* FILTER & SEARCH */}
-      <div className="bg-white border border-gray-200 p-3 sm:p-4 rounded-lg mb-4 sm:mb-6 flex flex-col sm:flex-row gap-3 sm:gap-4 items-start sm:items-center justify-between">
+      <div className="bg-white border border-gray-200 p-3 sm:p-4 rounded-lg mb-4 sm:mb-6 flex flex-col gap-3">
         <div className="flex gap-2 flex-wrap">
           {[
             { key: 'all', label: 'Semua', count: articles.length },
@@ -168,7 +168,7 @@ export default function AdminArticlesPage() {
             <button
               key={tab.key}
               onClick={() => setFilter(tab.key as typeof filter)}
-              className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest rounded-full transition-all border ${
+              className={`px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest rounded-full transition-all border ${
                 filter === tab.key
                   ? 'bg-black text-white border-black'
                   : 'bg-white text-gray-500 border-gray-200 hover:border-black hover:text-black'
@@ -184,7 +184,7 @@ export default function AdminArticlesPage() {
           placeholder="Cari artikel..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="border border-gray-200 px-4 py-2 text-sm outline-none focus:border-black transition-colors w-full md:w-64 rounded text-black placeholder:text-gray-400 bg-white"
+          className="border border-gray-200 px-3 py-2 text-sm outline-none focus:border-black transition-colors w-full rounded text-black placeholder:text-gray-400 bg-white"
         />
       </div>
 
