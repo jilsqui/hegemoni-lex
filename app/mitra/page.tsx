@@ -25,7 +25,7 @@ const partners = [
   {
     name: 'IPYG (International Peace Youth Group)',
     shortName: 'IPYG',
-    logo: '/IPYG.jpeg',
+    logo: '/IPYG.png',
   },
 ];
 
