@@ -90,6 +90,10 @@ model Article {
   comments      Comment[]
   ratings       Rating[]
   viewEvents    ArticleView[]
+
+  @@index([status, isArchived, publishedAt])
+  @@index([category])
+  @@index([authorId])
 }
 
 model ArticleView {
