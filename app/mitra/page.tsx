@@ -22,6 +22,11 @@ const partners = [
     shortName: 'Kadera',
     logo: '/Kadera.jpeg',
   },
+  {
+    name: 'IPYG (International Peace Youth Group)',
+    shortName: 'IPYG',
+    logo: '/IPYG.jpeg',
+  },
 ];
 
 export default function MitraPage() {
