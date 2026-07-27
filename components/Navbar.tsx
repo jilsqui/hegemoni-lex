@@ -25,7 +25,8 @@ export default function Navbar() {
   const kebijakanCategories = [
     "REGULASI", "EKONOMI PUBLIK", "SOSIAL & BUDAYA",
     "LINGKUNGAN", "PENDIDIKAN", "KESEHATAN",
-    "TEKNOLOGI DAN DIGITAL", "POLITIK DAN PEMERINTAHAN"
+    "TEKNOLOGI DAN DIGITAL", "POLITIK DAN PEMERINTAHAN",
+    "BUDAYA", "FILSAFAT", "TEOLOGI"
   ];
 
   useEffect(() => {

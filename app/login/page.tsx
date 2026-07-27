@@ -161,11 +161,11 @@ export default function LoginPage() {
         </div>
         <div className="relative z-10">
             <h2 className="text-5xl font-serif font-light leading-tight mb-8">
-              "Keadilan bukanlah sekadar kata, melainkan <span className="italic border-b border-white pb-1">tindakan</span> yang terus menerus."
+              "Sesungguhnya dengan <span className="italic border-b border-white pb-1">membaca dan menulis</span> akan mampu menciptakan peradaban baru."
             </h2>
             <div className="flex items-center gap-4">
                 <div className="h-[2px] w-12 bg-white"></div>
-                <p className="text-xs font-bold uppercase tracking-[0.3em] text-gray-400">Portal Hukum Independen</p>
+                <p className="text-xs font-bold uppercase tracking-[0.3em] text-gray-400">Platform Hukum dan Kebijakan Publik</p>
             </div>
         </div>
         <div className="absolute -bottom-24 -right-24 w-96 h-96 border border-gray-800 rounded-full opacity-50"></div>

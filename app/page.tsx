@@ -995,6 +995,8 @@ export default async function Home() {
             <div className="flex gap-3">
               <a href="https://instagram.com/hegemoni_lex" target="_blank" rel="noopener noreferrer" className="text-[10px] font-bold border border-gray-800 px-3 py-1.5 hover:bg-white hover:text-black hover:border-white transition-all duration-300">INSTAGRAM</a>
                 <a href="#" className="text-[10px] font-bold border border-gray-800 px-3 py-1.5 hover:bg-white hover:text-black hover:border-white transition-all duration-300">LINKEDIN</a>
+                <a href="#" className="text-[10px] font-bold border border-gray-800 px-3 py-1.5 hover:bg-white hover:text-black hover:border-white transition-all duration-300">TWITTER (X)</a>
+                <a href="#" className="text-[10px] font-bold border border-gray-800 px-3 py-1.5 hover:bg-white hover:text-black hover:border-white transition-all duration-300">THREADS</a>
             </div>
           </div>
           
@@ -1035,7 +1037,7 @@ export default async function Home() {
         </div>
 
         <div className="max-w-7xl mx-auto mt-10 md:mt-24 pt-6 md:pt-8 border-t border-gray-800/50 flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-600 font-mono uppercase tracking-wider md:tracking-widest gap-3 md:gap-4">
-          <span>© 2026 HEGEMONI LEX PORTAL.</span>
+          <span>© 2026 HEGEMONI LEX PROJECT.</span>
         </div>
       </footer>
     </div>

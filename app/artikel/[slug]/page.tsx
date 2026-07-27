@@ -349,7 +349,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
       {/* FOOTER KECIL */}
       <div className="max-w-3xl mx-auto px-4 md:px-6 mt-10 md:mt-20 pt-8 md:pt-10 border-t border-black">
         <p className="text-center text-[10px] uppercase tracking-widest text-gray-400">
-            © 2026 Hegemoni Lex Portal
+            © 2026 Hegemoni Lex Project
         </p>
       </div>
     </div>
