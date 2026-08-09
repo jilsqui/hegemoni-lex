@@ -39,8 +39,8 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        // Static assets: long cache
-        source: '/_next/static/:path*',
+        // Static assets & images: long cache for CDN
+        source: '/(_next/static|logohl.png|favicon.ico)/:path*',
         headers: [
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
         ],
