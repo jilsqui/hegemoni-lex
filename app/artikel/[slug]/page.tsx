@@ -8,6 +8,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { markdownLikeToHtml } from '@/lib/articleFormatting';
 import { getPreviewText } from '@/lib/utils';
+import ArticleImage from '@/components/ArticleImage';
 
 // Agar halaman ini selalu mengambil data terbaru (tidak cache mati)
 export const revalidate = 300;
@@ -180,7 +181,11 @@ export default async function ArticleDetailPage({ params }: PageProps) {
           <header className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-[0_20px_40px_-32px_rgba(0,0,0,0.45)]">
             {article.image ? (
               <div className="relative w-full h-[180px] md:h-[280px] lg:h-[420px] bg-gray-100">
-                <img src={article.image} alt={article.title} className="absolute inset-0 h-full w-full object-cover object-center" />
+                <ArticleImage
+                  src={article.image}
+                  alt={article.title}
+                  className="absolute inset-0 h-full w-full object-cover object-center"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
 
                 <div className="absolute left-4 top-4 md:left-8 md:top-8 z-10">
@@ -284,7 +289,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
                       <Link key={item.id} href={`/artikel/${item.slug}`} className="group flex gap-3 p-4 hover:bg-gray-50 transition-colors">
                         <div className="w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
                           {item.image ? (
-                            <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            <ArticleImage src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center text-gray-300 text-[10px] italic font-serif">HL</div>
                           )}
@@ -316,7 +321,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
               <Link key={item.id} href={`/artikel/${item.slug}`} className="group block rounded-xl border border-gray-200 bg-white overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.07)] hover:shadow-[0_8px_24px_-12px_rgba(0,0,0,0.35)] hover:-translate-y-1 transition-all duration-300">
                 <div className="aspect-[16/10] bg-gray-100 overflow-hidden">
                   {item.image ? (
-                    <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <ArticleImage src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-gray-300 font-serif italic text-sm">Hegemoni Lex</div>
                   )}

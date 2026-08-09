@@ -6,6 +6,7 @@ import { getPreviewText } from '@/lib/utils';
 import ScrollPopOut from '@/components/ScrollPopOut';
 import MissionCinematic from '@/components/MissionCinematic';
 import HomeHybridWidget from '@/components/HomeHybridWidget';
+import ArticleImage from '@/components/ArticleImage';
 export const revalidate = 120;
 
 export default async function Home() {
@@ -777,7 +778,7 @@ export default async function Home() {
                     <article className="card-lift rounded-2xl border border-gray-200 bg-white p-4 md:p-5 shadow-[0_1px_3px_rgba(0,0,0,0.08)] transition-all duration-300 hover:shadow-[0_14px_36px_-26px_rgba(0,0,0,0.4)]">
                       {latestArticles[0].image && (
                         <div className="aspect-[16/10] md:aspect-[16/9] w-full bg-gray-100 mb-4 md:mb-6 overflow-hidden hover-elegant rounded-xl">
-                          <img 
+                          <ArticleImage 
                             src={latestArticles[0].image} 
                             alt={latestArticles[0].title} 
                             className="w-full h-full object-cover"
@@ -816,7 +817,7 @@ export default async function Home() {
                         <article className="h-full border border-gray-200 rounded-sm p-3 md:p-4 card-lift bg-white">
                           {article.image && (
                             <div className="aspect-[4/3] w-full bg-gray-100 mb-4 overflow-hidden hover-elegant rounded-sm">
-                              <img 
+                              <ArticleImage 
                                 src={article.image} 
                                 alt={article.title} 
                                 className="w-full h-full object-cover"
@@ -853,7 +854,7 @@ export default async function Home() {
                           <div className="sm:w-[190px] sm:flex-shrink-0">
                             <div className="h-full min-h-[132px] bg-gray-100 overflow-hidden hover-elegant">
                               {article.image ? (
-                                <img
+                                <ArticleImage
                                   src={article.image}
                                   alt={article.title}
                                   className="w-full h-full object-cover"

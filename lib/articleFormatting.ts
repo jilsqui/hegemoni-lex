@@ -12,6 +12,7 @@ export function escapeHtml(value: string): string {
 function renderInline(text: string): string {
   let out = escapeHtml(text).replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;');
   out = out.replace(/ {2,}/g, (spaces) => '&nbsp;'.repeat(spaces.length - 1) + ' ');
+  out = out.replace(/!\[([^\]]*)\]\((https?:\/\/[^\s)]+|\/[^\s)]+)\)/g, '<img src="$2" alt="$1" loading="lazy" class="rounded-lg max-w-full my-4" />');
   out = out.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noreferrer">$1</a>');
   out = out.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
   out = out.replace(/~~(.+?)~~/g, '<s>$1</s>');
