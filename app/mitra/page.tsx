@@ -48,7 +48,7 @@ export default function MitraPage() {
             Profil
           </span>
           <h1 className="text-3xl md:text-5xl font-serif font-bold mb-4 leading-tight">
-            Jaringan Kolaborasi
+            Mitra Kolaborasi
           </h1>
           <p className="max-w-2xl mx-auto text-sm md:text-base text-gray-500 leading-relaxed">
             Kami tumbuh bersama komunitas dan lembaga yang memiliki visi serupa: memperluas literasi hukum dan kebijakan publik secara kritis, terbuka, dan berdampak.
