@@ -28,13 +28,13 @@ const partners = [
     logo: '/IPYG.png',
   },
   {
-    name: 'YPGI (Yayasan Pemuda Generasi Indonesia)',
-    shortName: 'YPGI',
+    name: 'YGPI (Yayasan Get Plastic Indonesia)',
+    shortName: 'YGPI',
     logo: '/YGPI.jpeg',
   },
   {
-    name: 'BP 2025',
-    shortName: 'BP2025',
+    name: 'Bincang Perempuan',
+    shortName: 'BP',
     logo: '/LOGO BP 2025.png',
   },
 ];
