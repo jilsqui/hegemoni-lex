@@ -30,7 +30,7 @@ const partners = [
   {
     name: 'YPGI (Yayasan Pemuda Generasi Indonesia)',
     shortName: 'YPGI',
-    logo: '/YPGI.jpeg',
+    logo: '/YGPI.jpeg',
   },
   {
     name: 'BP 2025',
