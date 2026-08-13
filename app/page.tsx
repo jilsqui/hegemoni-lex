@@ -196,13 +196,13 @@ export default async function Home() {
               <article className="md:col-span-6 lg:col-span-6 rounded-2xl border border-gray-200 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.08)] overflow-hidden transition-all duration-300 hover:shadow-[0_14px_36px_-26px_rgba(0,0,0,0.4)]">
                 <Link href={`/artikel/${featuredArticle.slug}`} tabIndex={-1} className="block group">
                   <div className="relative aspect-[16/9] bg-gray-100 overflow-hidden hover-elegant">
-                    {featuredArticle.image ? (
-                      <img src={featuredArticle.image} alt={featuredArticle.title} className="absolute inset-0 w-full h-full object-cover" />
-                    ) : (
-                      <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-700 flex items-center justify-center">
-                        <span className="font-serif text-white/10 text-7xl italic">HL</span>
-                      </div>
-                    )}
+                  {featuredArticle.image ? (
+                    <ArticleImage src={featuredArticle.image} alt={featuredArticle.title} className="absolute inset-0 w-full h-full object-cover" priority={true} sizes="(max-width: 768px) 100vw, 60vw" />
+                  ) : (
+                    <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-700 flex items-center justify-center">
+                      <span className="font-serif text-white/10 text-7xl italic">HL</span>
+                    </div>
+                  )}
                   </div>
                 </Link>
 
@@ -245,9 +245,9 @@ export default async function Home() {
                         href={`/artikel/${article.slug}`}
                         className="group flex items-start gap-3 rounded-lg border border-gray-100 p-3 transition-all duration-200 hover:bg-gray-50 hover:border-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
                       >
-                        <div className="w-[70px] h-[70px] lg:w-20 lg:h-20 rounded-lg bg-gray-100 overflow-hidden flex-shrink-0 hover-elegant">
+                                                <div className="w-[70px] h-[70px] lg:w-20 lg:h-20 rounded-lg bg-gray-100 overflow-hidden flex-shrink-0 hover-elegant relative">
                           {article.image ? (
-                            <img src={article.image} alt={article.title} className="w-full h-full object-cover" />
+                            <ArticleImage src={article.image} alt={article.title} className="w-full h-full object-cover" sizes="80px" />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center text-gray-300 font-serif italic text-xs">HL</div>
                           )}
@@ -324,9 +324,9 @@ export default async function Home() {
 
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6 items-stretch">
                       <Link href={`/artikel/${lead.slug}`} className="lg:col-span-7 relative min-h-[320px] md:min-h-[460px] overflow-hidden rounded-sm border border-gray-200 group">
-                        {lead.image && <img src={lead.image} alt={lead.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                        <div className="absolute left-4 top-4">
+                        {lead.image && <ArticleImage src={lead.image} alt={lead.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" sizes="(max-width: 768px) 100vw, 55vw" />}
+                                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                                  <div className="absolute left-4 top-4">
                           <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-white/70">Suara & Tafsir</span>
                         </div>
                         <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6">
@@ -367,12 +367,12 @@ export default async function Home() {
                         <Link href={`/artikel?q=${section.category}`} className="text-[10px] font-bold uppercase tracking-[0.15em] text-gray-500 hover:text-black">Lihat Semua →</Link>
                       </div>
                       <Link href={`/artikel/${lead.slug}`} className="relative block min-h-[300px] md:min-h-[440px] rounded-sm overflow-hidden border border-gray-200 group">
-                        {lead.image && <img src={lead.image} alt={lead.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
-                        <div className="absolute bottom-0 left-0 right-0 p-5 md:p-7">
-                          <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/70">Dokumen Utama</span>
-                          <h4 className="text-2xl md:text-4xl font-serif font-bold text-white leading-tight mt-2 line-clamp-3">{lead.title}</h4>
-                        </div>
+                        {lead.image && <ArticleImage src={lead.image} alt={lead.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" sizes="(max-width: 768px) 100vw, 55vw" />}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
+                                    <div className="absolute bottom-0 left-0 right-0 p-5 md:p-7">
+                                      <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/70">Dokumen Utama</span>
+                                      <h4 className="text-2xl md:text-4xl font-serif font-bold text-white leading-tight mt-2 line-clamp-3">{lead.title}</h4>
+                                    </div>
                       </Link>
                     </section>
                   );
@@ -389,9 +389,9 @@ export default async function Home() {
                         <Link href={`/artikel?q=${section.category}`} className="text-[10px] font-bold uppercase tracking-[0.15em] text-gray-500 hover:text-black">Lihat Semua →</Link>
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                        {section.articles.map((article, idx) => (
+                                                {section.articles.map((article, idx) => (
                           <Link key={article.id} href={`/artikel/${article.slug}`} className="block border border-gray-200 rounded-sm overflow-hidden group">
-                            {article.image && <img src={article.image} alt={article.title} className="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-105" />}
+                            {article.image && <div className="relative h-56 w-full"><ArticleImage src={article.image} alt={article.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" sizes="(max-width: 768px) 100vw, 40vw" /></div>}
                             <div className="p-4 md:p-5">
                               <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-gray-400 mb-2">{String(idx + 1).padStart(2, '0')}</p>
                               <h4 className="font-serif font-bold text-base md:text-lg leading-snug line-clamp-3">{article.title}</h4>
@@ -417,10 +417,10 @@ export default async function Home() {
 
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6">
                       <Link href={`/artikel/${lead.slug}`} className="lg:col-span-5 relative min-h-[260px] md:min-h-[360px] overflow-hidden rounded-sm border border-gray-200 group">
-                        {lead.image && <img src={lead.image} alt={lead.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />}
+                        {lead.image && <ArticleImage src={lead.image} alt={lead.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" sizes="(max-width: 768px) 100vw, 40vw" />}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
                         <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6">
-                          <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/70">Dokumen Utama</span>
+                                <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/70">Dokumen Utama</span>
                           <h4 className="text-xl md:text-3xl font-serif font-bold text-white leading-tight mt-2 line-clamp-3">{lead.title}</h4>
                         </div>
                       </Link>
@@ -458,16 +458,16 @@ export default async function Home() {
                         <Link href={`/artikel?q=${section.category}`} className="text-[10px] font-bold uppercase tracking-[0.15em] text-gray-500 hover:text-black">Lihat Semua →</Link>
                       </div>
                       <Link href={`/artikel/${lead.slug}`} className="relative block min-h-[300px] md:min-h-[460px] rounded-sm overflow-hidden border border-gray-200 group">
-                        {lead.image && <img src={lead.image} alt={lead.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
-                        <div className="absolute bottom-0 left-0 right-0 p-5 md:p-7">
-                          <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/70">Martabat, Akses, Perlindungan</span>
-                          <h4 className="text-2xl md:text-4xl font-serif font-bold text-white leading-tight mt-2 line-clamp-3">{lead.title}</h4>
-                          <p className="text-white/75 text-sm md:text-base font-light leading-relaxed mt-3 max-w-2xl line-clamp-3">
-                            {getPreviewText(lead.excerpt, lead.content, 180)}
-                          </p>
-                        </div>
-                      </Link>
+                        {lead.image && <ArticleImage src={lead.image} alt={lead.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" sizes="(max-width: 768px) 100vw, 55vw" />}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
+                          <div className="absolute bottom-0 left-0 right-0 p-5 md:p-7">
+                            <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/70">Martabat, Akses, Perlindungan</span>
+                            <h4 className="text-2xl md:text-4xl font-serif font-bold text-white leading-tight mt-2 line-clamp-3">{lead.title}</h4>
+                            <p className="text-white/75 text-sm md:text-base font-light leading-relaxed mt-3 max-w-2xl line-clamp-3">
+                              {getPreviewText(lead.excerpt, lead.content, 180)}
+                            </p>
+                          </div>
+                        </Link>
                     </section>
                   );
                 }
@@ -475,17 +475,17 @@ export default async function Home() {
                 if (total === 2) {
                   return (
                     <section key={section.category} className="pb-8 border-b border-gray-100">
-                      <div className="flex items-center justify-between mb-4 md:mb-5">
-                        <div>
-                          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-2 block">Hak & Martabat</span>
-                          <h3 className="text-xl md:text-3xl font-serif font-bold text-gray-900">{formatCategory(section.category)}</h3>
+                        <div className="flex items-center justify-between mb-4 md:mb-5">
+                          <div>
+                            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-2 block">Hak & Martabat</span>
+                            <h3 className="text-xl md:text-3xl font-serif font-bold text-gray-900">{formatCategory(section.category)}</h3>
+                          </div>
+                          <Link href={`/artikel?q=${section.category}`} className="text-[10px] font-bold uppercase tracking-[0.15em] text-gray-500 hover:text-black">Lihat Semua →</Link>
                         </div>
-                        <Link href={`/artikel?q=${section.category}`} className="text-[10px] font-bold uppercase tracking-[0.15em] text-gray-500 hover:text-black">Lihat Semua →</Link>
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                        {section.articles.map((article) => (
-                          <Link key={article.id} href={`/artikel/${article.slug}`} className="block border border-gray-200 rounded-sm overflow-hidden group">
-                            {article.image && <img src={article.image} alt={article.title} className="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-105" />}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                          {section.articles.map((article) => (
+                            <Link key={article.id} href={`/artikel/${article.slug}`} className="block border border-gray-200 rounded-sm overflow-hidden group">
+                              {article.image && <div className="relative h-56 w-full"><ArticleImage src={article.image} alt={article.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" sizes="(max-width: 768px) 100vw, 40vw" /></div>}
                             <div className="p-4 md:p-5">
                               <h4 className="font-serif font-bold text-base md:text-lg leading-snug line-clamp-3">{article.title}</h4>
                             </div>
@@ -519,10 +519,10 @@ export default async function Home() {
                       </div>
 
                       <Link href={`/artikel/${lead.slug}`} className="lg:col-span-8 relative min-h-[280px] md:min-h-[420px] overflow-hidden rounded-sm border border-gray-200 group">
-                        {lead.image && <img src={lead.image} alt={lead.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
-                        <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6">
-                          <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/70">Martabat, Akses, Perlindungan</span>
+                        {lead.image && <ArticleImage src={lead.image} alt={lead.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" sizes="(max-width: 768px) 100vw, 65vw" />}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
+                          <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6">
+                            <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/70">Martabat, Akses, Perlindungan</span>
                           <h4 className="text-2xl md:text-4xl font-serif font-bold text-white leading-tight mt-2 line-clamp-3">{lead.title}</h4>
                           <p className="text-white/75 text-sm md:text-base font-light leading-relaxed mt-3 max-w-2xl line-clamp-3">
                             {getPreviewText(lead.excerpt, lead.content, 180)}
@@ -544,13 +544,13 @@ export default async function Home() {
                         <Link href={`/artikel?q=${section.category}`} className="text-[10px] font-bold uppercase tracking-[0.15em] text-gray-500 hover:text-black">Lihat Topik →</Link>
                       </div>
                       <Link href={`/artikel/${lead.slug}`} className="relative block min-h-[250px] md:min-h-[340px] rounded-sm overflow-hidden group border border-gray-200">
-                        {lead.image && <img src={lead.image} alt={lead.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
-                        <div className="absolute bottom-0 p-4 md:p-6">
-                          <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/70">{formatCategory(section.category)}</span>
-                          <h3 className="text-lg md:text-2xl font-serif font-bold text-white mt-2 line-clamp-2">{lead.title}</h3>
-                        </div>
-                      </Link>
+                        {lead.image && <ArticleImage src={lead.image} alt={lead.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" sizes="(max-width: 768px) 100vw, 55vw" />}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
+                          <div className="absolute bottom-0 p-4 md:p-6">
+                            <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/70">{formatCategory(section.category)}</span>
+                            <h3 className="text-lg md:text-2xl font-serif font-bold text-white mt-2 line-clamp-2">{lead.title}</h3>
+                          </div>
+                        </Link>
                     </div>
                   );
                 }
@@ -558,14 +558,14 @@ export default async function Home() {
                 if (total === 2) {
                   return (
                     <div key={section.category} className="pb-10 border-b border-gray-100">
-                      <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-lg md:text-2xl font-serif font-bold">{formatCategory(section.category)}</h3>
-                        <Link href={`/artikel?q=${section.category}`} className="text-[10px] font-bold uppercase tracking-[0.15em] text-gray-500 hover:text-black">Lihat Topik →</Link>
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                        {section.articles.map((article) => (
-                          <Link key={article.id} href={`/artikel/${article.slug}`} className="block border border-gray-200 rounded-sm overflow-hidden group">
-                            {article.image && <img src={article.image} alt={article.title} className="w-full h-52 object-cover transition-transform duration-500 group-hover:scale-105" />}
+                        <div className="flex items-center justify-between mb-4">
+                          <h3 className="text-lg md:text-2xl font-serif font-bold">{formatCategory(section.category)}</h3>
+                          <Link href={`/artikel?q=${section.category}`} className="text-[10px] font-bold uppercase tracking-[0.15em] text-gray-500 hover:text-black">Lihat Topik →</Link>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                          {section.articles.map((article) => (
+                            <Link key={article.id} href={`/artikel/${article.slug}`} className="block border border-gray-200 rounded-sm overflow-hidden group">
+                              {article.image && <div className="relative h-52 w-full"><ArticleImage src={article.image} alt={article.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" sizes="(max-width: 768px) 100vw, 40vw" /></div>}
                             <div className="p-4">
                               <h4 className="font-serif font-bold text-base line-clamp-2">{article.title}</h4>
                             </div>
@@ -579,7 +579,7 @@ export default async function Home() {
                 return (
                   <div key={section.category} className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6 pb-10 border-b border-gray-100">
                     <Link href={`/artikel?q=${section.category}`} className="lg:col-span-7 relative min-h-[220px] md:min-h-[320px] overflow-hidden rounded-sm bg-gray-100 block group">
-                      {lead.image && <img src={lead.image} alt={lead.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />}
+                                            {lead.image && <ArticleImage src={lead.image} alt={lead.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" sizes="(max-width: 768px) 100vw, 55vw" />}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
                       <div className="absolute bottom-0 p-4 md:p-6">
                         <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/70">{formatCategory(section.category)}</span>
@@ -607,8 +607,8 @@ export default async function Home() {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                       {[lead, ...rest].slice(0, 2).map((article) => (
-                        <Link key={article.id} href={`/artikel/${article.slug}`} className="block border border-gray-200 rounded-sm overflow-hidden group">
-                          {article.image && <img src={article.image} alt={article.title} className="w-full h-44 object-cover transition-transform duration-500 group-hover:scale-105" />}
+                          <Link key={article.id} href={`/artikel/${article.slug}`} className="block border border-gray-200 rounded-sm overflow-hidden group">
+                            {article.image && <div className="relative h-44 w-full"><ArticleImage src={article.image} alt={article.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" sizes="(max-width: 768px) 100vw, 40vw" /></div>}
                           <div className="p-4">
                             <h4 className="font-serif font-bold text-base line-clamp-2">{article.title}</h4>
                           </div>
