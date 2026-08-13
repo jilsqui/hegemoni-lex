@@ -26,11 +26,13 @@ export default function ArticleImage({
   sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 800px',
   priority = false,
 }: ArticleImageProps) {
-  const [imgSrc, setImgSrc] = useState(src || fallbackSrc);
+  const [error, setError] = useState(false);
+  const resolvedSrc = (!src || error) ? null : src;
 
-  // Jika src kosong, langsung render fallback sebagai <img> lokal
-  if (!imgSrc || imgSrc === fallbackSrc) {
+  // Jika src kosong atau error, render fallback lokal
+  if (!resolvedSrc) {
     return (
+      // eslint-disable-next-line @next/next/no-img-element
       <img
         src={fallbackSrc}
         alt={alt}
@@ -39,31 +41,32 @@ export default function ArticleImage({
     );
   }
 
-  // Gunakan next/image untuk semua URL eksternal (Supabase) agar di-cache Vercel
+  // Gunakan next/image untuk semua URL agar di-cache & di-optimize Vercel
   if (fill) {
     return (
       <NextImage
-        src={imgSrc}
+        src={resolvedSrc}
         alt={alt}
         fill
         sizes={sizes}
         className={className}
         priority={priority}
-        onError={() => setImgSrc(fallbackSrc)}
+        onError={() => setError(true)}
+        style={{ objectFit: 'cover' }}
       />
     );
   }
 
   return (
     <NextImage
-      src={imgSrc}
+      src={resolvedSrc}
       alt={alt}
       width={width ?? 800}
       height={height ?? 450}
       sizes={sizes}
       className={className}
       priority={priority}
-      onError={() => setImgSrc(fallbackSrc)}
+      onError={() => setError(true)}
     />
   );
 }

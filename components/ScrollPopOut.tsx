@@ -11,15 +11,15 @@ interface ScrollPopOutProps {
 export default function ScrollPopOut({ children, className = '' }: ScrollPopOutProps) {
   const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+    useEffect(() => {
     const el = ref.current;
     if (!el) return;
 
     // Only apply on mobile (< 768px)
     const isMobile = window.innerWidth < 768;
     if (!isMobile) {
-      el.style.opacity = '1';
-      el.style.transform = 'none';
+      // Ensure desktop always visible regardless of CSS initial state
+      el.classList.add('is-visible');
       return;
     }
 
@@ -33,15 +33,15 @@ export default function ScrollPopOut({ children, className = '' }: ScrollPopOutP
         });
       },
       {
-        threshold: 0.15,
-        rootMargin: '0px 0px -50px 0px',
+        threshold: 0.1,
+        rootMargin: '0px 0px -30px 0px',
       }
     );
 
     observer.observe(el);
 
     return () => {
-      observer.unobserve(el);
+      observer.disconnect();
     };
   }, []);
 

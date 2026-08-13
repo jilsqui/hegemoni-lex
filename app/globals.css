@@ -9,8 +9,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter), Arial, Helvetica, sans-serif;
+  --font-mono: 'Courier New', monospace;
+  --font-serif: var(--font-playfair), Georgia, serif;
 }
 
 body {
@@ -46,10 +47,13 @@ body {
   display: none;
 }
 
-/* Smooth scrolling on mobile */
+/* Smooth scrolling — semua device */
+html {
+  scroll-behavior: smooth;
+}
+
 @media (max-width: 768px) {
   html {
-    scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
   }
 }
@@ -64,34 +68,27 @@ body {
   animation: marquee 30s linear infinite;
 }
 
-.animate-marquee-cards {
-  display: flex;
-  flex-wrap: nowrap;
-  width: max-content;
-  animation: marquee 32s linear infinite;
-}
-
 @media (max-width: 768px) {
   .animate-marquee {
     animation: marquee 15s linear infinite;
   }
-
-  .animate-marquee-cards {
-    animation: marquee 18s linear infinite;
-  }
 }
 
 /* Elegant hover effect for article images */
+/* Compatible dengan next/image (img, span > img) */
 .hover-elegant {
   overflow: hidden;
   position: relative;
 }
 
-.hover-elegant img {
+/* Target both plain img and next/image rendered img */
+.hover-elegant img,
+.hover-elegant span img {
   transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.7s ease;
 }
 
-.hover-elegant:hover img {
+.hover-elegant:hover img,
+.hover-elegant:hover span img {
   transform: scale(1.04);
   filter: brightness(1.05) contrast(1.02);
 }
@@ -155,10 +152,25 @@ body {
 .scroll-pop-out {
   opacity: 0;
   transform: translateY(40px) scale(0.95);
+  /* Prevent invisible content on slow connections */
+  will-change: opacity, transform;
 }
 
 .scroll-pop-out.is-visible {
-  animation: popOut 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: popOut 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Desktop: langsung tampil tanpa animasi untuk performa lebih baik */
+@media (min-width: 768px) {
+  .scroll-pop-out {
+    opacity: 1;
+    transform: none;
+    will-change: auto;
+  }
+
+  .scroll-pop-out.is-visible {
+    animation: none;
+  }
 }
 
 /* Stagger children for sequential animation */
