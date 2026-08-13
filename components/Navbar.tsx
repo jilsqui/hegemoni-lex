@@ -91,7 +91,9 @@ export default function Navbar() {
                 
                 <div className="absolute top-full left-1/2 -translate-x-1/2 w-64 bg-white border border-gray-200 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.2)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 p-4">
                     <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-t border-l border-gray-200 rotate-45"></div>
-                    <div className="relative z-10 flex flex-col gap-3">
+                                        <div className="relative z-10 flex flex-col gap-3">
+                         <Link href="/tentang-kami/visi-misi-kami" className="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black hover:pl-2 transition-all">Tentang Kami</Link>
+
                          <Link href="/tentang-kami/tim-kami" className="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black hover:pl-2 transition-all">Tim Kami</Link>
                          
                          <Link href="/hubungi-kami" className="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-black hover:pl-2 transition-all">Hubungi Kami</Link>

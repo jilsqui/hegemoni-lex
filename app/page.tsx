@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { prisma } from '@/lib/prisma';
 import { getPreviewText } from '@/lib/utils';
 import ScrollPopOut from '@/components/ScrollPopOut';
-import MissionCinematic from '@/components/MissionCinematic';
+
 import HomeHybridWidget from '@/components/HomeHybridWidget';
 import ArticleImage from '@/components/ArticleImage';
 export const revalidate = 120;
@@ -289,7 +289,7 @@ export default async function Home() {
 
       </header>
 
-      <MissionCinematic items={missionItems} />
+      
 
       {groupedCategorySections.length > 0 && (
         <section className="max-w-7xl mx-auto px-3 md:px-6 py-10 md:py-20 border-b border-gray-200">

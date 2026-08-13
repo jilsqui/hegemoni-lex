@@ -22,10 +22,20 @@ const partners = [
     shortName: 'Kadera',
     logo: '/Kadera.jpeg',
   },
-  {
+    {
     name: 'IPYG (International Peace Youth Group)',
     shortName: 'IPYG',
     logo: '/IPYG.png',
+  },
+  {
+    name: 'YPGI (Yayasan Pemuda Generasi Indonesia)',
+    shortName: 'YPGI',
+    logo: '/YPGI.jpeg',
+  },
+  {
+    name: 'BP 2025',
+    shortName: 'BP2025',
+    logo: '/LOGO BP 2025.png',
   },
 ];
 

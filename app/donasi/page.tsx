@@ -26,39 +26,20 @@ export default function DonasiPage() {
       <div className="max-w-4xl mx-auto px-4 md:px-6 py-10 md:py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           
-          {/* INFO REKENING */}
-          <div className="bg-gray-50 border border-gray-200 p-5 md:p-10">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-12 h-12 bg-black text-white flex items-center justify-center font-bold text-xl">
-                💳
-              </div>
-              <div>
-                <h3 className="font-serif font-bold text-xl">Transfer Bank</h3>
-                <p className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Metode Donasi</p>
-              </div>
+                    {/* INFO DONASI */}
+          <div className="bg-gray-50 border border-gray-200 p-5 md:p-10 flex flex-col justify-center items-center text-center gap-6">
+            <div className="w-14 h-14 bg-black text-white flex items-center justify-center font-bold text-2xl rounded-full">
+              🙏
             </div>
-
-            <div className="space-y-6">
-              <div className="bg-white border border-gray-200 p-6">
-                <p className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2">Bank</p>
-                <p className="text-2xl font-serif font-bold">BCA</p>
-              </div>
-
-              <div className="bg-white border border-gray-200 p-4 md:p-6">
-                <p className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2">Nomor Rekening</p>
-                <p className="text-xl md:text-2xl font-mono font-bold tracking-wider">8415 0908 22</p>
-              </div>
-
-              <div className="bg-white border border-gray-200 p-4 md:p-6">
-                <p className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2">Atas Nama</p>
-                <p className="text-lg md:text-2xl font-serif font-bold">Efrial Ruliandi Silalahi</p>
-              </div>
+            <div>
+              <h3 className="font-serif font-bold text-xl mb-2">Donasi via Saweria</h3>
+              <p className="text-sm text-gray-500 font-light leading-relaxed max-w-xs">
+                Dukung kami langsung melalui platform Saweria. Cepat, mudah, dan aman.
+              </p>
             </div>
-
-            <div className="mt-8 p-4 bg-yellow-50 border border-yellow-200 text-sm text-yellow-800">
-              <strong>Catatan:</strong> Setelah melakukan transfer, Anda dapat mengirimkan konfirmasi donasi 
-              melalui halaman <Link href="/hubungi-kami" className="underline font-bold">Hubungi Kami</Link>.
-            </div>
+            <a href="https://saweria.co/hegemonilex" target="_blank" rel="noopener noreferrer" className="inline-block bg-black text-white px-8 py-4 text-[10px] font-bold uppercase tracking-widest hover:bg-gray-800 transition-all">
+              Donasi di Saweria →
+            </a>
           </div>
 
           {/* IMPACT */}
