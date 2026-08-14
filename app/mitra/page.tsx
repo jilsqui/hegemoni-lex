@@ -35,7 +35,7 @@ const partners = [
   {
     name: 'Bincang Perempuan',
     shortName: 'BP',
-    logo: '/LOGO%20BP%202025.png',
+    logo: '/LOGO-BP-2025.png',
   },
 ];
 
