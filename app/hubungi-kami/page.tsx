@@ -25,7 +25,7 @@ export default function HubungiKamiPage() {
         </div>
 
         <div className="mt-8 md:mt-12">
-            <a href="mailto:lexhegemoni@gmail.com" className="bg-white text-black px-6 py-3 md:px-8 md:py-4 font-bold uppercase tracking-widest text-xs hover:bg-gray-200 transition-colors inline-block active:bg-gray-300">
+            <a href="https://mail.google.com/mail/?view=cm&to=lexhegemoni@gmail.com&su=Kolaborasi%20dengan%20Hegemoni%20LEX" target="_blank" rel="noopener noreferrer" className="bg-white text-black px-6 py-3 md:px-8 md:py-4 font-bold uppercase tracking-widest text-xs hover:bg-gray-200 transition-colors inline-block active:bg-gray-300">
                Hubungi Via Email ✉️
             </a>
         </div>
