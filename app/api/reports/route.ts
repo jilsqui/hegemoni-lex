@@ -44,7 +44,7 @@ export async function POST(request: Request) {
     // 3. SUSUN ISI EMAIL
     const mailOptions = {
         from: `"Sistem Laporan Hegemoni" <${process.env.EMAIL_USER}>`, // Nama Pengirim
-        to: 'lexhegemoni@gmail.com', // Email Admin Penerima (Bisa diganti jika admin beda email)
+        to: process.env.ADMIN_EMAIL || 'hegemonilex@gmail.com', // Email Admin Penerima (Bisa diganti jika admin beda email)
         subject: `[${type}] ${subject}`, // Judul Email: [BUG] Login Error
         html: `
             <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 5px;">

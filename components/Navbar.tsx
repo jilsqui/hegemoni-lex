@@ -26,12 +26,17 @@ export default function Navbar() {
     "REGULASI", "EKONOMI PUBLIK", "SOSIAL & BUDAYA",
     "LINGKUNGAN", "PENDIDIKAN", "KESEHATAN",
     "TEKNOLOGI DAN DIGITAL", "POLITIK DAN PEMERINTAHAN",
-    "BUDAYA", "FILSAFAT", "TEOLOGI"
+    "BUDAYA", "FILSAFAT", "TEOLOGI", "SASTRA"
   ];
+
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
+    setIsMobileMenuOpen(false);
+  }
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
-
 
     const onScroll = () => {
       const current = window.scrollY;
@@ -51,10 +56,6 @@ export default function Navbar() {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, [isMobileMenuOpen]);
-
-  useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [pathname]);
 
   // Sembunyikan Navbar di Dashboard Admin.
   // Penting: pengecekan ini diletakkan SETELAH semua hook dipanggil agar

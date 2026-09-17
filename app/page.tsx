@@ -711,7 +711,7 @@ export default async function Home() {
                     <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-900">Kategori</h3>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    {["LEGISLASI", "OPINI", "HUKUM PERDATA", "HUKUM PIDANA", "BISNIS", "KETENAGAKERJAAN", "HAK ASASI MANUSIA", "RESENSI BUKU", "RESENSI FILM", "REGULASI", "TEKNOLOGI DAN DIGITAL", "POLITIK DAN PEMERINTAHAN"].map((cat) => (
+                    {["LEGISLASI", "OPINI", "HUKUM PERDATA", "HUKUM PIDANA", "BISNIS", "KETENAGAKERJAAN", "HAK ASASI MANUSIA", "RESENSI BUKU", "RESENSI FILM", "REGULASI", "TEKNOLOGI DAN DIGITAL", "POLITIK DAN PEMERINTAHAN", "SASTRA", "FILSAFAT", "TEOLOGI", "BUDAYA"].map((cat) => (
                       <Link
                         key={cat}
                         href={`/artikel?q=${cat}`}
@@ -938,7 +938,7 @@ export default async function Home() {
                   <h3 className="text-[11px] md:text-[10px] font-bold uppercase tracking-[0.2em] text-gray-900">Kategori</h3>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  {["LEGISLASI", "OPINI", "HUKUM PERDATA", "HUKUM PIDANA", "BISNIS", "KETENAGAKERJAAN", "HAK ASASI MANUSIA", "RESENSI BUKU", "RESENSI FILM", "REGULASI", "TEKNOLOGI DAN DIGITAL", "POLITIK DAN PEMERINTAHAN"].map((cat) => (
+                  {["LEGISLASI", "OPINI", "HUKUM PERDATA", "HUKUM PIDANA", "BISNIS", "KETENAGAKERJAAN", "HAK ASASI MANUSIA", "RESENSI BUKU", "RESENSI FILM", "REGULASI", "TEKNOLOGI DAN DIGITAL", "POLITIK DAN PEMERINTAHAN", "SASTRA", "FILSAFAT", "TEOLOGI", "BUDAYA"].map((cat) => (
                     <Link 
                       key={cat}
                       href={`/artikel?q=${cat}`}
@@ -995,9 +995,7 @@ export default async function Home() {
             </div>
             <div className="flex gap-3">
               <a href="https://instagram.com/hegemoni_lex" target="_blank" rel="noopener noreferrer" className="text-[10px] font-bold border border-gray-800 px-3 py-1.5 hover:bg-white hover:text-black hover:border-white transition-all duration-300">INSTAGRAM</a>
-                <a href="#" className="text-[10px] font-bold border border-gray-800 px-3 py-1.5 hover:bg-white hover:text-black hover:border-white transition-all duration-300">LINKEDIN</a>
-                <a href="#" className="text-[10px] font-bold border border-gray-800 px-3 py-1.5 hover:bg-white hover:text-black hover:border-white transition-all duration-300">TWITTER (X)</a>
-                <a href="#" className="text-[10px] font-bold border border-gray-800 px-3 py-1.5 hover:bg-white hover:text-black hover:border-white transition-all duration-300">THREADS</a>
+              <a href="https://www.youtube.com/@hegemonilex" target="_blank" rel="noopener noreferrer" className="text-[10px] font-bold border border-gray-800 px-3 py-1.5 hover:bg-white hover:text-black hover:border-white transition-all duration-300">YOUTUBE</a>
             </div>
           </div>
           

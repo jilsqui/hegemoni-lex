@@ -25,6 +25,7 @@ const categories = [
   'REGULASI', 'EKONOMI PUBLIK', 'SOSIAL & BUDAYA',
   'LINGKUNGAN', 'PENDIDIKAN', 'KESEHATAN',
   'TEKNOLOGI DAN DIGITAL', 'POLITIK DAN PEMERINTAHAN',
+  'SASTRA', 'FILSAFAT', 'TEOLOGI', 'BUDAYA',
 ];
 
 export default function AdminEditArticlePage() {

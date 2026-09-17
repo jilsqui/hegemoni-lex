@@ -24,9 +24,12 @@ export default function HubungiKamiPage() {
            </div>
         </div>
 
-        <div className="mt-8 md:mt-12">
-            <a href="https://mail.google.com/mail/?view=cm&to=lexhegemoni@gmail.com&su=Kolaborasi%20dengan%20Hegemoni%20LEX" target="_blank" rel="noopener noreferrer" className="bg-white text-black px-6 py-3 md:px-8 md:py-4 font-bold uppercase tracking-widest text-xs hover:bg-gray-200 transition-colors inline-block active:bg-gray-300">
+        <div className="mt-8 md:mt-12 flex flex-col items-center gap-3">
+            <a href="mailto:hegemonilex@gmail.com?subject=Kolaborasi%20dengan%20Hegemoni%20LEX" className="bg-white text-black px-6 py-3 md:px-8 md:py-4 font-bold uppercase tracking-widest text-xs hover:bg-gray-200 transition-colors inline-block active:bg-gray-300">
                Hubungi Via Email ✉️
+            </a>
+            <a href="mailto:hegemonilex@gmail.com" className="text-xs text-gray-400 hover:text-white transition-colors underline decoration-gray-600 underline-offset-4 font-mono">
+               hegemonilex@gmail.com
             </a>
         </div>
       </div>

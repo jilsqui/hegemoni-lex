@@ -153,11 +153,11 @@ export default function RegisterPage() {
         <div className="absolute top-0 left-0 w-64 h-64 border-r-2 border-b-2 border-black rounded-br-[100px]"></div>
         
         <div className="relative z-10 flex flex-col items-end text-right mt-20">
-            <h2 className="text-6xl font-serif font-light leading-tight mb-8">
-              "Hukum adalah <br/> <span className="italic border-b-2 border-black pb-1 font-bold">akal budi</span> yang bebas dari nafsu."
+            <h2 className="text-5xl xl:text-6xl font-serif font-light leading-tight mb-8">
+              &ldquo;Sesungguhnya dengan membaca dan menulis akan mampu <span className="italic border-b-2 border-black pb-1 font-bold">menciptakan peradaban baru</span>.&rdquo;
             </h2>
             <div className="flex items-center gap-4 justify-end">
-                <p className="text-xs font-bold uppercase tracking-[0.3em] text-gray-500">— Aristoteles</p>
+                <p className="text-xs font-bold uppercase tracking-[0.3em] text-gray-500">— Hegemoni Lex Project</p>
                 <div className="h-[2px] w-12 bg-black"></div>
             </div>
         </div>

@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
@@ -66,6 +66,7 @@ export default function CreateArticlePage() {
     'REGULASI', 'EKONOMI PUBLIK', 'SOSIAL & BUDAYA',
     'LINGKUNGAN', 'PENDIDIKAN', 'KESEHATAN',
     'TEKNOLOGI DAN DIGITAL', 'POLITIK DAN PEMERINTAHAN',
+    'SASTRA', 'FILSAFAT', 'TEOLOGI', 'BUDAYA',
   ];
 
   const snapshot: DraftSnapshot = {
